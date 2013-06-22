@@ -1,13 +1,22 @@
-#business_companies_assets_total_yearly{:style=>"min-width: 600px; height: 600px; margin: 0 auto;margin:4em 0"}
+#business_companies_assets_total_yearly
 :javascript
   dates=#{@companies_assets_total_yearly.keys}
   values=#{@companies_assets_total_yearly.values}
   $(function () {
         $('#business_companies_assets_total_yearly').highcharts({
             chart: {
+
+                plotBackgroundColor: "#dddddd",
+                borderWidth:1,
+                borderColor:"#dddddd",
                 type: 'spline',
                 marginRight: 130,
                 marginBottom: 40
+            },
+
+            credits: {
+              href: "http://radar.sme.gov.cn/",
+              text: "征信中心"
             },
             title: {
               text: '#{@companies_assets_total_yearly.keys.first}到#{@companies_assets_total_yearly.keys.last}',

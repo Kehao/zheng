@@ -1,13 +1,21 @@
-#global_companies_court_by_owner.clearfix{:style=>"min-width: 600px; height: 600px; margin: 5em auto"}
+#global_companies_court_by_owner
 
 :javascript
   companies_court_by_owner = #{@js_companies_court_by_owner}
   $(function () {
         $('#global_companies_court_by_owner').highcharts({
             chart: {
+
+                plotBackgroundColor: "#dddddd",
+                borderWidth:1,
+                borderColor:"#dddddd",
                 plotBackgroundColor: null,
                 plotBorderWidth: null,
                 plotShadow: false
+            },
+            credits: {
+              href: "http://radar.sme.gov.cn/",
+              text: "征信中心"
             },
             title: { text: '企业及企业主被执行比例统计' },
             tooltip: {

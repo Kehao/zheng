@@ -10,14 +10,14 @@
     float:left
   }
 
-#global_companies_court_by_reg_date{:style=>"min-width: 600px; height: 600px; margin: 0 auto;margin:4em 0"}
+#global_companies_court_by_reg_date
 #court_reg_date.clearfix
   = simple_form_for :search_crime,url: global_statistics_path(:tab=>"companies_court_by_reg_date") do |f|
-    = f.input :start_month_beginning, as: :date, input_html: {class: "span1"}, label:false, required: false, default: @start_month_beginning 
+    = f.input :start_month_beginning, as: :date,  label:false, required: false, default: @start_month_beginning 
     .control-group
       = " 到 "
-    = f.input :end_month_end, as: :date, input_html: {class: "span1"},label:false,required: false, default:  @end_month_end
-    = f.submit "更新",class: "btn"
+    = f.input :end_month_end, as: :date, label:false,required: false, default:  @end_month_end
+    = f.submit "更新",class: "btn",:style=>"height:50px"
 
 
 :javascript
@@ -26,9 +26,17 @@
   $(function () {
         $('#global_companies_court_by_reg_date').highcharts({
             chart: {
+
+                plotBackgroundColor: "#dddddd",
+                borderWidth:1,
+                borderColor:"#dddddd",
                 type: 'spline',
                 marginRight: 130,
                 marginBottom: 40
+            },
+            credits: {
+              href: "http://radar.sme.gov.cn/",
+              text: "征信中心"
             },
             title: {
               text: '#{@companies_court_by_reg_date.keys.first}到#{@companies_court_by_reg_date.keys.last}',

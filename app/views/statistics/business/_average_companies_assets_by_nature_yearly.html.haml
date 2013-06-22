@@ -1,5 +1,5 @@
 - values = @average_companies_assets_by_nature_yearly.values
-#business_average_companies_assets_by_nature_yearly{:style=>"min-width: 600px; height: 600px; margin: 0 auto;margin:4em 0"}
+#business_average_companies_assets_by_nature_yearly.chart-height
 :javascript
   categories=#{@average_companies_assets_by_nature_yearly.keys}
   the_year_before_last =#{values.map{|h|h["前年"]}} 
@@ -9,8 +9,17 @@
   $(function () {
     $('#business_average_companies_assets_by_nature_yearly').highcharts({
       chart: {
+
+                plotBackgroundColor: "#dddddd",
+                borderWidth:1,
+                borderColor:"#dddddd",
         type: 'bar'
           },
+
+            credits: {
+              href: "http://radar.sme.gov.cn/",
+              text: "征信中心"
+            },
             title: {
               text: '年度平均资产总额'
             },

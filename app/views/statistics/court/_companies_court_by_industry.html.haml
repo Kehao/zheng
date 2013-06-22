@@ -1,4 +1,4 @@
-#global_companies_court_by_industry{:style=>"height: 600px; width: 600px; margin: 5em auto"}
+#global_companies_court_by_industry
 %table.table.table-striped.table-bordered.table-condensed
   %thead
     %th 行业类型
@@ -20,8 +20,16 @@
   $(function () {
         $('#global_companies_court_by_industry').highcharts({
             chart: {
+
+                plotBackgroundColor: "#dddddd",
+                borderWidth:1,
+                borderColor:"#dddddd",
                 type: 'column',
                 margin: [ 50, 50, 100, 80]
+            },
+            credits: {
+              href: "http://radar.sme.gov.cn/",
+              text: "征信中心"
             },
             title: {
                 text: '法院被执行企业行业分布'

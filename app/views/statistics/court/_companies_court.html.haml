@@ -1,13 +1,21 @@
-#global_companies_court.clearfix{:style=>"min-width: 600px; height: 600px; margin: 5em auto"}
+#global_companies_court
 
 :javascript
   companies_court = #{@js_companies_court}
   $(function () {
         $('#global_companies_court').highcharts({
             chart: {
+
+                plotBackgroundColor: "#dddddd",
+                borderWidth:1,
+                borderColor:"#dddddd",
                 plotBackgroundColor: null,
                 plotBorderWidth: null,
                 plotShadow: false
+            },
+            credits: {
+              href: "http://radar.sme.gov.cn/",
+              text: "征信中心"
             },
             title: {
                 text: '法院执行信息情况统计'
