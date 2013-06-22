@@ -3,8 +3,8 @@
     .tab-content{:style=>"display:inline;border:none"}
       = render "statistics/#{params[:scope] || :basic}/#{tab}"
 
-  .span3.todo.pull-right
-    %ul
+  .span3.pull-right
+    %ul.nav.nav-list.company_nav
       %h4{style: "padding-left: 12px;"} 基本情况分析
 
       %li{class: "#{tab == 'companies_credit' ? 'active' : ''}"}
