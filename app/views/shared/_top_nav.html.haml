@@ -10,20 +10,20 @@
               %i{:class=>"fui-checkmark-16"}
               征 信
 
-        - if current_user.role.name != "member"
-          %li{class: "#{controller_name == 'statistics' ? 'active' : ''}"}
-            = link_to  main_app.statistics_path do
-              %i{:class=>"fui-eye-16"}
-              监 测
+          - if current_user.role.name != "member"
+            %li{class: "#{controller_name == 'statistics' ? 'active' : ''}"}
+              = link_to  main_app.statistics_path do
+                %i{:class=>"fui-eye-16"}
+                监 测
 
-        %li
-          = link_to "" do 
-            %i{:class=>"fui-cmd-16"}
-            API接口
-        %li
-          = link_to "" do 
-            %i{:class=>"fui-menu-16"}
-            搜 索
+          %li
+            = link_to "" do 
+              %i{:class=>"fui-cmd-16"}
+              API接口
+          %li
+            = link_to "" do 
+              %i{:class=>"fui-menu-16"}
+              搜 索
 
 
       
