@@ -22,12 +22,11 @@
       %th
         公司名称
       %th
-        法人
-      %th
         地区
+      %th
+        法人
       /  = render "selections_of_region"
       %th
-
         操作
   
   %tbody
@@ -41,6 +40,7 @@
             = link_to c.name, company_client_path(client,:page=>params[:page]) 
           %td
             = c.area_desc
+
           %td.searchable
             = c.owner_name
           %td.company-operations
@@ -64,13 +64,11 @@
           添加客户。
 
 = paginate @company_clients
-
-- if params_q[:company_name_or_company_owner_name_or_company_cert_name_or_company_holder_name_cont].present?
+- highlight=params_q[:company_name_or_company_owner_name_or_company_cert_name_or_company_holder_name_cont] 
+- if highlight.present?
   :javascript
-    $(document).ready(function(){
-      $("td.searchable").highlight("#{params_q[:company_name_or_company_owner_name_or_company_cert_name_or_company_holder_name_cont]}");
-    });
+    $("td.searchable").highlight("#{highlight}");
 
 :javascript
-  $("tbody tr").deletable({toggle: ".company-operations a"});
+  //$("tbody tr").deletable({toggle: ".company-operations a"});
   // $("tbody tr").deletable({toggle: ".company-operations a", delegateTo: "table", deleteItem: "tr"});

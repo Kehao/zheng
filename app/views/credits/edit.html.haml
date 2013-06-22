@@ -15,8 +15,8 @@
 
     = render "shared/company_info_nav"
       
-    .row.span10.pull-left{:style=>"margin-left:2em;margin-top:15px"}
-      .company-detail.tab-content
+    .row.span10.pull-left{:style=>"margin-left:2em;"}
+      .company-detail.tab-content{:style=>"border:none"}
         #company-basic.tab-pane.tab-1.active
           = render "companies/cert", {company: @company} 
 
