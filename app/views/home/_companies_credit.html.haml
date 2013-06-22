@@ -1,0 +1,66 @@
+#basic_companies_credit{}
+%table.table.table-striped.table-bordered.table-condensed
+  %tr
+    %th 信用等级 
+    %th 筛查总数（家）
+    %th 属于等级（家）
+    %th 所占比例 
+
+  - @companies_credit[:categores].each_with_index do |categore,index|
+    %tr
+      %td= categore
+      %td= @companies_credit[:total][index]
+      %td= @companies_credit[:count][index]
+      %td= @companies_credit[:percent][index]
+
+
+
+:javascript
+  companies_credit = #{@companies_credit[:categores].zip(@companies_credit[:percent])}
+  $(function () {
+        $('#basic_companies_credit').highcharts({
+            chart: {
+                plotBackgroundColor: "#dddddd",
+                borderWidth:1,
+                borderColor:"#dddddd",
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false
+            },
+            credits: {
+              href: "http://rongzi.sme.gov.cn/",
+              text: "征信中心"
+            },
+            title: {
+                text: '企业信用等级分布'
+            },
+            tooltip: {
+              formatter: function(){
+                return '<b>'+ this.point.name +'</b>: '+ this.percentage.toFixed(2) +' %';
+              }
+        	/*pointFormat: '{series.name}: <b>{point.percentage}%</b>'*/
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        color: '#000000',
+                        connectorColor: '#000000',
+                        formatter: function() {
+                            return '<b>'+ this.point.name +'</b>: '+ this.percentage.toFixed(2) +' %';
+                        }, 
+                    },
+                    showInLegend: true
+                }
+            },
+            series: [{
+                type: 'pie',
+                name: '占总数',
+                data: companies_credit
+            }]
+        });
+    });
+   
+

@@ -15,6 +15,17 @@
             = link_to  main_app.statistics_path do
               %i{:class=>"fui-eye-16"}
               监 测
+
+        %li
+          = link_to "" do 
+            %i{:class=>"fui-cmd-16"}
+            API接口
+        %li
+          = link_to "" do 
+            %i{:class=>"fui-menu-16"}
+            搜 索
+
+
       
       - if current_user.present?
         %ul.nav.pull-right

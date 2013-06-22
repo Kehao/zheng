@@ -1,0 +1,25 @@
+.span5.exporters.pull-left
+  - if @exporters.any?
+    %table.table-bordered.table-striped.table-hover
+      %tr
+        %th 序号
+        %th 
+          导出文件名:用户_导出类型_时间_ 扩展名 
+      - @exporters.each_with_index do |e,i|
+        %tr
+          %td
+            = i+1
+          %td
+            - if e.status == 'success'
+              = link_to e.file_name, e
+            - elsif e.status == 'failed'
+              %span
+                /= e.file_name
+                导出不成功
+            = link_to "#", :class => "btn-close", :data => {:rel => exporter_path(e)} do
+              %i.icon-remove{style: "color: #BBC; text-decoration: none;"}
+  - else
+    %tr
+      %td= "-"
+      %td= 系统中没有导出记录。
+

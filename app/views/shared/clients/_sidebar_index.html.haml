@@ -11,7 +11,7 @@
   %li{class: "#{action_name == 'new' && controller_name == 'company_clients' && params[:by_xls].blank? ? 'active' : ''}"}
     = link_to "添加企业", main_app.new_company_client_path
   %li{class: "#{params[:by_xls].present? ? 'active' : ''}"}
-    = link_to "批量导入", main_app.new_company_client_path(by_xls: true)
+    = link_to "批量数据录入", main_app.new_company_client_path(by_xls: true)
 
   %li.nav-header
     数据查询

@@ -1,0 +1,7 @@
+.btn-toolbar{:style=>"margin-bottom:20px"}
+  .btn-group
+    - actived_list = action_name.eql?('index')&&controller_name.eql?('company_clients') && ( params[:q].blank? || params[:q][:court] != "problem" )
+    = link_to "企业列表",company_clients_path,:class=>"btn btn-primary #{actived_list ? 'active' : ''}"
+    = link_to "高危企业",company_clients_path(q: {court: "problem"}),:class=>"btn btn-primary #{(params[:q].present? && params[:q][:court].present?) ? 'active' : ''}" 
+    = link_to "批量数据录入",new_company_client_path(by_xls: true),:class=>"btn btn-primary #{params[:by_xls].present? ? 'active' : ''}"
+    = link_to "批量数据导出",exporters_path,:class=>"btn btn-primary #{action_name == 'index' && controller_name == 'exporters' ? 'active' : ''}"

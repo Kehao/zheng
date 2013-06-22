@@ -1,4 +1,4 @@
-.upload-list-box.add-form
+.upload-list-box
   = simple_form_for Importer.new,:url => main_app.importers_path,html: {multipart: true,:class => 'form-horizontal'} do |f|
     %fieldset
       .form-inputs
@@ -12,8 +12,8 @@
         - if template[:excel]
           = link_to "下载列表模板", template[:excel], class: 'btn' 
 
-        - if template[:image]
-          = link_to "图", "#template-png", data: {toggle: "modal"}, role: 'button', class: 'btn' 
+        /- if template[:image]
+        /  = link_to "图", "#template-png", data: {toggle: "modal"}, role: 'button', class: 'btn' 
 
         = submit_tag '取消', :type => :reset, :class => "btn"
 

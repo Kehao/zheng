@@ -4,81 +4,69 @@
   margin:0 5px
   }
 
-.span4.new-exports
-  .add-form2 
-    = simple_form_for @new_exporter do |f|
-      %legend 导出关联关系及法务信息:
-      = f.hidden_field :content_type, value: 'relationship'
-      = hidden_field_tag :tab, 'export-relationships'
-      = f.fields_for :options do |opts|
-        .add-form
-          客户关系:
-          %hr
-          = opts.fields_for :client_attrs do |client_attrs|
-            = client_attrs.input :created_at_from, as: :date, input_html: {class: "span1"}, label: "加入客户时间,从", required: false, default: Date.today.years_ago(1) 
-            = client_attrs.input :created_at_to, as: :date, input_html: {class: "span1"}, label: "到", required: false, default: Date.today 
+.span6.alert.new-exports.pull-right{:style=>"margin-right:20px"}
+  = simple_form_for @new_exporter do |f|
+    %legend 导出关联关系及法务信息:
+    = f.hidden_field :content_type, value: 'relationship'
+    = hidden_field_tag :tab, 'export-relationships'
+    = f.fields_for :options do |opts|
+      .add-form
+        客户关系:
+        %hr
+        = opts.fields_for :client_attrs do |client_attrs|
+          = client_attrs.input :created_at_from, as: :date, label: "加入客户时间,从", required: false, default: Date.today.years_ago(1) 
+          = client_attrs.input :created_at_to, as: :date, label: "到", required: false, default: Date.today 
 
-        .add-form
-          目标对象:
-          %hr
-          = opts.fields_for :target_object do |target_object|
+      .add-form
+        目标对象:
+        %hr
+        = opts.fields_for :target_object do |target_object|
 
-            = target_object.input :name,:label=>"公司名(不填为全部)"
-            = target_object.input :region_name, :wrapper => :append, :label => "所属地区", required: false,input_html:{id: "exporter_options_region_name"} do
-              = target_object.input_field :region_name, class: "span2", value: "全部"
-              .btn-group.target_object_region
-                = render("region_select")
-            = target_object.hidden_field :region_code, value: "000000"
-            /= target_object_opts.input :regist_date_after, as: :date, input_html: {class: "span1"}, label: "从哪天之后", required: false, default: Date.today.years_ago(1) 
+          = target_object.input :name,:label=>"公司名(不填为全部)"
+          = target_object.input :region_name, :wrapper => :append, :label => "所属地区", required: false,input_html:{id: "exporter_options_region_name"} do
+            = target_object.input_field :region_name, class: "span2", value: "全部"
+            .btn-group.target_object_region
+              = render("region_select")
+          = target_object.hidden_field :region_code, value: "000000"
+          /= target_object_opts.input :regist_date_after, as: :date, input_html: {class: "span1"}, label: "从哪天之后", required: false, default: Date.today.years_ago(1) 
 
-        .add-form
-          关联关系:
-          %hr
-          = opts.fields_for :relationship_attrs do |relationship_attrs|
-            = relationship_attrs.collection_check_boxes :relate_type_in,RelationshipImporter::RelationshipValue.zip(RelationshipImporter::Relationship),:first,:last,:checked => RelationshipImporter::RelationshipValue 
-        .add-form
-          关联对象类型
-          %hr
-          = opts.collection_radio_buttons :associated_type, [["all","全部"],["company", "企业"] ,["person", "个人"]], :first, :last,:checked=>"all" 
-        .add-form
-          关联对象
-          %hr
-          = opts.fields_for :associated_object do |associated_object|
-            = associated_object.input :name,:label=>"公司名/个人姓名(不填为全部)"
-            = associated_object.input :region_name, :wrapper => :append, :label => "所属地区", required: false do
-              = associated_object.input_field :region_name, class: "span2", value: "全部"
-              .btn-group.associated_object_region
-                = render("region_select")
-            = associated_object.hidden_field :region_code, value: "000000"
-        .add-form
-          关联案件
-          %hr
-            = opts.collection_radio_buttons :crime_enable, [["no","只导关系,不导案件"],["relationship_crime", "导出关系同时导出案件信息"] ,["crime_relationship", "导出有案件信息的关系"]], :first, :last,:checked=>"no",:item_wrapper_tag => :div
-          %hr
-          = opts.fields_for :crime_attrs do |crime_attrs|
+      .add-form
+        关联关系:
+        %hr
+        = opts.fields_for :relationship_attrs do |relationship_attrs|
+          = relationship_attrs.collection_check_boxes :relate_type_in,RelationshipImporter::RelationshipValue.zip(RelationshipImporter::Relationship),:first,:last,:checked => RelationshipImporter::RelationshipValue 
+      .add-form
+        关联对象类型
+        %hr
+        = opts.collection_radio_buttons :associated_type, [["all","全部"],["company", "企业"] ,["person", "个人"]], :first, :last,:checked=>"all" 
+      .add-form
+        关联对象
+        %hr
+        = opts.fields_for :associated_object do |associated_object|
+          = associated_object.input :name,:label=>"公司名/个人姓名(不填为全部)"
+          = associated_object.input :region_name, :wrapper => :append, :label => "所属地区", required: false do
+            = associated_object.input_field :region_name, class: "span2", value: "全部"
+            .btn-group.associated_object_region
+              = render("region_select")
+          = associated_object.hidden_field :region_code, value: "000000"
+      .add-form
+        关联案件
+        %hr
+          = opts.collection_radio_buttons :crime_enable, [["no","只导关系,不导案件"],["relationship_crime", "导出关系同时导出案件信息"] ,["crime_relationship", "导出有案件信息的关系"]], :first, :last,:checked=>"no",:item_wrapper_tag => :div
+        %hr
+        = opts.fields_for :crime_attrs do |crime_attrs|
 
-            = crime_attrs.label :exporter_options_crime_attrs_with_target_object_crimes, :class => "checkbox inline" do
-              = crime_attrs.check_box :with_target_object_crimes,:checked => true
-              同时导出目标对象的案件信息
-            %hr
-            = crime_attrs.input :regist_date_after, as: :date, input_html: {class: "span1"}, label: "关联对象立案时间从哪天之后:", required: false, default: Date.today.years_ago(1) 
-            关联对象案件状态:
-            = crime_attrs.collection_radio_buttons :status, [["all","全部"],["processing", "执行中"],["closed","已结案"],["other", "其它"]], :first, :last,:checked=>"all"
+          = crime_attrs.label :exporter_options_crime_attrs_with_target_object_crimes, :class => "checkbox inline" do
+            = crime_attrs.check_box :with_target_object_crimes,:checked => true
+            同时导出目标对象的案件信息
+          %hr
+          = crime_attrs.input :regist_date_after, as: :date, label: "关联对象立案时间从哪天之后:", required: false, default: Date.today.years_ago(1) 
+          关联对象案件状态:
+          = crime_attrs.collection_radio_buttons :status, [["all","全部"],["processing", "执行中"],["closed","已结案"],["other", "其它"]], :first, :last,:checked=>"all"
 
-      = f.submit "导出全部", class: "btn btn-info export_btn", data: {"loading-text" => "请求导出……"}
-      /- f.submit "导出更新", class: "btn btn-info export_btn", data: {"loading-text" => "请求导出……"}, disabled: true
-.span5.exporters
-  - if @exporters.any?
-    %ol
-      - @exporters.each do |e|
-        %li
-          - if e.status == 'success'
-            = link_to e.file_name, e
-          - elsif e.status == 'failed'
-            %span
-              = e.file_name
-              导出不成功
-          = link_to "#", :class => "btn-close", :data => {:rel => exporter_path(e)} do
-            %i.icon-remove{style: "color: #BBC; text-decoration: none;"}
-  - else
-    系统中没有导出记录。
+    = f.submit "导出全部", class: "btn btn-info export_btn", data: {"loading-text" => "请求导出……"}
+    /- f.submit "导出更新", class: "btn btn-info export_btn", data: {"loading-text" => "请求导出……"}, disabled: true
+
+.span5.pull-left
+  = render "out_files"
+
