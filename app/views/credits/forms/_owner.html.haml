@@ -1,0 +1,26 @@
+= simple_form_for @credit, :html => {:class => 'form-horizontal'} do |f|
+  = f.simple_fields_for :operators, @credit.operators do |b|
+    %legend
+      主要经营者背景
+
+    = b.hidden_field :_destroy, value: 0
+    - attr_arr = [:category, :name, :sex, :birthday, :number, :education, :position, :address, :zip, :cv, :negative]
+    .row
+      .span4= b.input :category, input_html: {class: "span2"}, include_blank: false
+      .span4= b.input :name, input_html: {class: "span2"}
+      .span4= b.input :sex, input_html: {class: "span2"}, include_blank: false
+    .row
+      .span8= b.input :birthday
+      .span4= b.input :number, input_html: {class: "span2"}
+    .row
+      .span4= b.input :education
+      .span4= b.input :position, input_html: {class: "span2"}
+    .row
+      .span4= b.input :address, input_html: {class: "span2"}
+      .span4= b.input :zip, input_html: {class: "span2"}
+    .row
+      .span8= b.input :cv,  input_html: {class: "span6", rows: 5}
+    .row
+      .span8= b.input :negative, input_html: {class: "span6"}
+  .form-actions
+    = f.submit "保存信息", class: "btn btn-primary"

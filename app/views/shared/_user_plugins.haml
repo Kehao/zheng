@@ -1,0 +1,8 @@
+.page-header
+  %h2
+    插件
+%ul
+  - current_user.plugins.each do |plugin|
+    - if plugin.mount_path
+      %li
+        = link_to plugin.title, plugin.mount_path

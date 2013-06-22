@@ -1,0 +1,11 @@
+= simple_form_for([:admin,status], :wrapper => :bootstrap, :html => { :class => 'form-horizontal' }) do |f|
+
+  %fieldset
+    .form-inputs
+      = f.association :tracker 
+      = f.input :name, :input_html => { :class => "span3" } 
+      = f.input :is_default,:as=>:boolean,:label=>false, :input_html => { :class => "span3" },:inline_label =>  Workflow::Status.human_attribute_name(:is_default),:hint => "每组标签只有一个默认状态"
+      = f.input :description, :input_html => { :class => "span3", :rows => 7 }
+
+    .form-actions
+      = f.button :submit

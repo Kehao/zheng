@@ -1,0 +1,72 @@
+:css
+  #search_crime_start_month_beginning_3i,#search_crime_end_month_end_3i {
+    display:none
+  }
+  #court_reg_date {
+    float:right
+  }
+  #court_reg_date .control-group {
+    line-height:30px;
+    float:left
+  }
+
+#global_companies_court_by_reg_date{:style=>"min-width: 600px; height: 600px; margin: 0 auto;margin:4em 0"}
+#court_reg_date.clearfix
+  = simple_form_for :search_crime,url: global_statistics_path(:tab=>"companies_court_by_reg_date") do |f|
+    = f.input :start_month_beginning, as: :date, input_html: {class: "span1"}, label:false, required: false, default: @start_month_beginning 
+    .control-group
+      = " 到 "
+    = f.input :end_month_end, as: :date, input_html: {class: "span1"},label:false,required: false, default:  @end_month_end
+    = f.submit "更新",class: "btn"
+
+
+:javascript
+  s6_dates=#{@companies_court_by_reg_date.keys}
+  s6_values=#{@companies_court_by_reg_date.values}
+  $(function () {
+        $('#global_companies_court_by_reg_date').highcharts({
+            chart: {
+                type: 'spline',
+                marginRight: 130,
+                marginBottom: 40
+            },
+            title: {
+              text: '#{@companies_court_by_reg_date.keys.first}到#{@companies_court_by_reg_date.keys.last}',
+                x: -20 //center
+            },
+            subtitle: {
+                text: '根据立案时间统计',
+                x: -20
+            },
+            xAxis: {
+              labels: {rotation: -25,	align: 'right',	style: { font: 'normal 13px Verdana, sans-serif'}},
+              categories: s6_dates 
+            },
+            yAxis: {
+                title: {
+                    text: '案件数'
+                },
+                plotLines: [{
+                    value: 0,
+                    width: 1,
+                    color: '#808080'
+                }]
+            },
+            tooltip: {
+                valueSuffix: '个'
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'top',
+                x: -10,
+                y: 100,
+                borderWidth: 0
+            },
+            series: [{
+                name: '执行中的案件',
+                data: s6_values
+            }]
+        });
+    });
+    

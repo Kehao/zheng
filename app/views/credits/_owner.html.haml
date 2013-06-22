@@ -1,0 +1,12 @@
+%h3
+  主要经营者背景
+- company.credit.operators.each do |p|
+  %table.table.table-striped.table-bordered
+    %tbody
+      - attr_arr = [:category, :name, :sex, :birthday, :number, :education, :position, :address, :zip, :cv, :negative]
+      - attr_arr.each do |item|
+        %tr
+          %td.span2
+            = Operator.human_attribute_name(item)
+          %td.span4
+            = p.send(item).respond_to?(:text) ? p.send(item).try(:text) : p.send(item)

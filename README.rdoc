@@ -1,0 +1,50 @@
+     # 企业经营情况
+      t.integer   :company_worker_number
+      t.string    :company_sales_area
+      t.float     :company_income_of_last_year
+      t.float     :company_income_of_the_year_before_last
+
+      t.float     :company_assets_of_last_year
+      t.float     :company_assets_of_the_year_before_last
+
+      t.float     :company_debt_of_last_year
+      t.float     :company_debt_of_the_year_before_last
+
+      t.float     :company_profit_of_last_year
+      t.float     :company_profit_of_the_year_before_last
+
+      t.float     :company_income_of_this_year
+
+      t.float     :company_order_amount_of_this_year
+      t.float     :company_order_amount_of_last_year
+
+      t.float     :company_vat_of_last_year
+      t.float     :company_income_tax_of_last_year
+
+      t.float     :company_elec_charges_monthly_of_this_year   # 元
+      t.float     :company_elec_charges_monthly_of_last_year
+      t.float     :company_water_charges_monthly_of_this_year  # 元
+      t.float     :company_water_charges_monthly_of_last_year  # 元
+
+      t.float     :company_major_income_by_year
+
+        company_worker_number: 公司员工数
+        company_sales_area: 销售所在地
+        company_income_of_last_year: 去年销售收入
+        company_income_of_the_year_before_last: 前年销售收入
+        company_assets_of_last_year: 去年资产总额
+        company_assets_of_the_year_before_last: 前年资产总额
+        company_debt_of_last_year: 去年负债总额
+        company_debt_of_the_year_before_last: 前年负债总额
+        company_profit_of_last_year: 去年利润总额
+        company_profit_of_the_year_before_last: 前年利润总额
+        company_income_of_this_year: 截止上月销售
+        company_order_amount_of_this_year: 当年订单总额
+        company_order_amount_of_last_year: 去年订单总额
+        company_vat_of_last_year: 去年vat总额
+        company_income_tax_of_last_year: 去年所得税
+        company_elec_charges_monthly_of_this_year: 当年月均电费
+        company_elec_charges_monthly_of_last_year: 去年月均电费
+        company_water_charges_monthly_of_this_year: 当年月均水费
+        company_water_charges_monthly_of_last_year: 去年月均水费
+        company_major_income_by_year: 当年主营收入

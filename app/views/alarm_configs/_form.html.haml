@@ -1,0 +1,7 @@
+= simple_form_for :alarm_config,:url => update_user_alarm_config_path,:method=>:put,:wrapper => :bootstrap,:html => { :class => 'form-horizontal' } do |f|
+
+  .form-inputs
+    = f.input :court,:as=>:boolean,:inline_label => "法务告警", :label=>false  
+
+  .form-actions
+    = f.button :submit,:label =>"更新"

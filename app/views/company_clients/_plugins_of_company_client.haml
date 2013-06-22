@@ -1,0 +1,6 @@
+.page-header
+  %h2
+    插件
+%ul
+  - Skyeye.plugins.scope(:company).each do |plugin|
+    = render partial: "/#{plugin.name}/partials/company_client_plugin", locals: {company: @company}

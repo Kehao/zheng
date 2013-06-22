@@ -1,0 +1,382 @@
+#encoding: utf-8
+module PdfHelperBackup
+  # This is the default value for the margin box
+  #
+  BOX_MARGIN   = 36
+
+  # Additional indentation to keep the line measure with a reasonable size
+  # 
+  INNER_MARGIN = 30
+
+  # Vertical Rhythm settings
+  #
+  RHYTHM  = 10
+  LEADING = 2
+
+  # Colors
+  #
+  BLACK      = "000000"
+  LIGHT_GRAY = "F2F2F2"
+  GRAY       = "DDDDDD"
+  DARK_GRAY  = "333333"
+  BROWN      = "A4441C"
+  ORANGE     = "F28157"
+  LIGHT_GOLD = "FBFBBE"
+  DARK_GOLD  = "EBE389"
+  BLUE       = "0000D0"
+  LIGHT_BLUE = "ADD8E6"
+
+  def pdf_top(str)
+    repeat(:all) do
+      font('Hwxk',:size=>8) do
+        formatted_text([{:text =>str,:color => LIGHT_BLUE}],:align => :right)
+      end
+      transparent(0.5){ stroke_horizontal_rule }
+    end
+  end
+
+  def pdf_end
+    start_new_page
+    bounding_box([110,500], :width => 300) do
+      font('Hwkt') do
+        formatted_text([{:text =>"———— 报告结束————",:size=>20}],:align => :center)
+        move_down 8
+        formatted_text([{:text =>"北京冠捷时速信息咨询有限责任公司",:size=>18}],:align => :center)
+        move_down 8
+        formatted_text([{:text =>"010-68575707",:size=>18}],:align => :center)
+      end
+    end
+  end
+
+  def pdf_title(company_name)
+    bounding_box([150,500], :width => 250) do
+      font('Hwkt',:size=>10) do
+        data = [ 
+          ["<font size='15'> 融资平台征信系统</font>"],
+          ["<font size='25'> 信用分析报告</font>"],
+          ["<font size='13'>企业名称：#{company_name}</font>"]
+        ]
+        table(data,:cell_style=>{
+          :border_width => [1,1,1,3],
+          :border_color => LIGHT_BLUE,
+          :inline_format => true
+        })
+      end
+
+      bounding_box([0, -350], :width => 250, :height => 220) do
+        font('Hwkt',:size=>12) do
+          formatted_text([{:text =>"北京冠捷时速信息咨询有限责任公司"}],:align => :left)
+          formatted_text([{:text =>"报告产生日期 #{Time.now.strftime("%Y-%m-%d")}"}],:align => :left)
+        end
+      end
+      #stroke_bounds 
+    end
+  end
+
+  def pdf_need_know
+    start_new_page
+
+    fill_color BLACK 
+    y_pos = cursor - 150
+
+    font('Hwkt') do
+      text_box "报告阅读须知",:at=>[0,y_pos],:size=>18,:align=>:center
+    end
+
+    bounding_box([80, y_pos-25], :width => 400, :height => 220) do
+      move_down 8 
+      stroke_horizontal_rule 
+      move_down 8 
+      font('Hwkt',:size=>12) do
+        text1="1.本报告的著作权属于北京冠捷时速信息咨询有限责任公司，未经书面许可，不得擅自复制、摘录、编辑、转载、披露和发表。"
+        text2="2.本报告仅供查询机构参考，不起任何证明作用。且本报告仅限查询依照法律法规规章所规定的查询用途使用，不得擅自向任何非查询人或机构泄露和发布本报告的所涉及的任何信息。"
+        text3="3.本报告的生成依据是截至报告时间为止的企业征信数据库中的相关信息。"
+        text4="4.征信机构承诺保持其客观、中立的地位，并保证将这一原则贯穿于信息汇总、加工、整合的全过程中。"
+        text5="5. 请妥善保管本报告，并注意保密。"
+        formatted_text([{:text =>text1}],:align => :left)
+        move_down 10 
+        formatted_text([{:text =>text2}],:align => :left)
+        move_down 10
+        formatted_text([{:text =>text3}],:align => :left)
+        move_down 10
+        formatted_text([{:text =>text4}],:align => :left)
+        move_down 10
+        formatted_text([{:text =>text5}],:align => :left)
+      end
+    end
+  end
+
+  def pdf_table(data)
+    table(data,:cell_style=>{ :border_color => LIGHT_BLUE, :inline_format => true },:row_colors => ["F0F0F0", "FFFFCC"])
+  end
+
+  def example_header(package, example)
+    header_box do
+      register_fonts
+      font('Hwxk', :size => 18) do
+        formatted_text([ { :text => package, :color => BROWN  },
+                       { :text => "/",     :color => BROWN  },
+                       { :text => example, :color => ORANGE }
+        ], :valign => :center)
+      end
+    end
+  end
+
+  # Register fonts used on the manual
+  #
+  def register_fonts
+    #kai_file = "#{Prawn::DATADIR}/fonts/gkai00mp.ttf"
+    hwxk_file = "#{Prawn::DATADIR}/fonts/Hwxk.ttf"
+    font_families["Hwxk"] = {
+      :normal => { :file => hwxk_file, :font => "Hwxk" }
+    }
+
+    hwkt_file = "#{Prawn::DATADIR}/fonts/Hwkt.ttf"
+    font_families["Hwkt"] = {
+      :normal => { :file => hwkt_file, :font => "Hwkt" }
+    }
+  end
+
+  # Render a block of text after processing code tags and URLs to be used with
+  # the inline_format option.
+  #
+  # Used on the introducory text for example pages of the manual and on
+  # package pages intro
+  #
+  def prose(str)
+
+    # Process the <code> tags
+    str.gsub!(/<code>([^<]+?)<\/code>/,
+              "<font name='Courier'><b>\\1<\/b><\/font>")
+
+    # Process the links
+    str.gsub!(/(https?:\/\/\S+)/,
+              "<color rgb='#{BLUE}'><link href=\"\\1\">\\1</link></color>")
+
+    inner_box do
+      font("Helvetica", :size => 11) do
+        str.split(/\n\n+/).each do |paragraph|
+
+          text(paragraph.gsub(/\s+/," "),
+               :align         => :justify,
+               :inline_format => true,
+               :leading       => LEADING,
+               :color         => DARK_GRAY)
+
+          move_down(RHYTHM)
+        end
+      end
+    end
+
+    move_down(RHYTHM)
+  end
+
+  # Render a code block. Used on the example pages of the manual
+  #
+  def code(str)
+    pre_text = str.gsub(' ', Prawn::Text::NBSP)
+    pre_text = ::CodeRay.scan(pre_text, :ruby).to_prawn
+
+    font('Courier', :size => 9.5) do
+      colored_box(pre_text, :fill_color => DARK_GRAY)
+    end
+  end
+
+  # Renders a dashed line and evaluates the code inline
+  #
+  def eval_code(source)
+    move_down(RHYTHM)
+
+    dash(3)
+    stroke_color(BROWN)
+    stroke_horizontal_line(-BOX_MARGIN, bounds.width + BOX_MARGIN)
+    stroke_color(BLACK)
+    undash
+
+    move_down(RHYTHM*3)
+    begin
+      eval(source)
+    rescue => e
+      puts "Error evaluating example: #{e.message}"
+      puts
+      puts "---- Source: ----"
+      puts source
+    end
+  end
+
+  # Renders a box with the link for the example file
+  #
+  def source_link(example)
+    url = "#{MANUAL_URL}/#{example.parent_folder_name}/#{example.filename}"
+
+    reason = [{ :text  => "This code snippet was not evaluated inline. " +
+      "You may see its output by running the " +
+      "example file located here:\n",
+      :color => DARK_GRAY },
+
+      { :text   => url,
+        :color  => BLUE,
+        :link   => url}
+    ]
+
+    font('Helvetica', :size => 9) do
+      colored_box(reason,
+                  :fill_color   => LIGHT_GOLD,
+                  :stroke_color => DARK_GOLD,
+                  :leading      => LEADING*3)
+    end
+  end
+
+  # Render a page header. Used on the manual lone pages and package
+  # introductory pages
+  #
+  def header(str)
+    header_box do
+      register_fonts
+      font('Hwxk', :size => 24) do
+        text(str, :color  => BROWN, :valign => :center)
+      end
+    end
+  end
+
+  # Render the arguments as a bulleted list. Used on the manual package
+  # introductory pages
+  #
+  def list(*items)
+    move_up(RHYTHM)
+
+    inner_box do
+      font("Hwkt", :size => 11) do
+        items.each do |li|
+          float { text("•") }
+          indent(RHYTHM) do
+            text(li.gsub(/\s+/," "), 
+                 :inline_format => true,
+                 :leading       => LEADING)
+          end
+
+          move_down(RHYTHM)
+        end
+      end
+    end
+  end
+
+  # Renders the page-wide headers
+  #
+  def header_box(&block)
+    bounding_box([-bounds.absolute_left, cursor + BOX_MARGIN],
+                 :width  => bounds.absolute_left + bounds.absolute_right,
+                 :height => BOX_MARGIN*2 + RHYTHM*2) do
+
+      fill_color LIGHT_GRAY
+      fill_rectangle([bounds.left, bounds.top],
+                     bounds.right,
+                     bounds.top - bounds.bottom)
+      fill_color BLACK
+
+      indent(BOX_MARGIN + INNER_MARGIN, &block)
+    end
+
+    stroke_color GRAY
+    stroke_horizontal_line(-BOX_MARGIN, bounds.width + BOX_MARGIN, :at => cursor)
+    stroke_color BLACK
+
+    move_down(RHYTHM*3)
+  end
+
+  # Renders a Bounding Box for the inner margin
+  #
+  def inner_box(&block)
+    bounding_box([INNER_MARGIN, cursor],
+                 :width => bounds.width - INNER_MARGIN*2,
+                 &block)
+  end
+
+  # Renders a Bounding Box with some background color and the formatted text
+  # inside it
+  #
+  def colored_box(box_text, options={})
+    options = { :fill_color   => DARK_GRAY,
+      :stroke_color => nil,
+      :text_color   => LIGHT_GRAY,
+      :leading      => LEADING
+    }.merge(options)
+
+    register_fonts
+    text_options = { :leading        => options[:leading], 
+      :fallback_fonts => ["Hwxk","Hwkt"]
+    }
+
+    box_height = height_of_formatted(box_text, text_options)
+
+    bounding_box([INNER_MARGIN + RHYTHM, cursor],
+                 :width => bounds.width - (INNER_MARGIN+RHYTHM)*2) do
+
+      fill_color   options[:fill_color]
+      stroke_color options[:stroke_color] || options[:fill_color]
+      fill_and_stroke_rounded_rectangle(
+        [bounds.left - RHYTHM, cursor],
+        bounds.left + bounds.right + RHYTHM*2,
+        box_height + RHYTHM*2,
+        5
+      )
+      fill_color   BLACK
+      stroke_color BLACK
+
+      pad(RHYTHM) do
+        formatted_text(box_text, text_options)
+      end
+                 end
+
+    move_down(RHYTHM*2)
+  end
+
+  # Draws X and Y axis rulers beginning at the margin box origin. Used on
+  # examples.
+  #
+  def stroke_axis(options={})
+    options = { :height => (cursor - 20).to_i,
+      :width => bounds.width.to_i
+    }.merge(options)
+
+    dash(1, :space => 4)
+    stroke_horizontal_line(-21, options[:width], :at => 0)
+    stroke_vertical_line(-21, options[:height], :at => 0)
+    undash
+
+    fill_circle [0, 0], 1
+
+    (100..options[:width]).step(100) do |point|
+      fill_circle [point, 0], 1
+      draw_text point, :at => [point-5, -10], :size => 7
+    end
+
+    (100..options[:height]).step(100) do |point|
+      fill_circle [0, point], 1
+      draw_text point, :at => [-17, point-2], :size => 7
+    end
+  end
+
+  # Reset some of the Prawn settings including graphics and text to their
+  # defaults.
+  # 
+  # Used after rendering examples so that each new example starts with a clean
+  # slate.
+  #
+  def reset_settings
+
+    # Text settings
+    font("Helvetica", :size => 12)
+    default_leading 0
+    self.text_direction = :ltr
+
+    # Graphics settings
+    self.line_width = 1
+    self.cap_style  = :butt
+    self.join_style = :miter
+    undash
+    fill_color   BLACK
+    stroke_color BLACK
+  end
+
+end

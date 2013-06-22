@@ -1,0 +1,13 @@
+= simple_form_for([:admin, company_account, bill],:wrapper => :bootstrap,:remote=>true,:html => { :class => 'form-horizontal' }) do |f|
+  %fieldset
+    .form-inputs
+      = f.input :cost
+      = f.input :amount
+      = f.input :paid,:as=>:boolean,:inline_label => "是否缴费",:label=>false 
+      = f.input :record_time,:as=>:date,:input_html=>{:style => "width:100px"}
+      = f.input :last_number
+      = f.input :this_number
+    .form-actions
+      = f.button :submit
+      =link_to "返回列表",[:admin,company_account,:bills],:remote=>true,:class=>"btn"
+

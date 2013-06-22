@@ -1,0 +1,9 @@
+= simple_form_for [:admin, institution], :wrapper => :bootstrap, :html => { :class => 'form-horizontal' } do |f|
+  .form-inputs
+    = f.input :name 
+    = f.input :short_name 
+
+  .form-actions
+    = f.button :submit, :class => 'btn-primary'
+    = submit_tag '重置', :type => :reset, :class => "btn"
+    = link_to "返回", :back, :class => "btn"

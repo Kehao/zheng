@@ -1,0 +1,9 @@
+=render "admin/shared/sidebar"
+.span9
+  .page-header
+    %h2 
+      = @company.name
+      [修改账单]
+.span8.well
+  = render 'form'
+  = link_to 'Back', admin_company_bills_path(@company)

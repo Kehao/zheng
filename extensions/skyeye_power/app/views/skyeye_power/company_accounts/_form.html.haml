@@ -1,0 +1,19 @@
+= simple_form_for([company, account], :wrapper => :bootstrap, :html => { :class => 'form-horizontal' }) do |f|
+  
+  %fieldset
+    .form-inputs
+      - if(workflow = Skyeye.plugins.find_by_name("workflow")) 
+        = render_cell_exist workflow.cell, :form,:f=>f,:trackable=>account,:current_user=>current_user
+
+      = f.input :type, :as=>:hidden
+
+      - if resources == :water_company_accounts
+
+        = f.input :water_number, :input_html => { :class => "span4" } 
+      - else
+
+        = f.input :elec_number,  :input_html => { :class => "span4" } 
+      = f.input :description, as: "text", :input_html => { :class => "span4", :rows => 7 }
+      
+    .form-actions
+      = f.button :submit

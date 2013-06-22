@@ -1,0 +1,60 @@
+%table.table.table-bordered.table-striped.table-hover
+  %thead
+    %tr
+      %th{:style=>"width:100px"}
+        数据完整度
+        / = render "selections_of_court"
+      %th.span3
+        公司名称
+      %th.span1
+        法人
+      %th.span2
+        地区
+      /  = render "selections_of_region"
+      %th.span1
+        操作
+  
+  %tbody
+    - if @company_clients.any?
+      - @company_clients.each do |client|
+        - c = client.company
+        %tr.one-company-in-tr{id: "company-#{c.id}"}
+          %td.alarm
+            = company_info_badges(c)
+          %td.searchable.compay-name-in-list
+            = link_to c.name, company_client_path(client,:page=>params[:page]) 
+          %td.searchable
+            = c.owner_name
+          %td
+            = c.area_desc
+          %td.company-operations
+            = link_to "javascript:;", data: {rel: company_client_path(client)}, style: "display: none;" do
+              %i.text-error.icon-trash
+
+    - elsif params[:q].present?
+      %tr
+        %td{colspan: 6}
+          没有筛选结果。
+          = link_to "返回全部列表", company_clients_path
+        
+    - else
+      %tr
+        %td{colspan: 6}
+          客户管理列表中暂无企业，您可以通过
+          = link_to "导入", new_company_client_path
+          - if can? :create, Seek
+            或
+            = link_to "检索", seeks_path
+          添加客户。
+
+= paginate @company_clients
+
+- if params_q[:company_name_or_company_owner_name_or_company_cert_name_or_company_holder_name_cont].present?
+  :javascript
+    $(document).ready(function(){
+      $("td.searchable").highlight("#{params_q[:company_name_or_company_owner_name_or_company_cert_name_or_company_holder_name_cont]}");
+    });
+
+:javascript
+  $("tbody tr").deletable({toggle: ".company-operations a"});
+  // $("tbody tr").deletable({toggle: ".company-operations a", delegateTo: "table", deleteItem: "tr"});

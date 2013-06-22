@@ -1,0 +1,29 @@
+%h3
+  股东和关联方构成
+= render "company_clients/relationship", relationships: @relationships, company: @company, company_client: @company_client
+
+%h3
+  股东变更
+%table.table.table-striped.table-bordered
+  - attr_arr = [:change_at, :name, :before_amount, :before_percent, :after_amount, :after_percent]
+  %tbody
+    %tr
+      - attr_arr.each do |item|
+        %td= HolderChange.human_attribute_name(item)
+    - company.credit.holder_changes.each do |p|
+      %tr
+        - attr_arr.each do |item|
+          %td= p.send(item)
+
+%h3
+  重要变更
+%table.table.table-striped.table-bordered
+  - attr_arr = [:change_at, :event, :before, :after]
+  %tbody
+    %tr
+      - attr_arr.each do |item|
+        %td= MassChange.human_attribute_name(item)
+    - company.credit.mass_changes.each do |p|
+      %tr
+        - attr_arr.each do |item|
+          %td= p.send(item)

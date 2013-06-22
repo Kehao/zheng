@@ -1,0 +1,9 @@
+%h3
+  行业评价
+- if company.credit.present?
+  - cr = company.credit
+  %p
+    - if cr.industry_review.present?
+      = cr.industry_review.gsub("\n", '<br>').html_safe
+    - else
+      暂无相关评价

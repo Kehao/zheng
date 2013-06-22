@@ -1,0 +1,53 @@
+%h3
+  银行信息
+
+- if company.credit.present?
+  - cr = company.credit
+  %h4
+    a) 开户信息
+  %table.table.table-striped.table-bordered
+    %tbody
+      - attr_attr = [:bank_name, :bank_account, :bank_address, :bank_tel, :avg_digits, :bank_level]
+      - attr_attr.each do |item|
+        %tr
+          %td.span2
+            = Credit.human_attribute_name(item) 
+          %td.span4
+            = cr.send(item)
+  %h4
+    b) 贷款信息
+  - if cr.loans.blank?
+    %p 没有贷款信息
+  - else
+    %table.table.table-striped.table-bordered
+      %tbody
+        - attr_attr = [:name, :category, :amount, :due_time, :balance, :deadline]
+        %tr
+          - attr_attr.each do |item|
+            %td.span2
+              = Loan.human_attribute_name(item) 
+        - cr.loans.each do |l|
+          %tr
+            - attr_attr.each do |item|
+              %td= l.send(item)
+
+  %h4
+    c) 担保信息
+  - if cr.morts.blank?
+    %p 没有贷款信息
+  - else
+    %table.table.table-striped.table-bordered
+      %tbody
+        - attr_attr = [:name, :category, :amount, :due_time, :balance, :deadline]
+        %tr
+          - attr_attr.each do |item|
+            %td.span2
+              = Loan.human_attribute_name(item) 
+        - cr.morts.each do |l|
+          %tr
+            - attr_attr.each do |item|
+              %td= l.send(item)
+
+- else
+  该公司的公司信息尚未检索成功
+  %span.badge ?

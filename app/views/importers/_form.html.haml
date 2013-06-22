@@ -1,0 +1,35 @@
+.upload-list-box.add-form
+  = simple_form_for Importer.new,:url => main_app.importers_path,html: {multipart: true,:class => 'form-horizontal'} do |f|
+    %fieldset
+      .form-inputs
+        = hidden_field_tag :"importer[class]", importer_class.name
+        = hidden_field_tag :"redirect_to", redirect_to
+        = f.input :file, as: :file, label: file_label, required: true
+      
+      %div{:style=>"margin-left:180px"}
+        = f.submit '确认上传', class: 'btn btn-primary'
+
+        - if template[:excel]
+          = link_to "下载列表模板", template[:excel], class: 'btn' 
+
+        - if template[:image]
+          = link_to "图", "#template-png", data: {toggle: "modal"}, role: 'button', class: 'btn' 
+
+        = submit_tag '取消', :type => :reset, :class => "btn"
+
+= render "importers/list_importers",:importer_class => importer_class,:redirect_to=>redirect_to
+
+- if template[:image]
+  .modal.hide{id: "template-png",style: "width:700px;height:600px"}
+    .modal-header
+      %button.close{data: {dismiss: "modal"}} ×
+      %h3
+        上传文件图示：
+    .modal-body
+      = image_tag template[:image]
+//:javascript
+//  this.user_channel = "/user-#{current_user.id}";
+//= javascript_include_tag "#{FAYE_CONFIG['server']}.js"
+//= javascript_include_tag "faye-function"
+
+

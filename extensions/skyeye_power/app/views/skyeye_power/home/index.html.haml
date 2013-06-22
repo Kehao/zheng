@@ -1,0 +1,68 @@
+.row
+  .span9
+    .page-header
+      %h2 
+        公司列表
+        %small
+          \ 一共有
+        = @company_clients.count 
+        %small
+          客户;
+  
+    %table.table.table-striped.table-bordered.table-condensed
+      %thead
+        %tr
+          %th 公司名称
+          %th 组织机构号
+          %th 水账户数量
+          %th 电账户数量
+          %th 操作
+  
+      %tbody
+        - @company_clients.each do |client| 
+          - company = client.company
+          - next unless company.present?
+          %tr
+            %td
+              /=link_to company.name, company_bills_path(company)
+              = company.name
+            %td= company.code 
+            %td
+              - c_ca_size =  company.water_company_accounts_count 
+              = c_ca_size > 0 ? c_ca_size : "暂无"
+            %td
+              - c_ca_size =  company.elec_company_accounts_count 
+              = c_ca_size > 0 ? c_ca_size : "暂无"
+  
+            %td
+              = link_to "账户管理",[company,:water_company_accounts]
+              
+    = paginate @company_clients
+  
+    %ul.nav.nav-tabs#power-importers
+      %li{:class=>((!params[:tab] || params[:tab].eql?("water_bill_importer")) ? "active" : "")}
+        = link_to "导入水账单","/skyeye_power#power-importers" 
+      %li{:class=>(params[:tab].eql?("elec_bill_importer") ? "active" : "")}
+        = link_to "导入电账单","/skyeye_power?tab=elec_bill_importer#power-importers"
+  
+    - if !params[:tab] || params[:tab].eql?("water_bill_importer")
+      = render "importers/form",
+        :importer_class=>WaterBillImporter,
+        :file_label => "水账单导入",
+        :template => {:excel=>"/template/水电导入模板.xls"},
+        :redirect_to => "/skyeye_power?tab=water_bill_importer#power-importers"
+  
+    - if params[:tab].eql?("elec_bill_importer")
+      = render "importers/form",
+        :importer_class=>ElecBillImporter,
+        :file_label => "电账单导入",
+        :template => {:excel => "/template/水电导入模板.xls"},
+        :redirect_to => "/skyeye_power?tab=elec_bill_importer#power-importers"
+
+  .span3
+    = render "shared/clients/sidebar_index"
+
+:javascript
+  this.user_channel = "/user-#{current_user.id}";
+= javascript_include_tag "#{FAYE_CONFIG['server']}.js"
+= javascript_include_tag "faye-function"

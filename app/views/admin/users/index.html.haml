@@ -1,0 +1,36 @@
+/<%#= link_to '自定义用户权限', edit_admin_user_path(user,:edit_ability=>true) %>
+/<%#= link_to '删除', admin_user_path(user), :method=>:delete, :confirm=>"确定删除?" %>  
+.row
+  .span3
+    = render "admin/shared/sidebar"
+
+  .span9
+    .page-header.page-header-qqw
+      %h3
+        用户列表
+        %span.label.label-info
+          = "#{@users.except(:offset, :limit).count} 个"
+
+    %table.table.table-hover
+      %thead
+        %tr
+          %th 用户名
+          %th Email
+          %th 角色
+          %th 机构
+          %th 当前ip
+          %th 注册时间
+          %th 操作
+      %tbody
+        - @users.each do |user| 
+          %tr
+            %td= user.name 
+            %td= user.email 
+            %td= user.role.try(:title) 
+            %td= user.institution.try(:name)
+            %td= user.current_sign_in_ip
+            %td= l user.created_at, format: :long
+            %td= link_to '修改', edit_admin_user_path(user) 
+    
+    = paginate @users 
+

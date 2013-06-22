@@ -1,0 +1,31 @@
+:plain
+  <script src="http://code.highcharts.com/highcharts.js"></script>
+  <script src="http://code.highcharts.com/modules/exporting.js"></script>
+
+  <!-- Additional files for the Highslide popup effect -->
+  <script type="text/javascript" src="http://www.highcharts.com/highslide/highslide-full.min.js"></script>
+  <script type="text/javascript" src="http://www.highcharts.com/highslide/highslide.config.js" charset="utf-8"></script>
+  <link rel="stylesheet" type="text/css" href="http://www.highcharts.com/highslide/highslide.css" />
+
+.row
+  .span9
+    /=debug(SkyeyePower::CompanyAccount.new)
+    .page-header
+      %h2 
+        = company.name
+        %small
+          \- 现在该公司中, 一共有
+        = @accounts.all.size 
+        %small
+          个 [#{t("skyeye_power/" + resources.to_s.singularize,:scope=>[:activerecord,:models])}]
+      = client_resources_nav
+      .tab-content
+        - unless @accounts.blank?
+          = render resources.to_s
+          .page-header
+        %h2 
+          新建[#{t("skyeye_power/" + resources.to_s.singularize,:scope=>[:activerecord,:models])}]
+        .well
+          = render 'form',:account => company.send(resources).new
+  .span3
+    = render "shared/clients/sidebar_index"

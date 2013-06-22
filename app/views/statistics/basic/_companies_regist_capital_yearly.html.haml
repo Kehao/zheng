@@ -1,0 +1,51 @@
+#basic_companies_regist_capital_yearly{:style=>"min-width: 600px; height: 400px; margin: 0 auto;margin:4em 0"}
+:javascript
+  s6_dates=#{@companies_regist_capital_yearly.keys}
+  s6_values=#{@companies_regist_capital_yearly.values}
+  $(function () {
+        $('#basic_companies_regist_capital_yearly').highcharts({
+            chart: {
+                type: 'spline',
+                marginRight: 130,
+                marginBottom: 40
+            },
+            title: {
+              text: '#{@companies_regist_capital_yearly.keys.first}到#{@companies_regist_capital_yearly.keys.last}',
+                x: -20 //center
+            },
+            subtitle: {
+                text: '企业资本趋势',
+                x: -20
+            },
+            xAxis: {
+              labels: {rotation: -25,	align: 'right',	style: { font: 'normal 13px Verdana, sans-serif'}},
+              categories: s6_dates 
+            },
+            yAxis: {
+                title: {
+                    text: '注册资本总额(万元)'
+                },
+                plotLines: [{
+                    value: 0,
+                    width: 1,
+                    color: '#808080'
+                }]
+            },
+            tooltip: {
+                valueSuffix: '万元'
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'top',
+                x: -10,
+                y: 100,
+                borderWidth: 0
+            },
+            series: [{
+                name: '资本趋势',
+                data: s6_values
+            }]
+        });
+    });
+    

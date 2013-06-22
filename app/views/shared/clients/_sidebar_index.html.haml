@@ -1,0 +1,51 @@
+%ul.nav.nav-list.company_nav
+  %li.nav-header
+    客户信息
+  - actived_list = action_name == 'index' && controller_name == 'company_clients' && ( params[:q].blank? || params[:q][:court] != "problem" )
+  %li{class: "#{actived_list ? 'active' : ''}"}
+    = link_to "企业列表", main_app.company_clients_path
+  %li{class: "#{(params[:q].present? && params[:q][:court].present?) ? 'active' : ''}"}
+    = link_to "高危企业", main_app.company_clients_path(q: {court: "problem"})
+  %li.nav-header
+    数据操作
+  %li{class: "#{action_name == 'new' && controller_name == 'company_clients' && params[:by_xls].blank? ? 'active' : ''}"}
+    = link_to "添加企业", main_app.new_company_client_path
+  %li{class: "#{params[:by_xls].present? ? 'active' : ''}"}
+    = link_to "批量导入", main_app.new_company_client_path(by_xls: true)
+
+  %li.nav-header
+    数据查询
+  %li{class: "#{action_name == 'index' && controller_name == 'crimes' ? 'active' : ''}"}
+    = link_to "案件信息", main_app.crimes_index_path
+  %li{class: "#{action_name == 'index' && controller_name == 'exporters' ? 'active' : ''}"}
+    = link_to "信息导出", main_app.exporters_path
+
+    / - if current_user.role.name != "member"
+    /   %li.nav-header
+    /     统计分析
+    /   %li{class: "#{action_name == 'global' ? 'active' : ''}"}
+    /     = link_to "整体分析", main_app.statistics_path(:tab=>"companies_court")
+
+    /%li{class: "#{action_name == 'detail' ? 'active' : ''}"}
+    /  = link_to "具体分析", statistics_detail_path(:tab=>"detail_s1")
+
+    / %li.nav-header
+    /   其它
+    / %li
+    /   = link_to "导出PDF",
+    /             court_problem_company_clients_path(format: "pdf"), 
+    /             data: {confirm: "本次导出的列表中同时包含企业和法人的法务信息；\n\n确认需要导出全部信息？"}
+
+  / .page-header
+  /   %h2
+  /     插件
+  / %ul.nav.nav-pills.nav-stacked
+  /   = render_plugin_cell :company_client_list
+  /%li{class: "#{action_name == 'warning' ? 'active' : ''}"}
+  /= link_to "消息中心", warning_company_clients_path
+
+- if params[:by_xls].present?
+  :javascript
+    $(function(){
+      $('#new-clients-tab a').eq(1).tab('show');
+    });

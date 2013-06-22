@@ -1,0 +1,25 @@
+.add-form
+  = simple_form_for @role,:html => { :class => '.form-horizontal' } do |f|
+    = f.error_notification
+    %fieldset
+      .form-inputs
+        =f.input :name 
+        =f.input :description 
+        =f.simple_fields_for :capability do |ability_form|
+          =ability_form.simple_fields_for :can do |can_form|
+            =can_form.simple_fields_for :cert do |cert_form|
+              .div 工商信息可见
+              -p @role.capability.can
+              =cert_form.check_box :view,{:checked=>@role.capability.can.cert.view},"true","false"
+            =can_form.simple_fields_for :crime do |crime_form|
+              .div 法院信息可见
+              =crime_form.check_box :view,{:checked=>@role.capability.can.crime.view},"true","false" 
+            =can_form.simple_fields_for :relationship do |relationship_form|
+              .div 关联方
+              =relationship_form.check_box :view,{:checked=>@role.capability.can.relationship.view},"true","false" 
+            =can_form.simple_fields_for :seek do |seek_form|
+              .div 搜索
+              =seek_form.check_box :search,{:checked=>@role.capability.can.seek.search},"true","false"
+
+      .form-actions
+        = f.button :submit

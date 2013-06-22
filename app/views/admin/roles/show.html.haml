@@ -1,0 +1,18 @@
+.row
+  .span3
+    = render "admin/shared/sidebar"
+
+  .span9
+    .page-header.page-header-qqw
+      %h3
+        = role.title
+        %small
+          = role.description 
+        = link_to edit_admin_role_path(role), :class => "btn btn-small btn-warning" do
+          %strong 
+            +
+          编辑
+    .detail-role-capability
+      = debug( role.capability.can) if role.capability 
+
+      = link_to '返回', :back

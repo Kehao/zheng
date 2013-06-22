@@ -1,0 +1,39 @@
+.row
+  .span3
+    =render "admin/shared/sidebar"
+  .span9
+    .page-header
+      %h2 
+        %small
+          \- 现在系统中, 一共有
+        = statuses.size 
+        %small
+          个工作状态;
+    - if Workflow::Tracker.first #&& statuses.blank?
+      %table.table.table-striped.table-bordered.table-condensed
+        %tr
+          %th 从属标签
+          %th 状态名
+          %th 默认选中
+          %th 描述
+          %th 操作
+        - statuses.each do |status|
+          %tr
+            %td= status.tracker.try(:name)
+            %td= status.name
+            %td= status.is_default
+            %td= status.description
+            %td
+              = link_to '修改','',:class=>"btn",:"data-toggle"=>"modal",:"data-target"=>"#modal-edit-#{dom_id(status)}"
+              = link_to '删除', [:admin,status],:class=>"btn", :data => { :confirm => '确定要删除么?' }, :method => :delete
+
+              = render "modal_edit",:status=>status
+      .page-header
+        %h2 
+          新建[工作状态]
+      .well
+        = render 'form',:status => @status || Workflow::Status.new
+    - else
+      = link_to "请先创建一个跟踪标签",[:admin,:trackers]
+
+

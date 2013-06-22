@@ -1,0 +1,44 @@
+#global_companies_court.clearfix{:style=>"min-width: 600px; height: 600px; margin: 5em auto"}
+
+:javascript
+  companies_court = #{@js_companies_court}
+  $(function () {
+        $('#global_companies_court').highcharts({
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false
+            },
+            title: {
+                text: '法院执行信息情况统计'
+            },
+            tooltip: {
+              formatter: function(){
+                return '<b>'+ this.point.name +'</b>: '+ this.percentage.toFixed(2) +' %';
+              }
+        	/*pointFormat: '{series.name}: <b>{point.percentage}%</b>'*/
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        color: '#000000',
+                        connectorColor: '#000000',
+                        formatter: function() {
+                            return '<b>'+ this.point.name +'</b>: '+ this.percentage.toFixed(2) +' %';
+                        }, 
+                    },
+                    showInLegend: true
+                }
+            },
+            series: [{
+                type: 'pie',
+                name: '占客户总数',
+                data: companies_court 
+            }]
+        });
+    });
+   
+

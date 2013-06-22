@@ -1,0 +1,60 @@
+#!/usr/bin/env ruby
+#encoding: utf-8
+$:.unshift File.expand_path("../../lib", __FILE__) unless $:.include?(File.expand_path("../../lib", __FILE__))
+
+require 'getoptlong'
+require "sqider"
+
+# Print pretty json
+require 'json'
+
+opts = GetoptLong.new(
+  [ '--help',   '-h', GetoptLong::NO_ARGUMENT ],
+  [ '--id',     '-i', GetoptLong::NO_ARGUMENT ],
+  [ '--person', '-p', GetoptLong::NO_ARGUMENT ],
+  [ '--company','-c', GetoptLong::NO_ARGUMENT ]
+)
+cli_args = {}
+
+opts.each do |opt, arg|
+  case opt
+  when '--help'
+    puts <<-EOF
+      --id,      -i #=> search a number 查询一个ID号码
+      --person,  -p #=> search a person name 查询一个人物姓名
+      --company, -c #=> search a company name 查询一个公司名称
+      example: 
+      sqider-cli -i 33012290323
+      sqider-cli -p 项羽
+      sqider-cli -c 东方航空
+      -----------------------------------------
+    EOF
+  when '--id'
+    cli_args[:type] = :number
+  when '--person'
+    cli_args[:type] = :owner
+  when '--company'
+    cli_args[:type] = :name
+  end
+end
+
+if ARGV.length != 1
+  puts "Missing key argument (try --help)"
+  exit 0
+end
+
+cli_args[:key] = ARGV.shift
+
+if cli_args[:type] == :number
+  cli_args[:card_number] = cli_args[:key]
+else
+  cli_args[:name] = cli_args[:key]
+end
+
+puts "@present, what we are searching for is: #{cli_args}"
+merged_result = {
+  :idinfo => Sqider::Idinfo.where(cli_args),
+  :court  => Sqider::Court.where(cli_args)
+}
+
+jj merged_result

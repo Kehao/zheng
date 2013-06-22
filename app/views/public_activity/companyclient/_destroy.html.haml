@@ -1,0 +1,8 @@
+%li.alert.alert-error
+  - if a.owner == current_user
+    = link_to "我",""
+  - else
+    = link_to a.owner.try(:name),""
+  删除了客户
+  = link_to a.recipient.name,""
+  = a.created_at.strftime("%y-%m-%d")

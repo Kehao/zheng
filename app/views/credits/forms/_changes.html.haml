@@ -1,0 +1,27 @@
+= simple_form_for @credit, :html => {:class => 'form-horizontal'} do |f|
+  = f.simple_fields_for :holder_changes, @credit.holder_changes do |b|
+    %legend
+      股东变更
+    = b.hidden_field :_destroy, value: 0
+    .row
+      .span3= b.input :name,  input_html: {class: "span2"}
+      .span6= b.input :change_at
+    .row
+      .span3= b.input :before_amount,  input_html: {class: "span1"}
+      .span3= b.input :before_percent, input_html: {class: "span1"}
+      .span3= b.input :after_amount,   input_html: {class: "span1"}
+      .span3= b.input :after_percent,  input_html: {class: "span1"}
+
+  = f.simple_fields_for :mass_changes, @credit.mass_changes do |b|
+    %legend
+      重要变更
+    = b.hidden_field :_destroy, value: 0
+    .row
+      .span6= b.input :event,     input_html: {class: "span2"}
+      .span6= b.input :change_at
+    .row
+      .span6= b.input :before,    input_html: {class: "span4"}
+      .span6= b.input :after,     input_html: {class: "span4"}
+
+  .form-actions
+    = f.submit "保存信息", class: "btn btn-primary"

@@ -1,0 +1,9 @@
+= simple_form_for @credit, :html => {:class => 'form-horizontal'} do |f|
+  %legend
+    其他信息
+  - attr_arr = [:bad_cert, :bad_tax, :bad_social, :bad_trade, :involved_before, :bad_manage, :bad_court]
+  - attr_arr.each do |item|
+    = f.input item
+  .form-actions
+    = f.submit "保存信息", class: "btn btn-primary"
+

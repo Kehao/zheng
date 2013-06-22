@@ -1,0 +1,8 @@
+.span8
+  .page-header
+    %h2 
+      = company.name
+      [新建账户]
+.span8.well
+  = render 'form'
+  = link_to 'Back', company_water_company_accounts_path(company)

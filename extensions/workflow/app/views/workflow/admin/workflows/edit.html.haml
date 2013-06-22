@@ -1,0 +1,45 @@
+.row
+  .span3
+    =render "admin/shared/sidebar"
+  .span9
+    - unless trackers.blank?
+      .page-header
+        %h3
+          选择角色和跟踪标签来编辑工作流程:
+      .well
+        = form_tag({},:class=>"form-horizontal",:method => 'get')do
+          %fieldset
+            .control-group
+              %label.control-label
+                角色:
+                .controls
+                  = select_tag 'role_id', options_from_collection_for_select(roles, "id", "title", @role && @role.id)
+            .control-group
+              %label.control-label
+                跟踪标签:
+                .controls
+                  = select_tag 'tracker_id', options_from_collection_for_select(trackers, "id", "name", @tracker && @tracker.id) 
+            .form-actions
+              = submit_tag '配置',:class=>'btn' ,:name => nil 
+
+      - if @tracker and @statuses.blank?
+        = link_to "请先创建一个工作状态",[:admin,:statuses]
+  
+      - if @tracker && @role && @statuses && @statuses.any?
+        = form_tag({}, :id => 'workflow_form' ) do 
+          = hidden_field_tag 'tracker_id', @tracker.id 
+          = hidden_field_tag 'role_id', @role.id 
+          = render 'form',:name=>:always,:workflows=>@workflows['always'],:show=>true 
+          %p
+            = link_to_function "当用户是资源作者时所允许的问题状态转换","$(this).parent().next().toggle()"
+          = render 'form',:name =>:author,:workflows => @workflows['author'],:show=> @workflows['author'].present?
+          %p 
+            = link_to_function "当用户是资源的分配对象时所允许的问题状态转换","$(this).parent().next().toggle()"
+          = render 'form',:name =>:assignee,:workflows => @workflows['assignee'],:show=>@workflows['assignee'].present?
+          .form-actions
+            = submit_tag "保存",:class=>"btn" 
+      
+
+    - else
+      = link_to "请先创建一个跟踪标签",[:admin,:trackers]
+  

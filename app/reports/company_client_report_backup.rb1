@@ -1,0 +1,156 @@
+#encoding: utf-8
+#Prawn.debug = true
+class CompanyClientReportBackup < Prawn::Document
+  include PdfHelper
+  include ContentHelper
+
+  attr_accessor :company_client
+  def to_pdf
+    company = company_client.company
+
+    register_fonts
+    stroke_color LIGHT_BLUE 
+    fill_color "778899"
+
+    pdf_top("北京冠捷时速·信用分析报告")
+
+    pdf_title(company.name)
+
+    pdf_need_know
+
+    start_new_page
+    y_pos = cursor - 70
+    font('Hwkt') do
+      text_box "信用分析报告",:at=>[0,y_pos],:size=>18,:align=>:center
+    end
+
+    bounding_box([80, y_pos-25], :width => 400) do
+      font('Hwkt') do
+        move_down 5 
+        stroke_horizontal_rule 
+        move_down 3 
+        formatted_text([{:text =>"本报告仅向报告提供对象提供",:size=>12}],:align => :left)
+        move_down 8 
+
+        formatted_text([{:text =>"信用评价",:color=>LIGHT_BLUE,:size=>18}],:align => :left)
+        move_down 8
+        if company.business
+          pdf_table([ 
+                    ["<font size='15'>主要指标</font>","<font size='15'>评分</font>","<font size='15'>评价</font>"],
+                    ["企业规模:",company.business.scale_score,company.business.txt_of(:scale_score)],
+                    ["财务状况:",company.business.sales_score,company.business.txt_of(:sales_score)],
+                    ["发展空间:",company.business.profit_score,company.business.txt_of(:profit_score)],
+                    ["公信力数据:",company.business.credit_score,company.business.txt_of(:credit_score)],
+                    ["信用等级:",company.business.credit_avg,company.business.credit_avg_txt],
+          ])
+        else
+          formatted_text([{:text =>"暂无信用评价"}],:align => :left)
+        end
+
+        move_down 25
+        formatted_text([{:text =>"工商信息",:color=>LIGHT_BLUE,:size=>18}],:align => :left)
+
+        move_down 8
+        pdf_table([ 
+                  ["<font size='15'>指标</font>","<font size='15'>数值</font>"],
+                  [Cert.human_attribute_name(:regist_id),company.number || company.cert.try(:regist_id)],
+                  [Cert.human_attribute_name(:owner_name),company.owner_name],
+                  [Cert.human_attribute_name(:address),company.address],
+                  [Cert.human_attribute_name(:business_scope),company.business_scope],
+                  [Cert.human_attribute_name(:company_type),company.company_type],
+                  [Cert.human_attribute_name(:found_date),company.found_date],
+                  [Cert.human_attribute_name(:approved_date),company.approved_date],
+                  [Cert.human_attribute_name(:business_period),company.business_period],
+                  [Cert.human_attribute_name(:paid_in_capital),company.paid_in_capital],
+                  [Cert.human_attribute_name(:regist_capital),company.regist_capital],
+                  [Cert.human_attribute_name(:regist_org),company.regist_org],
+                  [Cert.human_attribute_name(:check_years),(company.check_years.present? && company.check_years || "无法检索到工商年检信息")]
+        ])
+      end
+    end
+
+    start_new_page
+    y_pos = cursor
+    bounding_box([80, y_pos-25], :width => 400) do
+
+      font('Hwkt') do
+        formatted_text([{:text =>"经营状况",:color=>LIGHT_BLUE,:size=>18}],:align => :left)
+        move_down 5
+        formatted_text([{:text =>"行业：" + (company.industry && company.industry.name || "暂无数据"),:color=>LIGHT_BLUE,:size=>12}],:align => :left)
+        move_down 8
+        data = [[
+          "<font size='15'>年份</font>",
+          "<font size='15'>今年截止至上个月(万元)</font>",
+          "<font size='15'>去年(万元)</font>",
+          "<font size='15'>前年(万元)</font>"]]
+
+          ["worker_number","income","assets","debt","profit","order_amount","vat","income_tax","elec_charges_monthly",
+            "water_charges_monthly","major_income"].each do |item|
+            data << [
+              Business.human_attribute_name(item),
+              (company.business && company.business.public_send("#{item}_of_this_year") || "暂无数据"),
+              (company.business && company.business.public_send("#{item}_of_last_year") || "暂无数据"),
+              (company.business && company.business.public_send("#{item}_of_the_year_before_last") || "暂无数据"),
+            ]
+            end
+          pdf_table(data)
+          move_down 25
+
+          formatted_text([{:text =>"法务信息",:color=>LIGHT_BLUE,:size=>18}],:align => :left)
+          move_down 8
+          crimes = company.all_crimes.sort_by(&:regist_date).reverse
+          data =  []
+          if company.court_crawled 
+            if crimes.present?
+              data << [
+                Crime.human_attribute_name(:reg_date),
+                "状态",
+                "当事人",
+                Crime.human_attribute_name(:party_number),
+                Crime.human_attribute_name(:case_id), 
+                Crime.human_attribute_name(:apply_money)]
+                crimes.each do |crime|
+                  data << [
+                    crime.reg_date,
+                    crime.case_state,
+                    crime.party_name, 
+                    crime.party_number,
+                    crime.case_id,
+                    crime.apply_money
+                  ]
+                end
+            else
+              data << ["该企业尚未检测到相关法务记录"]
+            end
+          else
+            data << ["该企业的法务信息尚未检索完成"]
+          end
+
+          pdf_table(data)
+
+          move_down 25
+          formatted_text([{:text =>"关联方信息",:color=>LIGHT_BLUE,:size=>18}],:align => :left)
+          move_down 8
+
+          data = []
+          relationships = company_client.relationships
+          if relationships.blank?
+            data << ["暂无关联方信息"]
+          else
+            data << ["关联方","关系","占股","关联时间段"]
+            relationships.each do |relationship|
+              data << [
+                (relationship.is_a?(ClientCompanyRelationship) ? relationship.company.name : relationship.person_name),
+                relationship.relate_type.text,
+                (relationship.relate_type.shareholder? ? (relationship.hold_percent||"") : "n/a"),
+                (["guarantee", "guarantor", "debtor", "creditor"].include?(relationship.relate_type) ? "#{relationship.start_date}到#{relationship.expiration_date}" : "n/a")
+              ]
+            end
+          end
+          pdf_table(data)
+      end
+    end
+    pdf_end
+    render
+  end
+end

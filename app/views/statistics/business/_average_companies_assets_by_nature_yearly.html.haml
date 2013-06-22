@@ -1,0 +1,71 @@
+- values = @average_companies_assets_by_nature_yearly.values
+#business_average_companies_assets_by_nature_yearly{:style=>"min-width: 600px; height: 600px; margin: 0 auto;margin:4em 0"}
+:javascript
+  categories=#{@average_companies_assets_by_nature_yearly.keys}
+  the_year_before_last =#{values.map{|h|h["前年"]}} 
+  last_year =#{values.map{|h|h["去年"]}} 
+  this_year =#{values.map{|h|h["今年"]}} 
+
+  $(function () {
+    $('#business_average_companies_assets_by_nature_yearly').highcharts({
+      chart: {
+        type: 'bar'
+          },
+            title: {
+              text: '年度平均资产总额'
+            },
+            subtitle: {
+              text: '(按公司性质分)'
+            },
+            xAxis: {
+              categories: categories,
+                title: {
+                  text: null
+                }
+            },
+            yAxis: {
+              min: 0,
+                title: {
+                  text: '资产总额 (万元人民币)',
+                    align: 'high'
+                },
+                labels: {
+                  overflow: 'justify'
+                }
+            },
+            tooltip: {
+              valueSuffix: '万元'
+            },
+            plotOptions: {
+              bar: {
+                dataLabels: {
+                  enabled: true
+                    }
+                }
+            },
+            legend: {
+              layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'top',
+                x: -100,
+                y: 100,
+                floating: true,
+                borderWidth: 1,
+                backgroundColor: '#FFFFFF',
+                shadow: true
+            },
+            credits: {
+              enabled: false
+            },
+            series: [{
+              name: '前年',
+                data: the_year_before_last
+            }, {
+              name: '去年',
+                data: last_year 
+            }, {
+              name: '今年',
+                data: this_year 
+            }]
+        });
+    });

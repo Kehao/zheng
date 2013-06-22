@@ -1,0 +1,31 @@
+.page-header
+  %h2
+    (表一)企业整体区域分布及被执行比例:
+  %table.table.table-striped.table-bordered.table-condensed
+    %tr
+      %th
+        区域
+      - @companies_court_by_area.values.map { |stats|stats[:name] }.each do |area_name|
+        %td= area_name
+    %tr
+      %th
+        筛查总数(家)
+      - @companies_court_by_area.values.map { |stats|stats[:total_count] }.each do |total_count|
+        %td= total_count
+    %tr 
+      %th
+        法院执行数(家)
+      - @companies_court_by_area.values.map { |stats|stats[:court_count] }.each do |court_count|
+        %td= court_count
+    %tr
+      %th
+        法院执行比率
+      - @companies_court_by_area.values.map { |stats|stats[:court_percent] }.each do |court_percent|
+        %td= percentage_desc(court_percent)
+
+  %h2
+    (图一)法院被执行企业区域分布:
+  #global_s2{:style=>"height:600px;width:800px;overflow:hidden"}
+
+:javascript
+  companies_court_by_area = #{@js_companies_court_by_area}

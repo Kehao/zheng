@@ -1,0 +1,22 @@
+.row
+  .span3
+    = render "shared/clients/sidebar_index"
+  .span9
+    .page-header.page-header-qqw
+      %h3 导出 
+    .manage-clients-box
+      %ul.nav.nav-tabs#exporter-tab
+        %li{class: selected(params[:tab], :blank)}
+          = link_to '法务导出', exporters_path
+        %li{class: selected(params[:tab],"export-relationships")}
+          = link_to '关联方导出',exporters_path(:tab=>"export-relationships")
+
+    .tab-content
+      .row
+        - if params[:tab].blank?
+          = render "crime_exporter"
+        - if params[:tab].eql?("export-relationships")
+          = render "relationship_exporter"
+
+:javascript
+  $(".exporters li").deletable({toggle: "a.btn-close"})

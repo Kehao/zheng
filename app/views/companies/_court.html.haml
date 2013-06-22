@@ -1,0 +1,96 @@
+/%h4
+/法务信息
+/%small
+/  - if company.all_crimes.present?    
+/    = "法院执行信息（×#{company.all_crimes.size}）"
+/    /%span.badge.badge-important
+/    /  %i.icon-warning-sign
+/  - elsif not company.court_crawled
+/    法院执行信息
+/    %span.badge
+/      %i.icon-refresh
+/  - else
+/    %span.badge.badge-success
+/      %i.icon-ok
+
+.court-info-list
+  - if company.court_crawled
+    - if company.all_crimes.present?
+      - crimes = company.all_crimes.sort_by(&:regist_date).reverse
+      / .tab-content
+      /   - crimes.each_with_index do |crime, index|
+      /     .tab-pane{id: "crime-#{crime.id}", class: "#{index == 0 ? 'active' : ''}"}
+      /       %table.table
+      /         %thead
+      /           %tr
+      /             %th.span2
+      /               = Crime.human_attribute_name(:party_name)
+      /             %th
+      /               = company.name
+      /               - if can? :snapshot, Crime
+      /                (
+      /                = court_snapshot_link(crime)
+      /                = link_to "更新截图", update_snapshot_path(:crime_id=>crime.id),:remote=>true,:method=>:post
+      /               )
+      /                 = court_snapshot_link(crime)
+      /         %tbody
+      /           %tr
+      /             %th= Crime.human_attribute_name(:party_number) 
+      /             %td= crime.party_number
+      /           %tr
+      /             %th= Crime.human_attribute_name(:case_id) 
+      /             %td= crime.case_id
+      /           %tr
+      /             %th= Crime.human_attribute_name(:case_state) 
+      /             %td= crime.case_state
+      /           %tr
+      /             %th= Crime.human_attribute_name(:reg_date) 
+      /             %td= crime.reg_date
+      /           %tr
+      /             %th= Crime.human_attribute_name(:apply_money) 
+      /             %td= crime.apply_money
+      /           %tr
+      /             %th= Crime.human_attribute_name(:court_name) 
+      /             %td= crime.court_name
+
+      .court-info-table
+        %table.table.table-striped.table-bordered
+          %thead
+            %tr
+              %th= Crime.human_attribute_name(:reg_date)
+              %th
+                = link_to "全部",   "javascript:;", class: "show-ci-all-crimes-link gray-link"
+                |
+                = link_to "已结",   "javascript:;", class: "show-closed-crimes-link gray-link"
+                |
+                = link_to "执行中", "javascript:;", class: "show-ing-crimes-link gray-link"
+              %th
+                = link_to "全部", "javascript:;", class: "show-co-all-crimes-link gray-link"
+                |
+                = link_to "公司",   "javascript:;", class: "show-company-crimes-link gray-link"
+                |
+                = link_to "法人",   "javascript:;", class: "show-owner-crimes-link gray-link"
+              %th= Crime.human_attribute_name(:party_number) 
+              %th= Crime.human_attribute_name(:case_id) 
+              %th= Crime.human_attribute_name(:apply_money) 
+              - if can?(:snapshot, Crime)
+                %th 
+                  截图
+          %tbody
+            - crimes.each do |crime|
+              %tr.crime{id: "crime-#{crime.id}", data: {date: "#{crime.reg_date}", state: "#{crime.state}", belongs: "#{crime.party_name == company.name ? 'company' : 'owner'}" }}
+                %td= crime.reg_date
+                %td= crime.case_state
+                %td= crime.party_name
+                %td= crime.party_number
+                %td= crime.case_id
+                %td= number_to_currency crime.apply_money
+                - if can?(:snapshot, Crime)
+                  %td
+                    =court_snapshot_link(crime) 
+
+    - else
+      该企业尚未检测到相关法务记录
+
+  - else
+    该企业的法务信息尚未检索完成

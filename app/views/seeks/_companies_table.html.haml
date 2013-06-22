@@ -1,0 +1,33 @@
+%h3.response-title 检索结果：
+%table.table.table-hover
+  %thead
+    %tr
+      %th
+        公司名称
+      %th
+        法人姓名
+      %th
+        工商注册号
+      %th
+        操作
+  %tbody
+    - @companies.each do |company|
+      %tr{id: "feedback-company-#{company.id}"}
+        %td.company-name
+          - if current_user.companies.exists? company
+            = link_to company.name, company
+          - else
+            = link_to company.name, "javascript:;"
+        %td.owner-name
+          = company.owner_name
+        %td.company-number
+          = company.number
+        %td.company-operate
+          - if current_user.companies.exists? company
+            = link_to "已加为客户", "#", class: "btn btn-mini", disabled: true
+          - else
+            = link_to "添加为客户", 
+                      company_clients_path(company_id: company.id), 
+                      data: {method: :post}, 
+                      remote: true,
+                      class: "btn btn-success btn-mini"      

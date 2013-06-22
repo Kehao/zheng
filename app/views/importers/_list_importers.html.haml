@@ -1,0 +1,86 @@
+- importers = current_user.importers.where(type: importer_class.name, view_status: 1)
+
+- if importers.present?
+  .add-form
+    %table.table.table-hover{:style=>"table-layout:fixed"}
+      %thead
+        %tr
+          %th{:style=>"width:10%"} 序号
+          /%th 导入时间
+          %th{:style=>"width:15%"} 文件名称
+          %th{:style=>"width:10%"} 导入状态
+          %th{:style=>"width:50%"} 导入进度
+          /%th 用时
+          %th{:style=>"width:15%"} 操作
+      %tbody
+        - importers.each_with_index do |importer, index|
+
+          - if importer.process_bar  
+            - bar = JSON(importer.process_bar) 
+
+          %tr{:id=>"importer-#{importer.id}"}
+            %td= "##{index + 1}"
+            %td= link_to importer.name, importer.file.url
+            /%td=l importer.created_at, format: :short
+
+            - if importer.status.eql?("error")
+              %td= link_to_function importer.status_text,"$('#error-#{importer.id}').toggle()" 
+            - else
+              %td=t importer.status_text
+
+            %td
+              = link_to "#",:onclick=>("$('.process-#{importer.id}').toggle();return false;" ) do
+                - if ["importing","waiting"].index(importer.status)
+                  .progress.progress-success.progress-striped.active
+                    .bar{:style=>"width: #{importer.process_bar && bar['rate'] || 0 }%;"}  
+                - elsif importer.status.eql?("complete") 
+                  = "#{importer.process_bar && bar['rate'] || 100 }%"
+                - else
+                  = "#{importer.process_bar && bar['rate'] || 0 }%"
+
+            %td
+              - if ["error","complete"].index(importer.status)
+                = link_to main_app.importer_path(importer,:redirect_to=>redirect_to,:hide=>true), 
+                  data: {confirm: "仅仅删除该文件;保留导入的数据；\n确认移除？"},
+                  method: :delete do
+                  %i.text-success.icon-trash
+                = link_to  main_app.importer_path(importer,:redirect_to=>redirect_to), 
+                    method: :delete, 
+                    data: {confirm: "删除该文件的同时也会删除该文件对应导入的所有公司客户；\n确认删除？"} do
+                  %i.text-error.icon-trash
+              - else
+                = link_to "正在载入", "#", class: "btn btn-info btn-mini", disabled: true
+
+
+          - if importer.status.eql?("error")
+            %tr{:style=>"display:none",:id=>"error-#{importer.id}"}
+              %td{:colspan=>7}
+                =t importer.error_message || "无"
+
+
+          %tr{:style=>"display:none",:class=>"process-#{importer.id}"}
+            %td{:colspan=>7}
+              = importer.process_bar && bar['bar']  || "0/0"
+              = "#{importer.process_bar && bar['rate'] || 0}%"
+              = "已用时:#{seconds_to_offset(importer.process_bar && bar['cost_time'].to_i  || 0)}"
+          - temps = importer.importer_exception_temps.limit(10)
+          - unless temps.blank?
+            %tr{:style=>"display:none",:class=>"process-#{importer.id}"}
+              %td{:colspan=>7}
+                %table.table.table-hover{:style=>"overflow:scroll;table-layout:fixed"}
+                  %thead
+                    %tr
+                      %th{style: "width:200px"} 错误信息
+                      %th{style: "width:100px"} 状态
+                      %th{style: "width:100px"} 操作
+                      - importer_class::TITLE.each do |name|
+                        %th{style: "width:150px"}
+                          =name
+                      %th 
+                  %tbody
+                    = render :partial => "importers/temp", :collection => temps,:locals => {:importer=>importer}
+                    //- temps.each do |temp| 
+
+
+- else
+  暂未导入文件

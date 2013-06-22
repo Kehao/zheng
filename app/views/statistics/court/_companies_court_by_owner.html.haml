@@ -1,0 +1,41 @@
+#global_companies_court_by_owner.clearfix{:style=>"min-width: 600px; height: 600px; margin: 5em auto"}
+
+:javascript
+  companies_court_by_owner = #{@js_companies_court_by_owner}
+  $(function () {
+        $('#global_companies_court_by_owner').highcharts({
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false
+            },
+            title: { text: '企业及企业主被执行比例统计' },
+            tooltip: {
+              formatter: function(){
+                return '<b>'+ this.point.name +'</b>: '+ this.percentage.toFixed(2) +' %';
+              }
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        color: '#000000',
+                        connectorColor: '#000000',
+                        formatter: function() {
+                            return '<b>'+ this.point.name +'</b>: '+ this.percentage.toFixed(2) +' %';
+                        }
+                    },
+                    showInLegend: true
+                }
+            },
+            series: [{
+                type: 'pie',
+                name: '占被执行客户总数',
+                data: companies_court_by_owner 
+            }]
+        });
+    });
+   
+

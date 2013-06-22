@@ -1,0 +1,13 @@
+%h3
+  生产，研发，经营使用的主要设备
+%table.table.table-striped.table-bordered
+  - attr_arr = [:name, :count, :tech, :memo]
+  %tbody
+    %tr
+      - attr_arr.each do |item|
+        %td= Equip.human_attribute_name(item)
+    - company.credit.equips.each do |p|
+      %tr
+        - attr_arr.each do |item|
+          %td= p.send(item)
+      

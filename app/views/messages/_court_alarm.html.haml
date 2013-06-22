@@ -1,0 +1,7 @@
+= l court_alarm.created_at, format: :date
+@
+= link_to court_alarm.subject.name, court_alarm.subject, :target => "_blank"
+新发现
+= link_to court_alarm.subject, :target => "_blank" do
+  %span.text-error= court_alarm.crime_ids.count
+条法院信息；

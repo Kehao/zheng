@@ -1,0 +1,114 @@
+.span8.senti-list
+  .page-header
+    %h1
+      = @company.name
+
+  %table.table
+    %tbody
+      %tr
+        %td
+          %h3
+            = link_to "中国最大在线保健品商停业", "http://tech.sina.com.cn/i/2007-12-05/05171892452.shtml"
+            %small
+              [http://tech.sina.com.cn] [2011年12月05日]
+          %p
+            保健品销售网时，却发现该公司“健康中国”(www.99jk.cn)网站无法登录。随后，记者拨打了该公司在查号台登记的电话，发现仅是一个传真号。
+            如果说‘健康中国’确实
+            %span{:style => "color: red;"} 停业
+            也在情理之中，因为目前中国保健品行业存在很大不确定性，很多企业都很迷茫，不知道未来将往哪里走。”昨日，中国保健协会市场监测中心主任王珏向记者表示。
+      %tr
+        %td
+          %h3
+            = link_to "多名被害消费者投诉 工商部门已介入调查", "http://news.163.com/11/0310/02/6UOIMVME00011229.html"
+            %small
+              [http://news.163.com] [2012年03月05日]
+          %p
+            本报2月28日报道了一位退休女工“14万元买回一堆没用藏品”后，各种有关“坑老”的
+            %span{:style => "color: red;"} 投诉
+            纷至沓来。有的投诉商家，混淆食品、保健食品药品的概念，把食品、保健品当药品卖，老人买保健品后，都不按医嘱吃药了，甚至出现血压升高等副作用；
+      %tr  
+        %td
+          %h3
+            = link_to "引发副作用 销售者被判十倍赔偿", "http://www.bjhetong.com/article9233.aspx"
+            %small
+              [http://www.bjhetong.com] [2012年01月03日]
+          %p
+            王先生购买保健品送给朋友，朋友服用后出现不适，因协商未果，王先生遂将销售该保健品的销售商
+            %span{:style => "color: red;"} 诉至
+            法院。近日，延庆县法院对该起侵权责任纠纷案作出
+            %span{:style => "color: red;"} 裁判
+            ，判决被告退还原告购货款2560元并赔偿原告十倍赔偿金。
+      %tr  
+        %td
+          %h3
+            = link_to "公司专利实施许可合同纠纷案", "http://china.findlaw.cn/hetongfa/hetongsusong/12080.html"
+            %small
+              [http://tech.sina.com.cn] [2011年12月05日]
+          %p
+            原告AAA
+            %span{:style => "color: red;"} 诉被
+            告北京BB保健品有限公司(简称BB保健品公司)专利实施许可合同
+            %span{:style => "color: red;"} 纠纷
+            一案，本院二ООО年一月一日受理后，经公开开庭审理，作出了(2000)高知初字第1号民事判决书。AAA不服，向最高人民法院提起上诉，最高人民法院作出了(2000)知终字第6号民事裁定书，发回本院重审。
+      %tr  
+        %td
+          %h3
+            = link_to "公司借款担保合同纠纷案", "http://china.findlaw.cn/info/case/dqal/158576_3.html"
+            %small
+              [http://china.findlaw.cn] [2012年02月19日]
+          %p
+            本院还查明：兴豫公司在一、二审中出示了合行城东路支行与原太阳保健品公司(法定代表人孙占英)、现太阳保健品公司(法定代表人王清林)于1998年3月5日签订一份协议的复印件，该协议内容除约定现太阳保健品公司负责偿还1000万元的本金及之后新发生的银行利息，以前的利息由原太阳保健品公司承担外，还约定原1000万元的担保单位兴豫公司不再承担
+            %span{:style => "color: red;"} 担保
+            责任，由现太阳保健品公司另找担保人重新与合行城东路支行签订
+            %span{:style => "color: red;"} 担保
+            协议。合行城东路支行否认该协议存在。
+
+  .pagination
+    %ul
+      %li
+        = link_to '第一页', '#'
+      %li.active
+        = link_to '1', "#"
+      %li
+        = link_to '2', "#"
+      %li
+        = link_to '3', "#"
+      %li
+        = link_to '4', "#"
+      %li
+        = link_to '后一页', "#"
+
+
+.span4.risk-list
+  .page-header
+    %h1
+      风险控制 | 关键词列表
+  %ul.unstyled
+    %li
+      %h3= link_to "一级预警（×1）", "#"
+      %blockquote
+        %p
+          停止生产，停止经营，停业整顿（×1），吊销营业执照，吊销许可证，外逃，失踪，赌博，涉毒
+        %small
+          共9个关键词，最高风险
+    %li
+      %h3= link_to "二级预警（×2）", "#"
+      %blockquote
+        %p
+          拖欠工资，拖欠账款，合同违约（×1），民间借贷（×1），对外担保，偷税漏税，资产拍卖，灾害 
+        %small
+          共8个关键词，较高风险
+    %li
+      %h3= link_to "三级预警", "#"
+      %blockquote
+        %p
+          涉黄，纠纷，投诉，法院，执行记录，工商处罚，行政处罚 
+        %small
+          共8个关键词，一般风险
+    %li
+      %h3= link_to "四级预警（×1）", "#"
+      %blockquote
+        %p
+          变更，工商，信息，地址（×1） 
+        %small
+          共4个关键词，普通关注

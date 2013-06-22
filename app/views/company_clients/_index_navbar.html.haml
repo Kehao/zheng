@@ -1,0 +1,6 @@
+.search-form
+  = form_for @query, :url => company_clients_path, :html => {:class => "navbar-search form-search"}, :method => :get do |f|
+    = hidden_field_tag "q[region]", params_q[:region]
+    = hidden_field_tag "q[court]",  params_q[:court]
+    = f.text_field :company_name_or_company_owner_name_or_company_cert_name_or_company_holder_name_cont, 
+      :class => "search-query", :placeholder => "查询", :style => "width: 120px;"

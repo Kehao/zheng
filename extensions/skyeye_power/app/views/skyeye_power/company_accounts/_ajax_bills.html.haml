@@ -1,0 +1,9 @@
+= modal_dialog :style=>"display:none",:id=>dom_id(account) do
+  = modal_header do
+    %h3
+      - if resources == :water_company_accounts
+        ="水号为:#{account.water_number}"
+      - else
+        ="电号为:#{account.elec_number}"
+  = modal_body 
+

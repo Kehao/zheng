@@ -1,0 +1,19 @@
+%h3
+  会计信息
+= render "credits/forms/business",  {company: @company} 
+
+
+= simple_form_for @credit, :html => {:class => 'form-horizontal'} do |f|
+  %legend
+    财务信息
+  - attr_arr = [:gross_profit_0, :ratio_return_0, :ratio_profit_0, :ratio_net_return_0, :ratio_asset_liability_0, :ratio_liquidity_0, :ratio_quick_0, :ratio_ar_0, :ratio_inventory_0, :ratio_assets_0]
+  - attr_arr.each do |item|
+    .row
+      .span4
+        = f.input item, label: "前年#{Credit.human_attribute_name(item)}"
+      .span4
+        = f.input (item.to_s.chop + "1").to_sym, label: "去年#{Credit.human_attribute_name(item)}"
+      .span4
+        = f.input (item.to_s.chop + "2").to_sym, label: "今年#{Credit.human_attribute_name(item)}"
+  .form-actions
+    = f.submit "保存信息", class: "btn btn-primary"

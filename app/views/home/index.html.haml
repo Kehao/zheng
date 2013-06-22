@@ -1,0 +1,76 @@
+.row
+  .span8
+    .alert.alert-info
+      .title
+        %h4 平台数据库统计
+        %p{:style=>"margin-top:10px"}
+          系统中企业数量
+          = @companies_cont
+          ,系统企业总资产 ￥
+          = Cert.sum(:regist_capital_amount).round(2)
+          ,系统企业GDP贡献值 ￥
+          = Business.sum(:income_of_last_year).round(2)
+
+    .home-search.todo
+      = simple_form_for :seek_content, url: seeks_path, method: :post, html: { class: 'seek-form' } do |f|
+        = f.hidden_field :category
+        .todo-search
+          = f.input :content, label: false, 
+            :placeholder=>"请输入你要搜索的公司",
+            input_html: { class: 'todo-search-field span8', id: 'seek-content-input' }
+        /.span1
+        /= f.submit '检索企业', class: 'btn btn-large'
+        
+    #add-company-box.add-form.tab-pane{class: selected(params[:tab], nil)}
+      = simple_form_for @company_client,html: {:class => 'form-horizontal'}, url: [:create_with_company_and_company_owner,:company_clients], method: :post do |f|
+        %fieldset
+          %legend{:style=>"margin-bottom:25px"}
+            添加企业
+          .form-inputs
+            = f.simple_fields_for @company_client.company do |c|
+              = c.input :name
+              = c.input :number
+              = c.input :code
+              = c.input :owner_name
+          .form-actions
+            = f.submit '添加企业', class: 'btn btn-primary'
+            = submit_tag '取消', :type => :reset, :class => "btn"
+    /.todo
+    /  .tip
+    /    最近法务信息
+    /    %span.more
+    /      = link_to "更多", crimes_index_path
+    /  %ul
+    /    - @crimes.each do |c|
+    /      %li
+    /        = link_to "#{c.name}".html_safe, current_user.company_clients.find_by_company_id(c.id)
+    /        %br
+    /          .muted= "#{c.case_id} - #{c.apply_money}￥ - #{c.case_state}"
+
+
+  .span4.pull-right
+    .todo
+      .tip
+        高风险企业
+        %span.more
+          = link_to "更多", company_clients_path({q: {court: "problem"}})
+      %ul
+        - @risk_companies.each do |c|
+          %li
+            = link_to "#{c.name}", c
+            %br
+            .muted= "共有 #{c.all_crimes.count} 条案件信息"
+    .todo
+      .tip
+        最近添加的企业
+        %span.more
+          = link_to "更多", company_clients_path
+      %ul
+        - @recent_companies.each do |c|
+          %li
+            = link_to "#{c.name}", c
+            %br
+            .muted= "共有 #{c.all_crimes.count} 条案件信息"
+  
+
+    

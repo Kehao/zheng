@@ -1,0 +1,119 @@
+#encoding: utf-8
+zh-CN:
+  flash:
+    company_relationship:
+      already_exist: "已存在该相关公司"
+      create:
+        failure: "关联公司创建失败，请填写完整的信息"
+    company:
+      create:
+        failure: "公司创建失败，请填写完整的公司信息"
+    person_relationship:
+      already_exist: "已存在相关人物"
+      create:
+        failure: "关联人物创建失败，请填写完整的信息"
+    person:
+      create:
+        failure: "法人创建失败"
+  desc:
+  common:
+      water: "水"
+      electricity : "电"
+      "true": "是"
+      "false": "否"
+  view:
+    role:
+      view: "可查看" 
+      snapshot: "可浏览截图"
+      view_water: "可查看用水信息"
+      view_electricity: "可查看用电信息"
+      search: "可使用搜索"
+  views:
+    company_clients:
+      query_select:
+        court:
+          all: 全部
+          ok: 正常
+          warning: 异常
+          problem: 执行中
+    pagination:
+      next: "下一页"
+      last: "最后一页"
+      truncate: "……"
+      first: "第一页"
+      previous: "上一页"
+  permission:
+    actions:
+      create: "可创建"
+      read: "可查看"
+      view: "可查看"
+      update: "可编辑"
+      edit: "可编辑"
+      destroy: "可删除"
+      snapshot: "可查看截图"
+      search: "可搜索"
+  status:
+    order: "贷款"
+    order_opts:
+      all: "全部"
+      other: "未知"
+      loan_before: "贷前"
+      loan_after: "贷后"
+      closed: "结清"
+    industry: "行业"
+    industry_opts:
+      all: "全部"
+      other: "未知"
+    court: "法务"
+    court_opts:
+      all: "全部"
+      ok_court_status_values: "正常"
+      warning_court_status_values: "异常"
+      problem_court_status_values: "执行中"
+    crimes: "案件"
+    region: "地区"
+    region_opts: 
+      all: "全部"
+  enumerize:
+    court_status:
+      ok: "正常"
+      closed: "已结"
+      stopped: "中止执行"
+      other: "其他异常"
+      processing: "执行中"
+    import_status:
+      error: "异常"
+      waiting: "排队中"
+      importing: "解析中"
+      complete: "完成"
+    category:
+      all_crimes: "全部的案件"
+      processing_crimes: "执行中的案件"
+      warning_crimes: "异常的案件"
+    status:
+      error:     "出错"
+      waiting:   "排队"
+      importing: "导入"
+      complete:  "完成"
+    relate_type:
+      owner: "法人"
+      shareholder: "股东"
+      sub_company: "子公司"
+      branch_company: "分公司"
+      parent_company: "母公司"
+      guarantor: "担保人"
+      guarantee: "被担保人"
+      creditor: "债权人"
+      debtor: "债务人"
+      other: 其他
+    operator:
+      category:
+        owner: 法定代表人
+        ceo: 总经理
+        cto: 技术负责人
+        cfo: 财务负责人
+
+      sex:
+        m: 男
+        f: 女
+

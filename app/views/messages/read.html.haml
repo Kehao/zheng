@@ -1,0 +1,34 @@
+.row
+  .span9
+    .margin-top
+      %button.delete-all.btn.btn-info.pull-right 本页全部删除
+      %ul.nav.nav-tabs
+        %li.active
+          = link_to "已读消息", read_messages_path
+        %li
+          = link_to "未读消息", unread_messages_path
+
+    %ul.messages.unstyled
+      - @messages.each do |msg|
+        %li.message.court_alarm
+          %span.msg-operate.pull-right.btn.btn-mini
+            = link_to "删除", "javascript:;", :data => {:rel => message_path(msg)}
+          = render_message(msg)
+    = paginate(@messages)
+
+:javascript
+  // initialize a message deletable
+  $('li.message').deletable({toggle: '.msg-operate a'});
+
+  // initialize all messages deletable
+  $('ul.messages').deletable({ 
+    toggle:  'button.delete-all', 
+    url:     '/messages/destroy_some', 
+    data:    {ids: #{@messages.map(&:id)}},
+    afterDelete: function(){
+      next_page_url = $pagination = $(".pagination li.next a").eq(0).attr("href");
+      if(next_page_url){
+        window.location.reload(true);
+      }
+    }
+  });

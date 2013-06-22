@@ -1,0 +1,5 @@
+%h3
+  信用等级：
+  - if company.credit.present?
+    - cr = company.credit
+    = cr.credit_lvl

@@ -1,0 +1,50 @@
+.row
+  .span12
+    %h3{:style =>"border-bottom:2px solid #34495e;"}
+      = @company.name
+      %small
+        |
+      %small
+        = @company.owner_name || "法人-未知"
+      %small
+        |
+      %small
+        = @company.code || "组织机构号: 未知"
+      %small
+        |
+      %small
+        = link_to "导出该公司的征信报告",company_client_path(@company_client,:format=>:pdf)
+      %p{:style => "float:right"}
+        = link_to "返回列表", company_clients_path(), :class=>"btn"
+        = link_to "编辑",    edit_credit_path(@company.credit), :class=>"btn"
+    = render "shared/company_info_nav"
+    
+    .row.span10.pull-left{:style=>"margin-left:2em"}
+      .company-detail.tab-content
+        #company-basic.tab-pane.tab-1.active
+          = render "companies/cert", {company: @company}  
+        #company-contact.tab-pane.tab-2
+          = render "credits/contact", {company: @company} 
+        #company-relationship.tab-pane.tab-3
+          = render "credits/changes", {company: @company} 
+        #company-owner.tab-pane.tab-4
+          = render "credits/owner", {company: @company} 
+        #company-opt.tab-pane.tab-5
+          = render "credits/opt", {company: @company} 
+        #company-people.tab-pane.tab-6
+          = render "credits/people", {company: @company} 
+        #company-devise.tab-pane.tab-7
+          = render "credits/devise", {company: @company} 
+        #company-place.tab-pane.tab-8
+          = render "credits/place", {company: @company} 
+        #company-bank.tab-pane.tab-9
+          = render "credits/bank", {company: @company} 
+        #company-other.tab-pane.tab-10
+          = render "credits/other", {company: @company} 
+        #company-review.tab-pane.tab-11
+          = render "credits/review", {company: @company} 
+        #company-finance.tab-pane.tab-12
+          = render "credits/finance", {company: @company}
+        #company-level.tab-pane.tab-13
+          = render "companies/credit_info",  {company: @company}
+          / = render "credits/level", {company: @company}

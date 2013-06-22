@@ -1,0 +1,49 @@
+.add-relationship.hide
+  %ul.nav.nav-tab.nav-pills
+    %li.active
+      = link_to "企业", "#add-company-relationship", data: {toggle: "tab"}
+    %li
+      = link_to "个人", "#add-person-relationship", data: {toggle: "tab"}
+  .errors.text-error
+
+  #relationship-forms.tab-content
+    #add-company-relationship.tab-pane.active
+      - new_company_relationship = ClientCompanyRelationship.new(:company => Company.new)
+      = simple_form_for new_company_relationship,
+                        url: company_client_client_relationships_path(company_client), 
+                        method: :post, 
+                        :html => { :class => "form-vertical" } do |f|
+
+        = f.input :relate_type, prompt: false, input_html: {class: "relate_type_input"}
+        = f.input :hold_percent, wrapper_html: {class: "hold-percent-wrapper hide"}
+        .relationship-date{class: "hide"}
+          = f.input :start_date,     :as=>:date,:label=>"关系开始时间:",:input_html => {style: "width: 80px;"}
+          = f.input :expiration_date,:as=>:date,:label=>"关系结束时间:",:input_html => {style: "width: 80px;"}
+
+        = f.association new_company_relationship.company do |cf|
+          = cf.input :name
+          = cf.input :number
+          = cf.input :code
+         
+
+        = f.submit "确定", class: 'btn btn-info submit'
+        = link_to  "取消", "#", class: "cancel"
+
+    #add-person-relationship.tab-pane
+      - new_person_relationship = ClientPersonRelationship.new(:person => Person.new)
+      = simple_form_for new_person_relationship,
+                        url: company_client_client_relationships_path(company_client), 
+                        method: :post, 
+                        :html => { :class => 'form-vertical' } do |f|
+
+        = f.input :relate_type, prompt: false, input_html: {class: "relate_type_input"}
+        .relationship-date{class: "hide"}
+          = f.input :start_date,:as=>:date,:label=>"关系开始时间:",:input_html => {class: "span1"}
+          = f.input :expiration_date,:as=>:date,:label=>"关系结束时间:",:input_html => {class: "span1"}
+
+        = f.input :hold_percent, wrapper_html: {class: "hold-percent-wrapper hide"}
+        = f.input :person_name
+        = f.input :person_number, required: false
+
+        = f.submit "确定", class: "btn btn-info submit"
+        = link_to  "取消", "#", class: "cancel"

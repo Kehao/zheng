@@ -1,0 +1,30 @@
+.row
+  .span3.admin-views-sidebar
+    = render "admin/shared/sidebar"
+
+  .span9
+    .page-header.page-header-qqw
+      %h3
+        机构列表
+        %span.label.label-info
+          = "#{@institutions.count} 个"
+        = link_to new_admin_institution_path, :class => "btn btn-small btn-warning" do
+          %strong 
+            + 添加
+
+    %table.table.table-hover
+      %tr
+        %th 机构名
+        %th 简称
+        %th 操作
+      - @institutions.each do |institution|
+        %tr.institution-tr
+          %td= institution.name
+          %td= institution.short_name
+          %td
+            = link_to '修改', edit_admin_institution_path(institution)
+            \|
+            = link_to '删除', "#", :data => {:rel => admin_institution_path(institution)}, class: "link-to-delete"
+  
+  :javascript
+    $("tr.institution-tr").deletable({toggle: "a.link-to-delete"})

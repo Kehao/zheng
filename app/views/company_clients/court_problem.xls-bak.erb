@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Sheet1">
+    <Table>
+      <Row>
+        <Cell><Data ss:Type="String">企业名称 </Data></Cell>
+        <Cell><Data ss:Type="String">法人代表姓名 </Data></Cell>
+        <Cell><Data ss:Type="String">法人身份证号 </Data></Cell>
+        <Cell><Data ss:Type="String">营业执照编号 </Data></Cell>
+        <Cell><Data ss:Type="String">组织机构号码 </Data></Cell>
+        <Cell><Data ss:Type="String">案件号 </Data></Cell>
+        <Cell><Data ss:Type="String">执行法院 </Data></Cell>
+        <Cell><Data ss:Type="String">执行对象 </Data></Cell>
+        <Cell><Data ss:Type="String">案件状态 </Data></Cell>
+        <Cell><Data ss:Type="String">执行标的 </Data></Cell>
+        <Cell><Data ss:Type="String">立案时间 </Data></Cell>
+        <Cell><Data ss:Type="String">获取时间 </Data></Cell>
+      </Row>
+    <% @company_clients.all.each do |cc| %>
+      <% c = cc.company %>
+      <% c.all_crimes.each do |crime| %>
+        <Row>
+          <Cell><Data ss:Type="String"><%= c.name %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= c.owner_name %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= c.owner.try(:number) %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= c.number %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= c.code %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= crime.case_id %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= crime.court_name %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= crime.party_name %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= crime.case_state %></Data></Cell>
+          <Cell><Data ss:Type="Number"><%= crime.apply_money.to_f %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= crime.reg_date %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= crime.created_at.strftime("%Y-%m-%d") %></Data></Cell>
+        </Row>
+      <% end %>
+    <% end %>
+    </Table>
+  </Worksheet>
+</Workbook>

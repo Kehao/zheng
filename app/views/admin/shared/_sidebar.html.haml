@@ -1,0 +1,24 @@
+%ul.nav.nav-list.admin-views-sidebar-nav{data: {spy: "affix", "offset-top" => 0}}
+  %li{:class=> controller_name == "institutions" ? "active" : ""}
+    = link_to main_app.admin_institutions_path do
+      %i.icon-th-large.icon-white
+      %i.icon-chevron-right
+      机构管理
+
+  %li{:class=> controller_name == "users" ? "active" : ""}
+    = link_to main_app.admin_users_path do
+      %i.icon-home.icon-white
+      %i.icon-chevron-right
+      用户管理
+
+  %li{:class=> controller_name == "roles" ? "active" : ""}
+    =link_to main_app.admin_roles_path do
+      %i.icon-user.icon-white
+      %i.icon-chevron-right
+      角色配置
+
+  %li{:class=> ["companies"].index(controller_name) ? "active" : ""}
+    =link_to main_app.admin_companies_path do
+      %i.icon-briefcase.icon-white
+      %i.icon-chevron-right
+      公司管理

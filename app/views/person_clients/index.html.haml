@@ -1,0 +1,16 @@
+.span9
+  .page-header
+    %h2 客户列表 - 法人
+
+  .clients-list
+    - if @person_clients.any?
+      = render "person_clients_list"
+    - else
+      客户管理列表中暂无法人，您可以通过
+      = link_to_function "输入", "$('.add-person-bx').show();$('#person_name').focus();"
+      或
+      = link_to "检索", seeks_path
+      后添加客户。
+
+.span3
+  = render "shared/clients/sidebar_manage"

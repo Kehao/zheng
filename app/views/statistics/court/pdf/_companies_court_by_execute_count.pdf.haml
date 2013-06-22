@@ -1,0 +1,5 @@
+#global_s5{:style=>"height:400px;width:800px;overflow:hidden"}
+:javascript
+  s5_companies_court = #{@companies_court_by_execute_count[1].values}
+  s5_execute_count = #{@companies_court_by_execute_count[1].keys.map &:to_s}
+

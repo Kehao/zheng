@@ -1,0 +1,19 @@
+zh-CN:
+  workflow:
+    plugins:
+      workflow:
+        title: 工作流程
+  activerecord:
+    models:
+      workflow/tracker: "跟踪标签"
+      workflow/status: "工作状态"
+    attributes:
+      workflow/tracker:
+        name: "名称" 
+        description: "描述"
+      workflow/status:
+        name: "名称" 
+        is_default: "默认选中" 
+        description: "描述"
+        tracker: "跟踪标签"
+

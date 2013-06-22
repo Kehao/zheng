@@ -1,0 +1,59 @@
+#basic_companies_industry{:style=>"height: 600px; width: 100%; margin: 5em auto"}
+%table.table.table-striped.table-bordered.table-condensed
+  %tr
+    %th 公司类型
+    %th 筛查总数（家）
+    %th 属于该行业数（家）
+    %th 所占比例 
+
+  - @companies_industry[:categores].each_with_index do |categore,index|
+    %tr
+      %td= categore
+      %td= @companies_industry[:total][index]
+      %td= @companies_industry[:count][index]
+      %td= @companies_industry[:percent][index]
+
+
+
+:javascript
+  companies_industry = #{@companies_industry[:categores].zip(@companies_industry[:percent])}
+  $(function () {
+        $('#basic_companies_industry').highcharts({
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false
+            },
+            title: {
+                text: '企业行业分布'
+            },
+            tooltip: {
+              formatter: function(){
+                return '<b>'+ this.point.name +'</b>: '+ this.percentage.toFixed(2) +' %';
+              }
+        	/*pointFormat: '{series.name}: <b>{point.percentage}%</b>'*/
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        color: '#000000',
+                        connectorColor: '#000000',
+                        formatter: function() {
+                            return '<b>'+ this.point.name +'</b>: '+ this.percentage.toFixed(2) +' %';
+                        }, 
+                    },
+                    showInLegend: true
+                }
+            },
+            series: [{
+                type: 'pie',
+                name: '占总数',
+                data: companies_industry
+            }]
+        });
+    });
+   
+

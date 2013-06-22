@@ -1,0 +1,23 @@
+.row
+  .span3  
+    =render "admin/shared/sidebar"
+  .span9
+    /=debug(SkyeyePower::CompanyAccount.new)
+    .page-header
+      %h2 
+        = company.name
+        %small
+          \- 现在该公司中, 一共有
+        = @accounts.all.size 
+        %small
+          个 [#{t("skyeye_power/" + resources.to_s.singularize,:scope=>[:activerecord,:models])}]
+      = resources_nav
+      .tab-content
+        - unless @accounts.blank?
+          = render resources.to_s
+          .page-header
+        %h2 
+          新建[#{t("skyeye_power/" + resources.to_s.singularize,:scope=>[:activerecord,:models])}]
+        .well
+          = render 'form',:account => company.send(resources).new
+

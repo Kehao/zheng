@@ -1,0 +1,42 @@
+/%h4
+/关联方
+/%small
+/= "（#{relationships.count}个）"
+
+%table.table.table-striped.table-bordered
+  %thead
+    %tr
+      /%th 企业 
+      %th{:style=>"width:250px"} 
+        关联方(
+        %span.red *
+        表示有执行中的案件)
+      %th{:style=>"width:100px"} 关系
+      %th{:style=>"width:50px"}  占股
+      %th{:style=>"width:230px"} 关联时间段 
+      %th 
+        .add-relationship-container.pull-left
+          = link_to "添加", "#", class: "add-relationship-toggle btn btn-small btn-warning"
+          = render "add_relationship", company_client: company_client
+
+  %tbody
+    - relationships.each do |relationship|
+      = render "client_relationships/relationship", client: company_client, relationship: relationship
+
+:javascript
+  $(function(){
+    Relationship.init()
+    $('.relationship_relate_type').editable({source: #{JSON(relationship_select_options)}});
+    $('.relationship_hold_percent').editable();
+    $('.relationship_expiration_date').editable({
+      format: 'yyyy-mm-dd',    
+      viewformat: 'yyyy-mm-dd',  
+      datepicker: { weekStart: 1, language: "zh-CN"} });
+
+    $('.relationship_start_date').editable({
+      format: 'yyyy-mm-dd',    
+      viewformat: 'yyyy-mm-dd',  
+      datepicker: { language: "zh-CN", weekStart: 1} });
+
+  });
+

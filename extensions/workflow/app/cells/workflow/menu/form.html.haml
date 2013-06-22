@@ -1,0 +1,15 @@
+- allowed_statuses = @trackable.new_statuses_allowed_to(@current_user,true)
+- if Workflow::Tracker.first.nil? || allowed_statuses.first.nil?
+  
+  注意:若您要使用工作流插件,请先创建你的[工作流]
+  %br
+- else 
+  =@f.simple_fields_for :trace do |trace_form|
+  
+    = trace_form.input :tracker_id,:collection =>Workflow::Tracker.all.map{|t|[t.name,t.id]},:selected=>(@trackable.trace ? @trackable.trace.tracker_id : ""),:label=>"跟踪标签"
+  
+    = trace_form.input :status_id,:collection =>allowed_statuses.map{|s|[s.name,s.id]},:selected=>(@trackable.trace ? @trackable.trace.status.try(:id) : ""),:label=>"状态"
+  
+    = trace_form.input :assigned_to_id,:collection =>User.all.map{|u|[u.name,u.id]},:include_blank =>true,:selected=>(@trackable.trace ? @trackable.trace.assigned_to_id : ""),:label=>"指派给"
+  
+

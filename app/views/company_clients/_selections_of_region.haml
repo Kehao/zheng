@@ -1,0 +1,26 @@
+.dropdown
+  = t("status.region") + ": "
+  = link_to "#", class: "dropdown-toggle", id: "drop-region-selections", role: "button", data: {toggle: "dropdown"} do 
+    = selected_region.name + "▼"
+  %ul.dropdown-menu{"aria-labelledby" => "drop-region-selections", "role" => "menu"}
+    %li= link_to "全部", company_clients_path(:q => params_q.merge(:region => nil)) 
+    %li= link_to "未知", company_clients_path(:q => params_q.merge(:region => -1))  
+    %li.divider
+    - current_user.company_clients_regions_in('000000').each do |province|
+      - cities = current_user.company_clients_regions_in(province.code)
+      - if cities.present?
+        %li.dropdown-submenu
+          = link_to province.name, company_clients_path(:q => params_q.merge(:region => province.code)) 
+          %ul.dropdown-menu
+            - cities.each do |city|
+              - districts = current_user.company_clients_regions_in(city.code)
+              - if districts.present?
+                %li.dropdown-submenu
+                  = link_to city.name, company_clients_path(:q => params_q.merge(:region => city.code)) 
+                  %ul.dropdown-menu
+                    - districts.each do |district|
+                      %li= link_to district.name, company_clients_path(:q => params_q.merge(:region => district.code)) 
+              - else
+                %li= link_to city.name, company_clients_path(:q => params_q.merge(:region => city.code)) 
+      - else
+        %li= link_to province.name, company_clients_path(:q => params_q.merge(:region => province.code))

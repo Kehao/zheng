@@ -1,0 +1,22 @@
+%h3
+  会计信息
+= render "credits/forms/business",  {company: @company} 
+
+%h3
+  财务信息
+- if company.credit.present?
+  - cr = company.credit
+  %table.table.table-bordered
+    %tbody
+      %tr
+        %td.span4 年份 
+        %td.span2 前年
+        %td.span2 去年
+        %td.span2 今年
+      - att_arr = [:gross_profit_0, :ratio_return_0, :ratio_profit_0, :ratio_net_return_0, :ratio_asset_liability_0, :ratio_liquidity_0, :ratio_quick_0, :ratio_ar_0, :ratio_inventory_0, :ratio_assets_0]
+      - att_arr.each do |item|
+        %tr
+          %td= Credit.human_attribute_name(item)
+          %td= cr.send(item)
+          %td= cr.send(item.to_s.chop + "1")
+          %td= cr.send(item.to_s.chop + "2")

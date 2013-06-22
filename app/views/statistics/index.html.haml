@@ -1,0 +1,73 @@
+.row
+  .span8
+    .tab-content{:style=>"display:inline"}
+      = render "statistics/#{params[:scope] || :basic}/#{tab}"
+
+  .span3.tabbable.tabs-right.pull-right
+    %ul.nav.nav-tabs
+      %h4{style: "padding-left: 12px;"} 基本情况分析
+
+      %li{class: "#{tab == 'companies_credit' ? 'active' : ''}"}
+        = link_to "企业信用等级分布",basic_statistics_path(:tab=>"companies_credit")
+      %li{class: "#{tab == 'companies_nature' ? 'active' : ''}"}
+        = link_to "企业性质分布",basic_statistics_path(:tab=>"companies_nature")
+      %li{class: "#{tab == 'companies_industry' ? 'active' : ''}"}
+        = link_to "企业行业分布",basic_statistics_path(:tab=>"companies_industry")
+      %li{class: "#{tab == 'company_clients' ? 'active' : ''}"}
+        = link_to "企业增长概况",basic_statistics_path(:tab=>"company_clients")
+      %li{class: "#{tab == 'companies_regist_capital_by_nature' ? 'active' : ''}"}
+        = link_to "企业资本性质分布",basic_statistics_path(:tab=>"companies_regist_capital_by_nature")
+      %li{class: "#{tab == 'companies_regist_capital_by_industry' ? 'active' : ''}"}
+        = link_to "企业资本行业分布",basic_statistics_path(:tab=>"companies_regist_capital_by_industry")
+      %li{class: "#{tab == 'companies_regist_capital_yearly' ? 'active' : ''}"}
+        = link_to "企业资本趋势",basic_statistics_path(:tab=>"companies_regist_capital_yearly")
+
+      %h4{style: "padding-left: 12px;"} 经营情况分析 
+      %li{class: "#{tab == 'average_companies_worker_number_yearly' ? 'active' : ''}"}
+        = link_to "公司员工数",business_statistics_path(:tab=>"average_companies_worker_number_yearly")
+
+      %li{class: "#{tab == 'income' ? 'active' : ''}"}
+        = link_to "销售收入",business_statistics_path(:tab=>"income")
+      /average_companies_income_by_nature_yearly
+      %li{class: "#{tab == 'assets' ? 'active' : ''}"}
+        = link_to "资产总额",business_statistics_path(:tab=>"assets")
+      %li{class: "#{tab == 'profit' ? 'active' : ''}"}
+        = link_to "利润总额",business_statistics_path(:tab=>"profit")
+      
+      %h4{style: "padding-left: 12px;"} 法院执行信息分析
+      /%li{class: "#{tab == 'report'? 'active' : ''}"}
+      /  = link_to "统计首页",statistics_path
+      %li{class: "#{tab == 'companies_court' ? 'active' : ''}"}
+        = link_to "执行情况统计",global_statistics_path(:tab=>"companies_court")
+      %li{class: "#{tab == 'companies_court_by_reg_date' ? 'active' : ''}"}
+        = link_to "立案时间统计",global_statistics_path(:tab=>"companies_court_by_reg_date")
+      %li{class: "#{tab == 'companies_court_by_area'? 'active' : ''}"}
+        = link_to "区域分布情况统计",global_statistics_path(:tab=>"companies_court_by_area")
+      %li{class: "#{tab == 'companies_court_by_industry'? 'active' : ''}"}
+        = link_to "行业分布情况统计",global_statistics_path(:tab=>"companies_court_by_industry")
+      %li{class: "#{tab == 'companies_court_by_owner'? 'active' : ''}"}
+        = link_to "企业及企业主被执行比例统计",global_statistics_path(:tab=>"companies_court_by_owner")
+      %li{class: "#{tab == 'companies_court_by_execute_count'? 'active' : ''}"}
+        = link_to "单家企业被执行次数统计",global_statistics_path(:tab=>"companies_court_by_execute_count")
+
+      /%li{class: "#{tab == 'companies_court_by_apply_money'? 'active' : ''}"}
+      /  = link_to "案件执行金额统计",global_statistics_path(:tab=>"companies_court_by_apply_money")
+      /%li{class: "#{tab == 'companies_court_by_reg_date'? 'active' : ''}"}
+      /  = link_to "案件执行时间统计",global_statistics_path(:tab=>"companies_court_by_reg_date")
+      /%li
+      /  %h4 具体分析
+      /%li{class: "#{tab == 'detail_s1'? 'active' : ''}"}
+      /  = link_to "各区域被执行企业详细分布",global_statistics_path(:tab=>"detail_s1")
+
+      /%li 
+      /  %h4 导出
+      /%li
+      /  = link_to "导出pdf", "/statistics.pdf"
+      /%li
+      /  = link_to "导出excel", "/statistics.pdf"
+
+
+          
+
+          
+

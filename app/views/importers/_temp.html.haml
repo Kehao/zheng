@@ -1,0 +1,14 @@
+%tr{:class=>"list-#{dom_id(temp)}"}
+  %td
+    = temp.exception_msg
+  %td
+    = temp.status_text
+  %td
+    = link_to '修改', "",:"data-toggle"=>"modal",:"data-target"=>"##{dom_id(temp)}"
+    %br
+    = link_to "导入",main_app.import_temp_path(:temp_id=>temp.id),:remote=>true,:method=>:post
+  - temp.data.each do |col|
+    %td
+      = col
+  %td
+    = render "importers/modal_form",:importer=>importer,:temp=>temp

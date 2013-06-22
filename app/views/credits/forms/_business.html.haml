@@ -1,0 +1,22 @@
+- data_url = update_business_company_path(company)
+- business = company.business || company.build_business
+%table.table.table-striped.table-bordered.table-condensed
+  %tr
+    %th.span2 年份
+    %td.span2 今年(截止至上个月)
+    %td.span2 去年
+    %td.span2 前年
+ 
+  - ["worker_number","income","assets","debt","profit","order_amount","vat","income_tax","elec_charges_monthly",
+      "water_charges_monthly","major_income"].each do |item|
+    %tr.scope_editable
+      %th= Business.human_attribute_name(item)
+      %td= text_editable_link(business,"#{item}_of_this_year",data_url)
+      %td= text_editable_link(business,"#{item}_of_last_year",data_url)
+      %td= text_editable_link(business,"#{item}_of_the_year_before_last",data_url)
+
+:javascript
+  $(function(){
+    $('.company_industry_id').editable({mode:"inline",source: #{JSON(industry_select_options)}});
+    $('.scope_editable .business_editable').editable();
+  });

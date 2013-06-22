@@ -1,0 +1,56 @@
+- target_type = relationship.is_a?(ClientCompanyRelationship) ? "company" : "person"
+- data_type   = company_client_client_relationship_path(client,relationship, :target_type=>target_type)
+
+%tr
+  /%td= client.name
+  - if relationship.is_a?(ClientCompanyRelationship)
+    %td
+      = link_to relationship.company.name, relationship.company
+      = crimes_count_tip(relationship.company.crimes).html_safe
+  - else
+    %td
+      = relationship.person_name
+      - if relationship.person  
+        = crimes_count_tip(relationship.person.crimes).html_safe
+        
+  %td
+    = link_to relationship.relate_type.text,"#",
+      :class=>"relationship_relate_type editable editable-click editable-open",
+      :'data-type'=>"select",
+      :'data-url'=> data_type,
+      :'data-original-title'=>"修改关系",
+      :'data-resource'=> "relationship",
+      :'data-name'=> "relate_type",
+      :'data-value'=> relationship.relate_type
+
+  %td
+    - if  relationship.relate_type.shareholder? 
+      = link_to relationship.hold_percent||"","#",
+      :class=>"relationship_hold_percent editable editable-click editable-empty",
+      :'data-type'=>"text",
+      :'data-url'=> data_type,
+      :'data-original-title'=>"修改占股比例",
+      :'data-resource'=> "relationship",
+      :'data-name'=> "hold_percent"
+
+  %td
+    - if ["guarantee", "guarantor", "debtor", "creditor"].include?(relationship.relate_type)
+      = link_to relationship.start_date||"","#", 
+      :class => "relationship_start_date editable editable-click editable-empty",
+      :'data-type'=>"date",
+      :'data-url'=> data_type,
+      :'data-original-title'=>"修改关系起始日期",
+      :'data-resource'=> "relationship",
+      :'data-name'=> "start_date"
+      %span -
+      = link_to relationship.expiration_date||"","#", 
+      :class=>"relationship_expiration_date editable editable-click editable-empty",
+      :'data-type'=>"date",
+      :'data-url'=> data_type,
+      :'data-original-title'=>"修改关系结束日期",
+      :'data-resource'=> "relationship",
+      :'data-name'=> "expiration_date"      
+
+  %td.operate
+    = link_to "删除", "#", data: {rel: company_client_client_relationship_path(client, relationship, target_type: relationship_target_type(relationship))}
+

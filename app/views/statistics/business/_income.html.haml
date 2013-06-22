@@ -1,0 +1,22 @@
+%ul.nav.nav-pills
+  %li{class: "#{params[:subtab].eql?("income_by_nature") ? 'active' : ''}"}
+    = link_to "平均销售收入(按公司性质分)",business_statistics_path(:tab=>"income",:subtab=>"income_by_nature") 
+  %li{class: "#{params[:subtab].eql?("income_by_industry") ? 'active' : ''}"}
+    = link_to "平均销售收入(按公司行业分)",business_statistics_path(:tab=>"income",:subtab=>"income_by_industry") 
+
+  %li{class: "#{params[:subtab].blank?  ? 'active' : ''}"}
+    = link_to "销售收入合计",business_statistics_path(:tab=>"income") 
+
+- if tab.eql?("income") && params[:subtab].eql?("income_by_industry")  
+  #income_by_industry
+    = render "statistics/business/average_companies_income_by_industry_yearly"
+
+- elsif tab.eql?("income") && params[:subtab].eql?("income_by_nature")
+  #income_by_nature
+    = render "statistics/business/average_companies_income_by_nature_yearly"
+
+- else
+  #income_total
+    = render "statistics/business/companies_income_total_yearly"
+  
+

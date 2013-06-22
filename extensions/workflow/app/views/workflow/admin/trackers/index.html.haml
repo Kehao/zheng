@@ -1,0 +1,31 @@
+.row
+  .span3
+    =render "admin/shared/sidebar"
+  .span9
+    .page-header
+      %h2 
+        %small
+          \- 现在系统中, 一共有
+        = trackers.size 
+        %small
+          个跟踪标签;
+    - unless trackers.blank?
+      %table.table.table-striped.table-bordered.table-condensed
+        %tr
+          %th 标签名
+          %th 描述
+          %th 操作
+        - trackers.each do |tracker|
+          %tr
+            %td= tracker.name
+            %td= tracker.description
+            %td
+              = link_to '修改','',:class=>"btn",:"data-toggle"=>"modal",:"data-target"=>"#modal-edit-#{dom_id(tracker)}"
+              = link_to '删除', [:admin,tracker],:class=>"btn", :data => { :confirm => '确定要删除么?' }, :method => :delete
+  
+              = render "modal_edit",:tracker=>tracker
+    .page-header
+      %h2 
+        新建[跟踪标签]
+    .well
+      = render 'form',:tracker => @tracker || Workflow::Tracker.new

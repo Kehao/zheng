@@ -1,0 +1,61 @@
+.row
+  .span12
+    .page-header.page-header-qqw
+      .search-form.pull-right
+        = form_for (:q), :url => crimes_index_path, :html => {:class => "navbar-search form-search"}, :method => :get do |f|
+          \|
+          = f.check_box :closed
+          = f.label :closed, "已结案"
+          = f.check_box :other
+          = f.label :other, "其他"
+          = f.check_box :processing
+          = f.label :processing, "执行中"
+          \|
+          = f.label :start_from, "立案时间: "
+          = f.date_select :start_from, {:order => [:year, :month, :day], :default => 1.years.ago}, {class: "span1"}
+          \|
+          = f.label :amount, "金额(万元):"
+          = f.text_field :floor, :placeholder => "下限", style: "width: 50px;"
+          \-
+          = f.text_field :upper, :placeholder => "上限", style: "width: 50px;"
+          = f.submit "go", class: "btn btn-info"
+
+      %h3 
+        案件列表
+        %span.label.label-info
+          = "#{@crimes.except(:offset, :limit).count} 个"
+        %small.crime-toggle
+          = link_to "企业案件", crimes_index_path(target: "Company")
+          \|
+          = link_to "法人案件", crimes_index_path(target: "Person")
+          \|
+          = link_to "返回企业列表", main_app.company_clients_path
+
+    .court-info-list
+      .court-info-table
+        %table.table.table-hover
+          %thead
+            %tr
+              %th= Crime.human_attribute_name(:updated_at)
+              %th= Company.human_attribute_name(:name)
+              %th= Crime.human_attribute_name(:reg_date)
+              %th= Crime.human_attribute_name(:case_state) 
+              %th= Crime.human_attribute_name(:apply_money)
+              %th= Crime.human_attribute_name(:party_number) 
+              %th= Crime.human_attribute_name(:court_name)
+              %th= Crime.human_attribute_name(:case_id)
+              %th= Crime.human_attribute_name(:apply_money) 
+          %tbody
+            - @crimes.each do |crime|
+              %tr
+                %td=l crime.updated_at, format: :date
+                %td= crime.name
+                %td= crime.reg_date
+                %td= crime.case_state
+                %td= crime.apply_money
+                %td= crime.party_number
+                %td= crime.court_name
+                %td= crime.case_id
+                %td= crime.apply_money
+
+      = paginate @crimes

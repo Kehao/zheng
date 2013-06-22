@@ -1,0 +1,2 @@
+module AlarmConfigsHelper
+end

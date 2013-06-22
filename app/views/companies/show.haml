@@ -1,0 +1,20 @@
+.row
+  .span12
+    %h3.page-header
+      = @company.name
+      %small
+        |
+      %small
+        = @company.owner_name || "法人-未知"
+      %small
+        |
+      %small
+        = @company.code || "组织机构号: 未知"
+
+    .info-list
+      = render "cert",  {company: @company} if can? :read, Cert
+      = render "court", {company: @company} if can? :read, Crime
+      / = render "company_clients/info_of_relationship" if can? :read, ClientCompanyRelationship
+
+  /.span3
+  /  = render "sidebar_of_show"

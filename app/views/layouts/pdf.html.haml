@@ -1,0 +1,9 @@
+!!! 
+%html(lang="zh-CN")
+  %head
+    %meta(charset="utf-8")
+    %title= content_for?(:title) ? yield(:title) : "天眼中心 | 全球网"
+    = wisepdf_stylesheet_tag "application" 
+    = wisepdf_javascript_tag "application" 
+  %body
+    = yield

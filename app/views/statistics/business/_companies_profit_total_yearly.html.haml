@@ -1,0 +1,51 @@
+#business_companies_profit_total_yearly{:style=>"min-width: 600px; height: 600px; margin: 0 auto;margin:4em 0"}
+:javascript
+  dates=#{@companies_profit_total_yearly.keys}
+  values=#{@companies_profit_total_yearly.values}
+  $(function () {
+        $('#business_companies_profit_total_yearly').highcharts({
+            chart: {
+                type: 'spline',
+                marginRight: 130,
+                marginBottom: 40
+            },
+            title: {
+              text: '#{@companies_profit_total_yearly.keys.first}到#{@companies_profit_total_yearly.keys.last}',
+                x: -20 //center
+            },
+            subtitle: {
+                text: '年度公司利润总额合计',
+                x: -20
+            },
+            xAxis: {
+              labels: {rotation: -25,	align: 'right',	style: { font: 'normal 13px Verdana, sans-serif'}},
+              categories: dates 
+            },
+            yAxis: {
+                title: {
+                    text: '利润总额总额(万元)'
+                },
+                plotLines: [{
+                    value: 0,
+                    width: 1,
+                    color: '#808080'
+                }]
+            },
+            tooltip: {
+                valueSuffix: '万元'
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'top',
+                x: -10,
+                y: 100,
+                borderWidth: 0
+            },
+            series: [{
+                name: '利润总额',
+                data: values
+            }]
+        });
+    });
+    

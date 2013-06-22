@@ -1,0 +1,14 @@
+.sidebar
+  .page-header
+    %h3
+      预警消息
+      %small
+        = link_to "通知配置", "#", class: 'gray-link'
+  
+  = warning_msg_sb(@company)
+
+  / .page-header
+  /   %h3
+  /     插件
+  / %ul.nav.nav-pills.nav-stacked
+  /   = render_plugin_cell :company_client, company_client: @company_client

@@ -1,0 +1,7 @@
+= modal_dialog :style=>"display:none",:id=>"modal-edit-#{dom_id(status)}" do
+  = modal_header do
+    %h3
+      修改[工作状态]
+  = modal_body do
+    =render "form",:status => status
+

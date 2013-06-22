@@ -1,0 +1,26 @@
+.dashed-wall.feedbacks.span8
+  - if @seek.new_record?
+    %h3.response-title 您的检索结果将在这里显示
+  
+  - else
+    - if @seek.crawled
+      - if @companies.present?
+        = render "companies_table"
+      - else
+        .response-title= "[#{@seek.content.first[1]}]: 暂无检索结果"
+
+    - else
+      - if @companies.present?
+        = render "companies_table" 
+        %h3.response-title     
+          = image_tag "ajax-loader.gif"
+          继续检索中...
+      - else
+        %h3.response-title     
+          = image_tag "ajax-loader.gif"
+          正在检索中...   
+
+      :javascript
+        this.user_channel = "/user-#{current_user.id}";
+      = javascript_include_tag "#{FAYE_CONFIG['server']}.js"
+      = javascript_include_tag "faye-function"

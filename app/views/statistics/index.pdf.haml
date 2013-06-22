@@ -1,0 +1,11 @@
+.row
+  .span12
+    - if params[:global] 
+      = render "statistics/global/pdf/#{tab}"
+    - elsif params[:detail]
+      = render "statistics/detail/pdf/#{tab}"
+    - else
+      = render "statistics/report"
+
+          
+

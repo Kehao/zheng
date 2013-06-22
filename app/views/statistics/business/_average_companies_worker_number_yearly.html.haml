@@ -1,0 +1,51 @@
+#business_average_companies_worker_number_yearly{:style=>"min-width: 600px; height: 600px; margin: 0 auto;margin:4em 0"}
+:javascript
+  s6_dates=#{@average_companies_worker_number_yearly.keys}
+  s6_values=#{@average_companies_worker_number_yearly.values}
+  $(function () {
+        $('#business_average_companies_worker_number_yearly').highcharts({
+            chart: {
+                type: 'spline',
+                marginRight: 130,
+                marginBottom: 40
+            },
+            title: {
+              text: '#{@average_companies_worker_number_yearly.keys.first}到#{@average_companies_worker_number_yearly.keys.last}',
+                x: -20 //center
+            },
+            subtitle: {
+                text: '年度公司平均员工数',
+                x: -20
+            },
+            xAxis: {
+              labels: {rotation: -25,	align: 'right',	style: { font: 'normal 13px Verdana, sans-serif'}},
+              categories: s6_dates 
+            },
+            yAxis: {
+                title: {
+                    text: '平均员工数(人)'
+                },
+                plotLines: [{
+                    value: 0,
+                    width: 1,
+                    color: '#808080'
+                }]
+            },
+            tooltip: {
+                valueSuffix: '人'
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'top',
+                x: -10,
+                y: 100,
+                borderWidth: 0
+            },
+            series: [{
+                name: '平均员工人数',
+                data: s6_values
+            }]
+        });
+    });
+    

@@ -1,0 +1,6 @@
+= simple_form_for(temp,:url=>main_app.update_importer_temp_path,:wrapper => :bootstrap,:html => { :class => 'form-horizontal' }) do |f|
+  .form-inputs
+    = f.input :exception_msg,as: :text,  input_html: { class: 'special' }
+  .form-actions
+    = f.button :submit#,:"data-dismiss"=>"modal",:"aria-hidden"=>true
+

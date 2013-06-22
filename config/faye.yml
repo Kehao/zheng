@@ -1,0 +1,8 @@
+production:
+  server: http://115.238.73.25:5901/faye
+
+development:
+  server: http://115.238.73.25:5901/faye
+
+test:
+  server: http://115.238.73.25:5901/faye

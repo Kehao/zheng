@@ -1,0 +1,322 @@
+#encoding: utf-8
+zh-CN:
+  activerecord:
+    errors:
+      template:
+        header:
+          one: "有 1 个错误发生导致「%{model}」无法被保存。"
+          other: "有 %{count} 个错误发生导致「%{model}」无法被保存。"
+        body: "如下字段出现错误："
+      messages:
+        record_invalid: "无效记录"
+        inclusion: "不包含于列表中"
+        exclusion: "是保留关键字"
+        invalid: "是无效的"
+        confirmation: "与确认值不匹配！"
+        accepted: "此处必须是可被接受的"
+        empty: "不能留空"
+        blank: "不能为空！"
+        too_long: "字符输入过长（最长为 %{count} 个字符）！"
+        too_short: "过短（最短为 %{count} 个字符）"
+        wrong_length: "超出字符长度限制（必须为 %{count} 个字符）！"
+        taken: "已经存在，请重新选择其他；"
+        not_a_number: "您输入的不是数字！"
+        greater_than: "必须大于 %{count}"
+        greater_than_or_equal_to: "必须大于或等于 %{count}"
+        equal_to: "必须等于 %{count}"
+        less_than: "必须小于 %{count}"
+        less_than_or_equal_to: "必须小于或等于 %{count}"
+        odd: "必须为单数"
+        even: "必须为双数"
+        name_format: "输入内容必须是中文字符、字母、数字、@、下划线(_)或者破折号(-)！"
+        image_format: "上传的图片必须是 JPEG,JPG,GIF 或 PNG 文件.请按照系统提示重新操作！"
+        url_format: "您输入的Web地址有误，请输入正确的web地址，如:http://www.qqw.com"
+        mobile_format: "您输入的手机号码有误，手机号码为11位数字，请正确填写，如： 13800571888"
+        email_format: "您输入的邮箱地址有误，请输入正确的邮箱地址，如: qingtian@qqw.com"
+        wrong_captcha: "校验码输入有误！"
+        display_name_format: "此处输入内容只能是中文字符、字母、数字、.、@、下划线(_)或者破折号(-)，且长度必须为2到50位！"
+        username_format: "此处输入内容只能是中文字符，且长度必须为2到4位！"
+        has_ban_words: "含有一个或多个违禁词！"
+    models:
+      client_company_relationship: "客户关联方企业"
+      client_person_relationship: "客户关联方个人"
+      relationship: "关联方" 
+      seek: "检索"
+      user_seek: "用户检索记录"
+      user_client: "用户客户"
+      user: "用户"
+      crime: "法院信息"
+      cert: "工商信息"
+      business: "经营信息"
+      company: "公司"
+      person: "法人"
+      role: "角色"
+      institution: "机构"
+      company_client: "企业客户"
+      person_client: "法人客户"
+      alarm_config: "告警配置"
+      export: "导出"
+    attributes:
+      institution:
+        name: "全名"
+        short_name: "简称"
+      bill:
+        category: "类型" 
+        number: "水电号"
+        cost: "金额"
+        amount: "用量"
+        paid: "是否缴费"
+        record_time: "记录日期"
+        last_number: "上次抄见数"
+        this_number: "本次抄见数"
+      seek:
+        company_name: "公司名称"
+        company_number: "工商注册号"
+        person_name: "法人姓名"
+        person_number: "身份证号"
+        crawled: "抓取状态"
+        created_at: "首次检索时间"
+      user_seek:
+        created_at: "添加时间"
+      company:
+        name: "公司名称"
+        owner_name: "法人姓名"
+        number: "工商注册号"
+        code: "组织机构代码"
+        idinfo_status: "工商"
+        court_status: "法务"
+        water_status: "水费"
+        power_status: "电费"
+        sentiment_status: "舆情"
+      person:
+        name: "法人姓名"
+        number: "身份证号"
+      user_client:
+        create_at: "客户添加时间"
+      user:
+        name: "用户名"
+        email: "电子邮箱"
+        password: "密码"
+        password_confirmation: "确认密码"
+        current_password: "当前密码"
+        role_id: "角色"
+      role:
+        name: "角色名"
+        title: "名称"
+        description: "描述"
+      crime:
+        party_name: '被执行人姓名/名称'
+        party_number: '身份证/组织机构号'
+        case_id: '案号'
+        reg_date: '立案时间'
+        case_state: '案件状态'
+        apply_money: '执行标的'
+        court_name: '执行法院'
+        updated_at: '获取时间'
+      business:
+        id: 序号
+        income: 销售收入
+        assets: 资产总额
+        debt: 负债总额
+        profit: 利润总额
+        order_amount: 订单总额
+        vat: vat总额
+        income_tax: 所得税
+        elec_charges_monthly: 月均电费
+        water_charges_monthly: 月均水费
+        major_income: 主营收入
+        sales_area: 销售所在地
+        worker_number: 公司员工数
+
+        worker_number_of_this_year: 今年员工数
+        worker_number_of_last_year: 去年员工数
+        worker_number_of_the_year_before_last: 前年员工数
+
+        income_of_this_year: 今年销售收入
+        income_of_last_year: 去年销售收入
+        income_of_the_year_before_last: 前年销售收入
+
+        assets_of_this_year: 今年资产总额
+        assets_of_last_year: 去年资产总额
+        assets_of_the_year_before_last: 前年资产总额
+
+        debt_of_this_year: 今年负债总额
+        debt_of_last_year: 去年负债总额
+        debt_of_the_year_before_last: 前年负债总额
+
+        profit_of_this_year: 今年利润总额
+        profit_of_last_year: 去年利润总额
+        profit_of_the_year_before_last: 前年利润总额
+
+        order_amount_of_this_year: 当年订单总额
+        order_amount_of_last_year: 去年订单总额
+        order_amount_of_the_year_before_last: 前年订单总额
+
+        vat_of_this_year: 今年vat总额
+        vat_of_last_year: 去年vat总额
+        vat_of_the_year_before_last: 前年vat总额
+
+        income_tax_of_this_year: 今年所得税
+        income_tax_of_last_year: 去年所得税
+        income_tax_of_the_year_before_last: 前年所得税
+
+        elec_charges_monthly_of_this_year: 今年月均电费
+        elec_charges_monthly_of_last_year: 去年月均电费
+        elec_charges_monthly_of_the_year_before_last: 前年月均电费
+
+        water_charges_monthly_of_this_year: 今年月均水费
+        water_charges_monthly_of_last_year: 去年月均水费
+        water_charges_monthly_of_the_year_before_last: 前年月均水费
+
+        major_income_of_this_year: 今年主营收入
+        major_income_of_last_year: 去年主营收入
+        major_income_of_the_year_before_last: 前年主营收入
+      cert:
+        address: '经营场所'
+        approved_date: '核准日期'
+        business_end_date: '经营起始日期'
+        business_start_date: '经营截止日期'
+        business_period: '有效时间'
+        business_scope: '经营范围'
+        company_type: '公司类型'
+        found_date: '成立日期'
+        name: '公司名称'
+        owner_name: '法人'
+        paid_in_capital: '实收资本'
+        regist_capital: '注册资本'
+        regist_id: '注册号'
+        regist_org: '登记机关'
+        check_years: '年检年份'
+      export:
+        category: '导出信息内容'
+      client_company_relationship:
+        relate_type: "关联关系"
+        hold_percent: 占股比例(0~1.0)
+        company: 关联公司
+        company_id: 关联公司
+      client_person_relationship:
+        hold_percent: 占股比例(0~1.0)
+        relate_type: "关联关系"
+        person_name: 姓名
+        person_number: 身份证
+      credit: 
+        reg_address: 注册地址
+        reg_zip:     注册地址邮编
+        opt_address: 经营地址
+        opt_zip:     经营地址邮编
+        zone:        所在园区
+        industry:    所属行业
+        tel:         联系电话
+        fax:         联系传真
+        email:       电子邮箱
+        website:     网址
+
+        main_product:  主要产品或服务
+        sales_region:  销售区域
+        clients_type:  客户类型
+        upstream:      列举主要上游供应商、合作方及付款方式
+        downstream:    列举主要下游客户及收款方式
+        opt_stage:     运营阶段
+
+        epl_count:    员工总数
+        master:       硕士以上人数
+        bachelor:     大学本科人数
+        junior:       大专人数
+        other:        其他学历人数
+
+        self_area:   自有房产总面积
+        self_head:   自有总部面积
+        self_branch: 自有分部面积
+        self_value:  自有房产原值或年租金
+        rent_area:   租赁房产总面积
+        rent_head:   租赁总部面积
+        rent_branch: 租赁分部面积
+        rent_value:  租赁房产原值或年租金  
+        mort_area:   按揭房产总面积
+        mort_head:   按揭总部面积
+        mort_branch: 按揭分部面积
+        mort_value:  按揭房产原值或年租金
+
+        bank_name:    开户银行
+        bank_account: 账号
+        bank_address: 开户行地址
+        bank_tel:     开户电话
+        avg_digits:   月均存款位数
+        bank_level:   信用等级
+
+        bad_cert:   不良工商记录
+        bad_tax:    不良税务记录
+        bad_social: 不良社保记录
+        bad_trade:  不良交易记录
+        involved_before: 是否参与申请征信或评级
+        bad_manage: 行业管理的不良记录
+        bad_court:  不良司法记录
+
+        industry_review: 行业评价
+
+        gross_profit_0:  毛利率
+        ratio_return_0:  总资产报酬率
+        ratio_profit_0:  营业利润率
+        ratio_net_return_0: 净资产收益率
+        ratio_asset_liability_0: 资产负债率
+        ratio_liquidity_0: 流动比率
+        ratio_quick_0:     速动比率
+        ratio_ar_0:        应收账款周转速度
+        ratio_inventory_0: 存贷周转速度
+        ratio_assets_0:    总资产周转速度
+
+        credit_lvl: 信用等级
+
+      operator:
+        category: 负责人职位
+        name:     名称
+        sex:      性别
+        birthday: 出生日期
+        number:   身份证号码
+        education: 最高学历
+        position:  现任职务
+        address:   目前住址
+        zip:       邮政编码
+        cv:        工作经历
+        negative:  负面信息
+
+      equip:
+        name:    设备名称
+        count:   数量
+        tech:    技术水平
+        memo:    备注
+
+      loan:
+        name:       贷款行名称
+        category:   贷款种类
+        amount:     贷款额度
+        due_time:   贷款期限
+        deadline:   到期日
+        balance:    目前余额
+
+      mort:
+        name:       被担保对象名称
+        category:   担保种类
+        amount:     担保额度
+        due_time:   担保期限
+        deadline:   到期日
+        balance:    目前余额
+
+      holder_change:
+        change_at:      变更日期
+        name:           股东名称
+        before_amount:  变更前出资额
+        before_percent: 变更前比例
+        after_amount:   变更后出资额
+        after_percent:  变更后比例 
+
+      mass_change:
+        change_at:  变更日期
+        event:      变更事项
+        before:     变更前
+        after:      变更后
+
+
+
+
+

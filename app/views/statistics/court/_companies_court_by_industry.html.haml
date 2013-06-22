@@ -1,0 +1,74 @@
+#global_companies_court_by_industry{:style=>"height: 600px; width: 600px; margin: 5em auto"}
+%table.table.table-striped.table-bordered.table-condensed
+  %thead
+    %th 行业类型
+    %th 筛查总数（家）
+    %th 法院执行数（家）
+    %th 法院执行比率
+  %tbody
+    - @companies_court_by_industry.each do |industry_name, stats|
+      %tr
+        %td= industry_name
+        %td= stats[:total_count]
+        %td= stats[:court_count]
+        %td= percentage_desc(stats[:court_percent])
+
+
+:javascript
+  js_companies_court_by_industry_categories = #{@js_companies_court_by_industry_categories}
+  js_companies_court_by_industry_data = #{@js_companies_court_by_industry_data}
+  $(function () {
+        $('#global_companies_court_by_industry').highcharts({
+            chart: {
+                type: 'column',
+                margin: [ 50, 50, 100, 80]
+            },
+            title: {
+                text: '法院被执行企业行业分布'
+            },
+            xAxis: {
+                categories: js_companies_court_by_industry_categories,
+                labels: {
+                    rotation: -45,
+                    align: 'right',
+                    style: {
+                        fontSize: '13px',
+                        fontFamily: 'Verdana, sans-serif'
+                    }
+                }
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: '法院执行比率 (%)'
+                }
+            },
+            legend: {
+                enabled: false
+            },
+            tooltip: {
+                formatter: function() {
+                    return '<b>'+ this.x +'</b><br/>'+
+                        '法院执行比率: '+ Highcharts.numberFormat(this.y, 2) +
+                        '%';
+                }
+            },
+            series: [{
+                name: 'Population',
+                data: js_companies_court_by_industry_data,
+                dataLabels: {
+                        enabled: true,
+                        color: "#2F7ED8",
+                        style: {
+                            fontWeight: 'bold'
+                        },
+                        formatter: function() {
+                            return this.y +'%';
+                        }
+                    }
+            }]
+        });
+    });
+    
+
+

@@ -1,0 +1,214 @@
+.gray-link {
+  color: #999;
+  &:hover {
+    color: #666
+  };
+  &:visited {
+    color: #999;
+  };
+}
+
+// bug fix for white icons background image in active nav bar.
+.icon-white, .nav > .active > a > [class^="icon-"], .nav > .active > a > [class*=" icon-"], .dropdown-menu > li > a:hover > [class^="icon-"], .dropdown-menu > li > a:hover > [class*=" icon-"], .dropdown-menu > .active > a > [class^="icon-"], .dropdown-menu > .active > a > [class*=" icon-"] {
+  background-image: none;
+}
+
+h3.inline{
+  display: inline;
+}
+
+.page-header-qqw {
+  margin: 20px 0 20px;
+  padding-bottom: 0px;
+  h1, h2, h3 {
+    line-height: 28px;
+  }
+}
+
+.page-header-unstyled{
+  border-bottom: none;
+}
+
+.navbar .divider-vertical-qqw {
+  border-left: 1px solid #C3C3C3;
+  border-right: 1px solid #FFFFFF;
+  height: 40px;
+  margin: 0 0px;
+}
+
+/* 
+ * utility classes 
+ */
+.margin-vertical {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.margin-top {
+  margin-top: 20px;
+}
+.margin-bottom {
+  margin-bottom: 20px;
+}
+
+.region-selections {
+  ul {
+    li {
+      text-align: left;
+    }
+  }
+}
+
+.popover.editable-container {
+  z-index: 1090;
+}
+body .span12 .tab-content {
+  overflow: visible;
+}
+
+.form-inputs .required abbr{
+  color: red;
+  border-bottom: none;
+}
+
+/* in navbar */
+.messages-nav-link {
+  position: relative;
+}
+
+.floating-red-point { 
+  position: absolute; 
+  font-size: 20px; 
+  line-height: 20px; 
+  top: 2px; 
+  right: 11px;
+} 
+.company-detail-tab {
+  margin-top: 1em
+}
+.company-detail-tab li a{
+  text-align:center;
+  background-color:#DDDDDD
+}
+
+.company-detail-tab h4{
+  text-align:center
+}
+.company-detail-tab ul.nav li{
+  width:16em;
+  margin-right: 4px;
+  float: left;
+}
+span.red{
+  color:red;
+}
+.company-detail-tab .alert{
+ padding:8px;
+}
+#court_reg_date select{
+  border:1px solid #2F7ED8 
+}
+
+.row .span12 {
+  width: 1170px;
+}
+
+.nav .icon-chevron-right {
+  float: right;
+  margin-top: 4px;
+  margin-right: -6px;
+  opacity: .25;
+}
+
+.nav .active .icon-chevron-right {
+  opacity: 1;
+}
+.badge-link {
+  color: #fff;
+  text-decoration: none;
+  &:hover {
+    color: #fff;
+    text-decoration: none;
+  }
+}
+
+.invisible-co-filter, .invisible-ci-filter {
+  display: none;
+}
+
+.searchable {
+  .highlight {
+    background-color:#FFEC8B; 
+    color:#CC0033;
+  }
+}
+.add-relationship {
+  /* border: dashed 3px #ccc; */
+  border: solid 5px #bbb;
+  background: #eee;
+  border-radius: 6px 6px 6px 6px;
+  z-index: 1000;
+  position: absolute;
+  padding: 10px 20px;
+  width: 300px;
+  margin-top: 10px;
+}
+
+.add-form {
+  border-width: 2px;
+  border-style: dotted;
+  border-radius: 10px;
+  border-color: #e09070;
+
+  margin-bottom: 12px;
+  padding: 12px 18px;
+  padding-bottom: 10px;
+}
+
+.one-client {
+  border-bottom: solid 1px #ccc;
+  margin-bottom: 22px;
+}
+#footer {
+  margin-top: 10px;
+  padding: 15px 0;
+  padding-left: 340px;
+  border-top: 4px solid #336699;
+  // text-align: center;
+  color: #5E5E5E;
+  line-height: 20px;
+}
+.home-box {
+  border: 1px solid #ccc;
+  .title {
+    padding: 6px 12px;  
+    background-color: #eee;
+    border-bottom: 1px solid #ccc;
+  }
+  li { padding-top: 6px;}
+}
+
+.side-box {
+  color: #222;
+  p { padding-top: 6px; }
+}
+li.message {
+  margin-bottom: 10px;
+}
+.cp-postion {
+  position: relative;
+  hr {
+    margin: 0px 22px;
+    border-top: 22px solid #d9edf7;
+  }
+  .cp-dot {
+    position: absolute;
+    top: 4px;
+    width: 18px;
+    line-height: 18px;
+    text-align: center;
+    background-color: white;
+    border: solid 4px #0088cc;
+    padding: 3px;
+    border-radius: 1000px;
+  }
+}

@@ -1,0 +1,5 @@
+- if @company.present?
+  - after_add_html = link_to '已加为客户', '#', class: 'btn btn-mini', disabled: true
+  $("#feedback-company-#{@company.id}").find('.company-operate').html("#{escape_javascript after_add_html}");
+  - after_add_link = link_to @company.name, @company
+  $("#feedback-company-#{@company.id}").find('.company-name').html("#{escape_javascript after_add_link}");

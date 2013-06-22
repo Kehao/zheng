@@ -1,0 +1,65 @@
+.row
+  .span9
+    .margin-top
+      .btn-group.pull-right 
+        %button.reading-all.btn.btn-info
+          本页知道了
+        %button.read-all.btn.btn-info
+          全部知道了
+      %ul.nav.nav-tabs
+        %li
+          = link_to "已读消息", read_messages_path
+        %li.active
+          = link_to unread_messages_path do
+            - if @current_unread_msg_count == 0
+              未读消息
+            - else
+              未读消息 -
+              %span#current_unread_msg_count
+                = @current_unread_msg_count
+
+    %ul.messages.all-msgs.unstyled
+      - @messages.each do |msg|
+        %li.message.court_alarm
+          %span.msg-operate.pull-right.btn.btn-mini
+            = link_to "知道了", "javascript:;", :data => {:rel => reading_message_path(msg)}
+          = render_message(msg)
+    
+    = paginate(@messages)
+
+:javascript
+  function decrement_unread_count(num) {
+    $unread_count = $("#current_unread_msg_count");
+    var count = parseInt($unread_count.text());
+    var count_text = (count - num == 0) ? '无' : (count - num);
+    $unread_count.text(count_text);
+  }
+  // initialize a message readable
+  $('li.message').deletable({
+    method:  'post', 
+    confirm: false, 
+    toggle:  '.msg-operate a',
+    afterDelete: function(){ decrement_unread_count(1); }
+  });
+
+  // initialize all messages readable
+  $('ul.messages').deletable({ 
+    method:  'post', 
+    confirm: false,
+    toggle:  'button.reading-all', 
+    url:     '/messages/reading_some', 
+    data:    {ids: #{@messages.map(&:id)}},
+    afterDelete: function(){
+      next_page_url = $pagination = $(".pagination li.next a").eq(0).attr("href");
+      if(next_page_url){
+        window.location.reload(true);
+      }
+      else{
+        decrement_unread_count(this.find("li.message").length);
+      }
+    }
+  });
+
+  $('button.read-all').on('click', function(){
+    $.ajax({type: "post", url: "/messages/reading_all", data: {}, success: function(){window.location.reload(true);}})
+  });

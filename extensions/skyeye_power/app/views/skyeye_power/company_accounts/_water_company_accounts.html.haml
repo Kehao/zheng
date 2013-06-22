@@ -1,0 +1,29 @@
+.tab-pane.active
+  %table.table.table-striped.table-bordered.table-condensed
+    %tr
+      %th 水号  
+      %th 描述
+      %th 操作
+    - @accounts.each do |account|
+      %tr
+        %td= account.view_number
+        %td= account.description
+        %td
+          = link_to '修改', [:edit,company,account],:class=>"btn",:"data-toggle"=>"modal",:"data-target"=>"#edit-account-#{account.id}"
+
+          = link_to '删除', [company,account],:class=>"btn", :confirm => 'Are you sure?', :method => :delete
+
+          /= modal_toggle :dialog => [account,:bills],:"data-target"=>"##{dom_id(account)}" do
+          = modal_toggle :dialog => water_company_account_bills_path(account),:"data-target"=>"##{dom_id(account)}" do
+            显示账单
+          - unless account.bills.blank?
+            = link_to_function "趋势","$('#container-#{account.id}').toggle()"
+          - else
+            暂无账单
+          = render "ajax_bills",:account=>account
+          /修改账号操作  
+          = render "modal_form",:account=>account
+
+  - @accounts.each do |account|
+    - unless account.bills.blank?
+      = render "info_of_water",:account=>account

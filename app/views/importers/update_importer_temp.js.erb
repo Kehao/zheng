@@ -1,0 +1,2 @@
+$('#<%=dom_id(@temp)%>').modal('hide')
+$(".list-<%=dom_id(@temp)%>").replaceWith('<%=escape_javascript(render "importers/temp",:temp=>@temp,:importer =>@temp.importer)%>')

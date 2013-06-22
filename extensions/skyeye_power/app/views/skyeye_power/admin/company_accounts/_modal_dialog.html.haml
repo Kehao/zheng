@@ -1,0 +1,31 @@
+= modal_dialog :style=>"display:none",:id=>"account-#{account.id}" do
+  = modal_header do
+    %h3
+      - if resources == :water_company_accounts
+        ="水号为:#{account.water_number}"
+      - else
+        ="电号为:#{account.elec_number}"
+  = modal_body do
+    %table.table.table-striped.table-bordered.table-condensed
+      %tr
+        %th 金额(元)
+        %th 用量 
+        %th 是否已缴费
+        %th 记录时间
+        %th 上次抄表见数
+        %th 本次抄表见数
+        %th 操作
+      - account.bills.each do |bill|
+        %tr
+          %td= bill.cost  
+          %td= bill.amount  
+          %td= bill.paid  
+          %td{:width=>100}= bill.record_time.strftime("%Y-%m-%d") if  bill.record_time 
+          %td= bill.last_number  
+          %td= bill.this_number  
+          %td
+            = link_to '修改', edit_admin_company_bill_path(company, bill) 
+            = link_to '删除', admin_company_bill_path(company,bill),:method=>:delete,:data => { :confirm => '确定要删除么?' } 
+
+  = modal_footer do 
+    = modal_cancel_button("关闭",:"data-dismiss"=>"modal",:"aria-hidden"=>true)

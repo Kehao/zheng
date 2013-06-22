@@ -1,0 +1,37 @@
+.navbar.navbar-inverse
+  .navbar-inner
+    .container
+      %ul.nav
+        - if current_user.present?
+          %li{class: "#{controller_name == 'home' ? 'active' : ''}"}
+            = link_to "征信中心", main_app.root_path
+          %li{class: "#{controller_name == 'company_clients' ? 'active' : ''}"}
+            = link_to company_clients_path do
+              %i{:class=>"fui-checkmark-16"}
+              征 信
+
+        - if current_user.role.name != "member"
+          %li{class: "#{controller_name == 'statistics' ? 'active' : ''}"}
+            = link_to  main_app.statistics_path do
+              %i{:class=>"fui-eye-16"}
+              监 测
+      
+      - if current_user.present?
+        %ul.nav.pull-right
+          %li
+            = link_to main_app.unread_messages_path do
+              %span.fui-mail-24{:style=>"margin-top:2px"}
+              - if current_user.unread_messages_count > 0
+                %span.navbar-unread
+                  current_user.unread_messages_count
+
+          %li
+            %a
+              = current_user.institution.try(:name)
+              |
+              = current_user.name
+            %ul
+              %li= link_to "管理平台", main_app.admin_users_path if current_user.admin?
+              %li= link_to "个人设置", main_app.edit_user_registration_path
+              %li= link_to "注 销", main_app.destroy_user_session_path, method: :delete
+

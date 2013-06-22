@@ -1,0 +1,90 @@
+- if account.is_a? SkyeyePower::WaterCompanyAccount
+  - text= "#{account.company.name}-水号:#{account.view_number}"
+  - name = "水量"
+  - xtitle = "用水量(吨)"
+- else
+  - text= "#{account.company.name}-电号:#{account.view_number}"
+  - name = "电量"
+  - xtitle = "用电量(度)"
+:plain
+  <script>
+  $(function () {
+    var chart;
+    $(document).ready(function() {
+      chart = new Highcharts.Chart({
+        chart: {
+          renderTo: 'container-#{account.id}',
+            type: 'line',
+              marginRight: 130,
+                marginBottom: 25
+            },
+            title: {
+              text: '#{text}',
+                x: -20 //center
+            },
+            subtitle: {
+              text: '最近12个月',
+                x: -20
+            },
+            xAxis: {
+              categories: #{account.bills.map{|b|b.record_time.strftime("%m月")}.to_json}
+              },
+            //xAxis: {
+            //  categories: [] 
+            //  },
+            yAxis: {
+              title: {
+                text: '#{xtitle}'
+                },
+                plotLines: [{
+                  value: 0,
+                    width: 1,
+                    color: '#808080'
+                }]
+            },
+            tooltip: {
+              formatter: function() {
+                return '<b>'+ this.series.name +'</b><br/>'+
+                  this.x +': '+ this.y ;
+                }
+            },
+            legend: {
+              layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'top',
+                x: -10,
+                y: 100,
+                borderWidth: 0
+            },
+            series: [{
+              name: '#{name}',
+                data: #{account.bills.map{|r|r.amount}.to_s}
+            }]
+        });
+    });
+    });   
+    </script>
+%div{:class=>"well",:style=>"min-width: 800px; height: 400px; margin: 10;display:none",:id => "container-#{account.id}"}
+/    %table.table.table-striped.table-bordered.table-condensed
+/      %thead
+/        %tr
+/          %th 账单类型
+/          %th 水电号
+/          %th 金额(元)
+/          %th 用量 
+/          %th 是否已缴费
+/          %th 记录时间
+/          %th 上次抄表见数
+/          %th 本次抄表见数
+/      %tbody
+/        - account.bills.each do |bill| 
+/          %tr
+/            /%td= t(SkyeyePower::Bill::Category.key(bill.category),:scope=>:common)  
+/            /%td= bill.number  
+/            %td= bill.cost  
+/            %td= bill.amount  
+/            %td= t(bill.paid.to_s,:scope=>:common)  
+/            %td{:width=>100}= bill.record_time.strftime("%Y-%m-%d")  
+/            %td= bill.last_number  
+/            %td= bill.this_number  
+/

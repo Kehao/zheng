@@ -1,0 +1,70 @@
+%h3 信用评价
+.row
+  .span9
+    %table.table.table-striped.table-bordered
+      %tr.info
+        %td.span1 主要指标
+        %td.span1 评分
+        %td.span1 评价
+        %td.span4 目标位置
+      %tr
+        %td
+          企业规模
+        %td
+
+          = company.business.scale_score.to_i != 50 ? company.business.scale_score : "未知"
+        %td
+          = company.business.scale_score.to_i != 50 ? company.business.txt_of(:scale_score) : "n/a"
+        %td.cp-postion
+          %hr
+          - s = company.business.scale_score
+          .cp-dot{style: "left: #{9*(s-49)}px;"}
+            = s
+      %tr
+        %td
+          财务状况
+        %td
+          = company.business.sales_score.to_i != 50 ? company.business.sales_score : "未知"
+        %td
+          = company.business.sales_score.to_i != 50 ? company.business.txt_of(:sales_score) : "n/a"
+        %td.cp-postion
+          %hr
+          - s = company.business.sales_score
+          .cp-dot{style: "left: #{9*(s-49)}px;"}
+            = s
+      %tr
+        %td
+          发展空间
+        %td
+          = company.business.profit_score.to_i != 50 ? company.business.profit_score : "未知"
+        %td
+          = company.business.profit_score.to_i != 50 ? company.business.txt_of(:profit_score) : "n/a"
+        %td.cp-postion
+          %hr
+          - s = company.business.profit_score
+          .cp-dot{style: "left: #{9*(s-49)}px;"}
+            = s
+      %tr
+        %td
+          公信力数据
+        %td
+          = company.business.credit_score.to_i != 50 ? company.business.credit_score : "未知"
+        %td
+          = company.business.credit_score.to_i != 50 ? company.business.txt_of(:credit_score) : "n/a"
+        %td.cp-postion
+          %hr
+          - s = company.business.credit_score
+          .cp-dot{style: "left: #{9*(s-49)}px;"}
+            = s
+      %tr
+        %th
+          信用等级
+        %th
+          = company.business.credit_avg.to_i != 50 ? company.business.credit_avg : "未知"
+        %th
+          = company.business.credit_avg.to_i != 50 ? company.business.credit_avg_txt : "n/a"
+        %td.cp-postion
+          %hr
+          - s = company.business.credit_avg
+          .cp-dot{style: "left: #{9*(s-49)}px;"}
+            = company.business.credit_avg_txt

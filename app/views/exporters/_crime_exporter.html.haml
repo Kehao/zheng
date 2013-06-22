@@ -1,0 +1,44 @@
+.span4.new-exports
+  .add-form 
+    = simple_form_for @new_exporter do |f|
+      %legend 导出法务信息
+
+      = f.fields_for :options do |opts|
+        %p
+          = opts.label :exporter_options_closed, :class => "checkbox inline" do
+            = opts.check_box :closed, :value => @new_exporter.options[:closed]
+            已结案
+          = opts.label :exporter_options_other, :class => "checkbox inline" do
+            = opts.check_box :other, :value => @new_exporter.options[:other]
+            其他
+          = opts.label :exporter_options_processing, :class => "checkbox inline" do
+            = opts.check_box :processing, :value => @new_exporter.options[:processing], :checked => true
+            执行中
+
+        = opts.input :region_name, :wrapper => :append, :label => "所属地区", required: false do
+          = opts.input_field :region_name, class: "span2", value: "全部"
+          .btn-group.crime_region_name
+            = render("region_select")
+                                                          
+        = opts.hidden_field :region_code, value: "000000"
+                                                          
+        = opts.input :regist_date_after, as: :date, input_html: {class: "span1"}, label: "从哪天之后", required: false, default: Date.today.years_ago(1) 
+
+      = f.submit "导出全部", class: "btn btn-info export_btn", data: {"loading-text" => "请求导出……"}
+      - f.submit "导出更新", class: "btn btn-info export_btn", data: {"loading-text" => "请求导出……"}, disabled: true
+
+.span5.exporters
+  - if @exporters.any?
+    %ol
+      - @exporters.each do |e|
+        %li
+          - if e.status == 'success'
+            = link_to e.file_name, e
+          - elsif e.status == 'failed'
+            %span
+              = e.file_name
+              导出不成功
+          = link_to "#", :class => "btn-close", :data => {:rel => exporter_path(e)} do
+            %i.icon-remove{style: "color: #BBC; text-decoration: none;"}
+  - else
+    系统中没有导出记录。

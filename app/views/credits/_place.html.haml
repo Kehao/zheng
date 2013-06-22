@@ -1,0 +1,35 @@
+%h3
+  经营场所
+- if company.credit.present?
+  - cr = company.credit
+  %table.table.table-bordered
+    %tbody
+      %tr
+        %td.span4 房产性质 
+        %td.span2 自有
+        %td.span2 租赁
+        %td.span2 按揭
+      %tr
+        %td 房产总面积(平方米)
+        %td= cr.self_area
+        %td= cr.rent_area
+        %td= cr.mort_area
+      %tr
+        %td 其中：总部面积
+        %td= cr.self_head
+        %td= cr.rent_head
+        %td= cr.mort_head
+      %tr
+        %td 其中：分部面积
+        %td= cr.self_branch
+        %td= cr.rent_branch
+        %td= cr.mort_branch
+      %tr
+        %td 房产原值或年租金(万元)
+        %td= cr.self_value
+        %td= cr.rent_value
+        %td= cr.mort_value
+
+- else
+  该公司的公司信息尚未检索成功
+  %span.badge ?

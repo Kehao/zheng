@@ -1,0 +1,27 @@
+%button.btn.dropdown-toggle#drop-region-selections{role: "button", data: {toggle: "dropdown"}}
+  = "选择"
+  %span.caret
+%ul.dropdown-menu#dropdown-of-region-selections{"aria-labelledby" => "drop-region-selections", "role" => "menu"}
+  %li= link_to "全部", "javascript:;", data: {code: "000000", name: "全部"}
+  %li= link_to "未知", "javascript:;", data: {code: "-1", name: "未知"}
+  %li.divider
+  - current_user.company_clients_regions_in('000000').each do |province|
+    - cities = current_user.company_clients_regions_in(province.code)
+    - if cities.present?
+      %li.dropdown-submenu
+        = link_to province.name, "javascript:;", data: {code: province.code, name: province.name}
+        %ul.dropdown-menu
+          - cities.each do |city|
+            - districts = current_user.company_clients_regions_in(city.code)
+            - if districts.present?
+              %li.dropdown-submenu
+                = link_to city.name, "javascript:;", data: {code: city.code, name: city.name}
+                %ul.dropdown-menu
+                  - districts.each do |district|
+                    %li= link_to district.name, "javascript:;", data: {code: district.code, name: "#{city.name}-#{district.name}"}
+            - else
+              %li= link_to city.name, "javascript:;",data: {code: city.code, name: city.name} 
+    - else
+      %li= link_to province.name, "javascript:;" 
+
+= javascript_include_tag "export_selections"

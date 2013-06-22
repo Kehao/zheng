@@ -1,0 +1,25 @@
+/ =cert_form.check_box :view,{:checked=>role.capability.can.cert.view},"true","false"
+= simple_form_for [:admin, role], :wrapper => :bootstrap, :html => { :class => 'form-horizontal' } do |f|
+  %fieldset
+    .form-inputs
+      = f.input :title 
+      = f.input :description 
+      = f.simple_fields_for :capability do |ability_form|
+        = ability_form.simple_fields_for :can do |can_form|
+          - role.setable_permissions.each do |permission|
+            / = can_form.input permission.resource, 
+            /                 collection: permission.actions, 
+            /                 as: :check_boxes, 
+            /                 item_wrapper_class: 'inline',
+            /                 label: t(permission.scoped_resource("/"), :scope=>[:activerecord, :models]),
+            /                 required: false
+
+            = can_form.simple_fields_for permission.scoped_resource do |resource_form|
+              = f.label :view, t(permission.scoped_resource("/"), :scope=>[:activerecord, :models])
+              - permission.actions.each do |action|
+                = resource_form.input action, :as => :boolean, :inline_label => t(action,:scope=>[:permission, :actions]), :input_html=>{:checked => role.cando.try(permission.scoped_resource).try(action)}, :label=>false , :item_wrapper_class => 'inline'
+    
+    .form-actions
+      = f.button :submit, :class => 'btn-primary'
+      = submit_tag '重置', :type => :reset, :class => "btn"
+      = link_to "返回", :back, :class => "btn"

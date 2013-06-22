@@ -1,0 +1,100 @@
+:plain
+  <script src="http://code.highcharts.com/highcharts.js"></script>
+  <script src="http://code.highcharts.com/modules/exporting.js"></script>
+
+  <!-- Additional files for the Highslide popup effect -->
+  <script type="text/javascript" src="http://www.highcharts.com/highslide/highslide-full.min.js"></script>
+  <script type="text/javascript" src="http://www.highcharts.com/highslide/highslide.config.js" charset="utf-8"></script>
+  <link rel="stylesheet" type="text/css" href="http://www.highcharts.com/highslide/highslide.css" />
+
+  <script>
+  $(function () {
+    var chart;
+    $(document).ready(function() {
+      chart = new Highcharts.Chart({
+        chart: {
+          renderTo: 'container',
+            type: 'line',
+              marginRight: 130,
+                marginBottom: 25
+            },
+            title: {
+              text: '#{@company.name}-水电账单',
+                x: -20 //center
+            },
+            subtitle: {
+              text: '说明:该公司最近的６个账单',
+                x: -20
+            },
+            //xAxis: {
+            //  categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+            //    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+            //},
+            xAxis: {
+              categories: [] 
+              },
+            yAxis: {
+              title: {
+                text: '花费(元)'
+                },
+                plotLines: [{
+                  value: 0,
+                    width: 1,
+                    color: '#808080'
+                }]
+            },
+            tooltip: {
+              formatter: function() {
+                return '<b>'+ this.series.name +'</b><br/>'+
+                  this.x +': '+ this.y +'°C';
+                }
+            },
+            legend: {
+              layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'top',
+                x: -10,
+                y: 100,
+                borderWidth: 0
+            },
+            series: [{
+              name: '水费',
+                data: #{@water_bills.map{|r|r.cost}.to_s}
+            },{
+              name: '电费',
+                data: #{@electricity_bills.map{|r|r.cost}.to_s}
+            }]
+        });
+    });
+    });   
+    </script>
+.cert-info
+  .page-header
+    %h3 水电信息
+  - if @bills.blank?
+    没有该公司的水电信息
+  - else
+    #container{:style=>"min-width: 400px; height: 400px; margin: 0 auto"}
+    %table.table.table-striped.table-bordered.table-condensed
+      %thead
+        %tr
+          %th 账单类型
+          %th 水电号
+          %th 金额(元)
+          %th 用量 
+          %th 是否已缴费
+          %th 记录时间
+          %th 上次抄表见数
+          %th 本次抄表见数
+      %tbody
+        - @bills.each do |bill| 
+          %tr
+            %td= t(SkyeyePower::Bill::Category.key(bill.category),:scope=>:common)  
+            %td= bill.number  
+            %td= bill.cost  
+            %td= bill.amount  
+            %td= t(bill.paid.to_s,:scope=>:common)  
+            %td{:width=>100}= bill.record_time.strftime("%Y-%m-%d")  
+            %td= bill.last_number  
+            %td= bill.this_number  
+

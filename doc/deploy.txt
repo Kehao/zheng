@@ -1,0 +1,9 @@
+1. backup data 先备份数据
+
+2. bundle exec rake db:migrate RAILS_ENV=production
+
+3. bundle exec rake data:clean RAILS_ENV=production
+
+4. bundle exec rake data:init_company_court_alarm RAILS_ENV=production
+
+注：消息的生成是通过schedule 任务完成

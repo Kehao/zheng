@@ -1,0 +1,7 @@
+= modal_dialog :style=>"display:none",:id=>"modal-edit-#{dom_id(tracker)}" do
+  = modal_header do
+    %h3
+      修改[跟踪标签]
+  = modal_body do
+    =render "form",:tracker => tracker
+

@@ -1,0 +1,22 @@
+%ul.nav.nav-pills
+  %li{class: "#{params[:subtab].eql?("assets_by_nature") ? 'active' : ''}"}
+    = link_to "平均资产总额(按公司性质分)",business_statistics_path(:tab=>"assets",:subtab=>"assets_by_nature") 
+  %li{class: "#{params[:subtab].eql?("assets_by_industry") ? 'active' : ''}"}
+    = link_to "平均资产总额(按公司行业分)",business_statistics_path(:tab=>"assets",:subtab=>"assets_by_industry") 
+
+  %li{class: "#{params[:subtab].blank?  ? 'active' : ''}"}
+    = link_to "资产总额合计",business_statistics_path(:tab=>"assets") 
+
+- if tab.eql?("assets") && params[:subtab].eql?("assets_by_industry")  
+  #assets_by_industry
+    = render "statistics/business/average_companies_assets_by_industry_yearly"
+
+- elsif tab.eql?("assets") && params[:subtab].eql?("assets_by_nature")
+  #assets_by_nature
+    = render "statistics/business/average_companies_assets_by_nature_yearly"
+
+- else
+  #assets_total
+    = render "statistics/business/companies_assets_total_yearly"
+  
+

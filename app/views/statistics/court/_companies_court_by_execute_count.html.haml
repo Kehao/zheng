@@ -1,0 +1,58 @@
+#global_companies_court_by_execute_count{:style=>"height: 600px; width: 600px; margin: 5em auto"}
+:javascript
+  s5_companies_court = #{@companies_court_by_execute_count.map{|a|a[1]}}
+  s5_execute_count = #{@companies_court_by_execute_count.map{|a|a[0]}}
+  $(function () {
+        $('#global_companies_court_by_execute_count').highcharts({
+            chart: {
+                type: 'column',
+                margin: [ 50, 50, 100, 80]
+            },
+            title: {
+                text: '企业被执行次数统计'
+            },
+            xAxis: {
+                categories: s5_execute_count,
+                labels: {
+                    align: 'right',
+                    style: {
+                        fontSize: '13px',
+                        fontFamily: 'Verdana, sans-serif'
+                    }
+                }
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: '企业数 (家)'
+                }
+            },
+            legend: {
+                enabled: false
+            },
+            tooltip: {
+                formatter: function() {
+                  return '<b>'+ this.y +'</b>'+ '家企业' +
+                         '被执行<b>'+ this.x +'</b>次'
+                }
+            },
+            series: [{
+                name: 'Population',
+                data: s5_companies_court,
+                dataLabels: {
+                        enabled: true,
+                        color: "#2F7ED8",
+                        style: {
+                            fontWeight: 'bold'
+                        },
+                        formatter: function() {
+                            return this.y;
+                        }
+                    }
+            }]
+        });
+    });
+    
+
+
+

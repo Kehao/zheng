@@ -1,0 +1,28 @@
+.row
+  .span3  
+    =render "admin/shared/sidebar"
+    
+  .span9
+    .page-header
+      %h2 
+        公司列表
+        %small
+          \- 现在系统中, 一共有
+        = Company.count
+        %small
+          个公司;
+
+    %table.table.table-striped.table-bordered.table-condensed
+      %thead
+        %tr
+          %th 公司名称
+          %th 企业注册号
+          %th 操作
+      %tbody
+        - @companies.each do |company| 
+          %tr
+            %td= company.name 
+            %td= company.number 
+            %td= link_to '账户管理', [:admin, company, :water_company_accounts] 
+    
+    = paginate @companies

@@ -1,0 +1,25 @@
+zh-CN:
+  skyeye:
+    plugins:
+      skyeye_power:
+        title: 水电信息
+  activerecord:
+    models:
+      skyeye_power/bill: "账单"
+      skyeye_power/company_account: "账户"
+      skyeye_power/water_company_account: "水账户"
+      skyeye_power/elec_company_account: "电账户"
+    attributes:
+      skyeye_power/bill:
+        category: "类型" 
+        number: "水电号"
+        cost: "金额"
+        amount: "用量"
+        paid: "是否缴费"
+        record_time: "记录日期"
+        last_number: "上次抄见数"
+        this_number: "本次抄见数"
+      skyeye_power/company_account:
+        water_number: "水号"
+        elec_number: "电号"
+        description: "说明"

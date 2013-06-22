@@ -1,0 +1,39 @@
+.row
+  .span9
+    .page-header
+      %h3
+        告警列表
+        %small
+          = "共 #{current_user.alarms.count} 个告警"
+      .company-clients-list
+        %table.table
+          %thead
+            %tr
+              %th.span2
+                告警名称
+              %th.span2
+                告警描述
+              %th.span2
+                次数
+              %th
+                告警时间
+          
+          %tbody
+            - @alarms.each do |alarm|
+              %tr
+                %td
+                  = alarm.name
+                %td
+                  = alarm.content
+                %td 
+                  = alarm.count
+                %td
+                  = alarm.created_at.strftime("%y-%m-%d")
+        
+        = paginate @alarms
+
+
+  .span3
+    = render "shared/clients/sidebar_index"
+
+

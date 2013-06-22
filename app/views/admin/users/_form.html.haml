@@ -1,0 +1,11 @@
+= simple_form_for([:admin,@user], :wrapper => :bootstrap, :html => { :class => 'form-horizontal' }) do |f| 
+  .form-inputs
+    = f.input :name
+    = f.input :email
+    = f.input :role_id, :collection => Role.all.map{|r|[r.title, r.id]}, :include_blank => false
+    = f.input :institution_id, :collection => Institution.all.map{|i|[i.name,i.id]}.push(["其它", nil]), :label =>"机构", :include_blank => false
+  
+  .form-actions
+    = f.button :submit, class: "btn btn-primary"
+    = submit_tag '重置', :type => :reset, :class => "btn"
+    = link_to "返回", :back, :class => "btn"

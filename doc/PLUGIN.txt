@@ -1,0 +1,4 @@
+生成插件的命令:
+  bundle exec rails plugin new [plugin_path] --mountable
+安装插件的migration
+  bundle exec rake [plugin_name]:install:migrations

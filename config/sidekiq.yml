@@ -1,0 +1,9 @@
+---
+:verbose:      false
+:pidfile:      tmp/pids/sidekiq.pid
+:concurrency:  3
+:timeout:      20
+:queues:
+  - [spider, 2]
+
+# nohup bundle exec sidekiq -C config/sidekiq.yml -e production >> log/sidekiq.log 2>&1 &

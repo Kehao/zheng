@@ -1,0 +1,51 @@
+.row
+  .span3
+    = render "shared/clients/sidebar_index"
+  .span9
+    .page-header.page-header-qqw
+      %h3 添加企业
+
+    .manage-clients-box
+      %ul.nav.nav-pills#new-clients-tab
+        %li{class: selected(params[:tab], :blank)}
+          = link_to '输入添加', "#add-company-box",  data: {toggle: 'tab'}
+        %li{class: selected(params[:tab], "upload-list-box")}
+          = link_to '批量导入客户', "#upload-list-box",  data: {toggle: 'tab'}
+        %li{class: selected(params[:tab], "upload-list-box2")}
+          = link_to '批量导入客户关系', "#upload-list-box2",  data: {toggle: 'tab'}
+      
+      .tab-content
+        #add-company-box.add-form.tab-pane{class: selected(params[:tab], nil)}
+          = simple_form_for @company_client, url: [:create_with_company_and_company_owner,:company_clients], method: :post,:html => { :class => 'form-horizontal' } do |f|
+            %fieldset
+              %legend{:style=>"margin-bottom:25px"}
+                公司属性
+              .form-inputs
+                = f.simple_fields_for @company_client.company do |c|
+                  = c.input :name
+                  = c.input :number
+                  = c.input :code
+                  = c.input :owner_name
+              .form-actions
+                = f.submit '添加企业', class: 'btn btn-primary'
+                = submit_tag '取消', :type => :reset, :class => "btn"
+
+        #upload-list-box.tab-pane{class: selected(params[:tab], "upload-list-box")}
+          = render "importers/form",
+            :file_label => "客户列表文件",
+            :importer_class => CompanyClientImporter,
+            :redirect_to => "/company_clients/new?tab=upload-list-box",
+            :template => {:excel=>"/template/客户导入模板.xls",:image=>"/template/demoinput.png" }
+
+        #upload-list-box2.tab-pane{class: selected(params[:tab], "upload-list-box2")}
+          = render "importers/form",
+            :file_label => "关联方导入",
+            :importer_class => RelationshipImporter,
+            :redirect_to => "/company_clients/new?tab=upload-list-box2",
+            :template => {:excel=>"/template/关联方导入模板.xls",:image=>"/template/relationship.png" }
+
+
+:javascript
+  this.user_channel = "/user-#{current_user.id}";
+= javascript_include_tag "#{FAYE_CONFIG['server']}.js"
+= javascript_include_tag "faye-function"

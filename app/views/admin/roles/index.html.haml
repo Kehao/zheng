@@ -1,0 +1,28 @@
+.row
+  .span3
+    = render "admin/shared/sidebar"
+  .span9
+    .page-header.page-header-qqw
+      %h3
+        角色列表
+        %span.label.label-info
+          = "#{@roles.count} 个"
+        = link_to new_admin_role_path, :class => "btn btn-small btn-warning" do
+          %strong 
+            + 添加
+    
+    %table.table.table-hover
+      %tr
+        %th 角色名
+        %th 角色描述
+        %th 操作
+      - @roles.each do |role|
+        %tr
+          %td= role.title
+          %td= role.description
+          %td
+            = link_to '显示', admin_role_path(role)
+            \|
+            = link_to '修改', edit_admin_role_path(role)
+            \|
+            = link_to '删除', admin_role_path(role), :data => { :confirm => '确定要删除么?' }, :method => :delete

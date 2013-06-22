@@ -1,0 +1,75 @@
+%table.table
+  %thead
+    %tr
+      %th
+        企业名称
+      %th
+        法人
+      %th
+        信息状态
+      %th
+        异常说明
+
+      %th
+        法人身份证号
+
+      %th
+        营业执照编号
+
+      %th
+        组织机构号码
+
+      %th
+        案件号
+
+      %th
+        执行法院
+
+      %th
+        执行对象
+
+      %th
+        案件状态
+
+      %th
+        执行标的
+
+      %th
+        立案时间
+
+      %th
+        获取时间
+
+  %tbody
+    - @company_clients.each do |cc|
+      - c = cc.company 
+      - c.all_crimes.each do |crime| 
+        %tr
+          %td
+            = c.name 
+          %td
+            = c.owner_name 
+          %td
+            = company_info_badges(cc)
+          %td
+            %span= warning_context(cc)
+          %td
+            = c.owner.try(:number) 
+          %td
+            = c.number 
+          %td
+            = c.code 
+          %td
+            = crime.case_id 
+          %td
+            = crime.court_name 
+          %td
+            = crime.party_name 
+          %td
+            = crime.case_state 
+          %td
+            = crime.apply_money.to_f 
+          %td
+            = crime.reg_date 
+          %td
+            = crime.created_at.strftime("%Y-%m-%d") 

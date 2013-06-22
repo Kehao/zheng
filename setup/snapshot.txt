@@ -1,0 +1,17 @@
+http://phpbob.blog.51cto.com/636017/663505
+第一步安装，这些都是ubuntu上安装的方法。
+sudo apt-get update 
+sudo apt-get -y install build-essential 
+sudo apt-get install xvfb 
+sudo apt-get install xfs xfonts-scalable xfonts-100dpi 
+sudo apt-get install libgl1-mesa-dri 
+sudo apt-get install subversion libqt4-webkit libqt4-dev g++ 
+第二步
+svn co https://cutycapt.svn.sourceforge.net/svnroot/cutycapt 
+第三步
+cd cutycapt/CutyCapt 
+qmake 
+make 
+第四步：命令行测试
+xvfb-run --server-args="-screen 0, 1024x768x24" ./CutyCapt --url=http://www.google.com --out=example.png 
+

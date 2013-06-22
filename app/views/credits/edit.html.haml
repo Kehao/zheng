@@ -1,0 +1,60 @@
+.row
+  .span12
+    %h3{:style =>"border-bottom:2px solid #34495e;"}
+      = @company.name
+      %small
+        = @company.owner_name || "法人-未知"
+      %small
+        |
+      %small
+        = @company.code || "组织机构号: 未知"
+      %small
+        |
+      %p{:style => "float:right"}
+        = link_to "返回查看", @company_client, :class=>"btn"
+
+    = render "shared/company_info_nav"
+      
+    .row.span10.pull-left{:style=>"margin-left:2em;margin-top:15px"}
+      .company-detail.tab-content
+        #company-basic.tab-pane.tab-1.active
+          = render "companies/cert", {company: @company} 
+
+        #company-contact.tab-pane.tab-2
+          = render "credits/forms/contact"
+
+        #company-relationship.tab-pane.tab-3
+          = render "credits/forms/changes"
+
+        #company-owner.tab-pane.tab-4
+          = render "credits/forms/owner"
+
+        #company-opt.tab-pane.tab-5
+          = render "credits/forms/opt"
+
+        #company-people.tab-pane.tab-6
+          = render "credits/forms/people"
+
+        #company-devise.tab-pane.tab-7
+          = render "credits/forms/equip"
+
+        #company-place.tab-pane.tab-8
+          = render "credits/forms/place"
+
+        #company-bank.tab-pane.tab-9
+          = render "credits/forms/bank"
+
+        #company-other.tab-pane.tab-10
+          = render "credits/forms/other"
+
+        #company-review.tab-pane.tab-11
+          = render "credits/forms/review"
+
+        #company-finance.tab-pane.tab-12
+          = render "credits/forms/finance"
+
+        #company-level.tab-pane.tab-13
+          = render "companies/credit_info",  {company: @company}
+          / = render "credits/forms/level"
+
+

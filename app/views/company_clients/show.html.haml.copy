@@ -1,0 +1,59 @@
+.row
+  .span12
+    %h3{:style =>"border-bottom:2px solid #D9EDF7;"}
+      = @company.name
+      %small
+        |
+      %small
+        = @company.owner_name || "法人-未知"
+      %small
+        |
+      %small
+        = @company.code || "组织机构号: 未知"
+      %small
+        |
+      %small
+        = link_to "导出该公司的征信报告",company_client_path(@company_client,:format=>:pdf)
+      %p{:style => "float:right"}
+        /= link_to "返回列表",company_clients_path(:page=>params[:page]),:class=>"btn"
+    .company-detail-tab{:style =>"border-bottom:2px solid #D9EDF7;"}
+      %ul.nav.nav-pills
+        %li.active
+          = link_to "信用评价","#company-credit", data: {toggle: "tab"} 
+          .alert.alert-success
+            %p 正常 - 信用评价完整
+        %li
+          = link_to "法务信息","#company-court", data: {toggle: "tab"} 
+          - court_tab(@company)
+        %li
+          = link_to "工商信息","#company-cert", data: {toggle: "tab"} 
+          - cert_tab(@company) 
+        %li
+          = link_to "关联方信息","#company-relationship", data: {toggle: "tab"} 
+          - relationship_tab(@company)
+        %li
+          = link_to "经营状况","#company-business", data: {toggle: "tab"} 
+          - business_tab(@company)
+    
+
+    .company-detail.tab-content
+      #company-court.tab-pane
+        - if can? :read, Crime
+          = render "companies/court", {company: @company}
+        - else
+          %p.text-error 你无权查看
+      #company-cert.tab-pane
+        - if can? :read, Cert
+          = render "companies/cert",  {company: @company} 
+        - else
+          %p.text-error 你无权查看
+      
+      #company-relationship.tab-pane
+        = render "relationship", relationships: @relationships, company: @company, company_client: @company_client # if can? :read, ClientCompanyRelationship
+      
+      #company-business.tab-pane
+        = render "companies/business",  {company: @company} 
+
+      #company-credit.tab-pane.active
+        = render "companies/credit_info",  {company: @company}
+

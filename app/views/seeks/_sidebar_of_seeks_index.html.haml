@@ -1,0 +1,16 @@
+.sidebar
+  %h3.page-header
+    检索历史
+    %small= link_to "全部清空", 
+                    delete_all_seeks_path, 
+                    class: "gray-link", 
+                    data: {method: :delete, confirm: "确认要删除所有的检索记录？", remote: true}
+
+  %ul.nav.nav-pills.nav-stacked.seeks-list
+    - if seeks.present?
+      - seeks.each do |s|
+        %li{class: "#{s.id == @seek.id ? 'active' : ''} one-seek", id: "seek-#{s.id}"}
+          .seek-del.close{style: "display: none;"}
+            = link_to '×', s, data: {method: :delete}, remote: true
+          = link_to s do
+            = seek_content_of(s)

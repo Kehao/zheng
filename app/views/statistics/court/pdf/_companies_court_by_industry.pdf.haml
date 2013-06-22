@@ -1,0 +1,22 @@
+.page-header
+  %h2
+    (表二)企业整体行业分布及被执行比例:
+  %table.table.table-striped.table-bordered.table-condensed
+    %thead
+      %th 行业类型
+      %th 筛查总数（家）
+      %th 法院执行数（家）
+      %th 法院执行比率
+    %tbody
+      - @companies_court_by_industry.each do |industry_name, stats|
+        %tr
+          %td= industry_name
+          %td= stats[:total_count]
+          %td= stats[:court_count]
+          %td= percentage_desc(stats[:court_percent])
+  %h2
+    (图二)被执行企业行业分布:
+  #global_s3{:style=>"height:400px;width:800px;overflow:hidden"}
+
+:javascript
+  companies_court_by_industry = #{@js_companies_court_by_industry}

@@ -1,0 +1,20 @@
+.row
+  .span12
+    .page-header
+      %ul.nav.nav-pills.pull-right
+        %li{class: "#{selected("index", params[:action])}"}
+          = link_to "全部", company_clients_path
+
+        %li{class: "#{selected("idinfo_problem", params[:action])}"}
+          = link_to "工商异常(#{current_user.idinfo_problem_company_clients.count})", idinfo_problem_company_clients_path
+
+        %li{class: "#{selected("court_problem", params[:action])}"}
+          = link_to "法务异常(#{current_user.court_problem_company_clients.count})", court_problem_company_clients_path
+
+        = render_plugin_cell :company_client_list_exception, current_user: current_user, current_ability: current_ability
+
+      %h2
+        客户列表 
+    .company-clients-list
+      - if @company_clients.any?
+        = render "company_clients_list_simple"

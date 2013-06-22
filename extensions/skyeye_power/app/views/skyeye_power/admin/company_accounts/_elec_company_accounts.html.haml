@@ -1,0 +1,24 @@
+.tab-pane.active
+  %table.table.table-striped.table-bordered.table-condensed
+    %tr
+      %th 电号  
+      %th 描述
+      %th 操作
+    - @accounts.each do |account|
+      %tr
+        %td= account.elec_number
+        %td= account.description
+        %td
+          = link_to '修改', [:edit,:admin,company,account],:"data-toggle"=>"modal",:class=>"btn",:"data-target"=>"#edit-account-#{account.id}"
+          = link_to '删除', [:admin,company,account], :confirm => 'Are you sure?', :class=>"btn",:method => :delete
+
+          /= modal_toggle :dialog => [:admin,account,:bills],:"data-target"=>"##{dom_id(account)}" do
+          = modal_toggle :dialog => admin_elec_company_account_bills_path(account),:"data-target"=>"##{dom_id(account)}" do
+            显示账单
+          = render "ajax_bills",:account=>account
+          /修改账号操作  
+          = render "modal_form",:account=>account
+
+  
+
+

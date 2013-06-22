@@ -1,0 +1,2 @@
+module CompanyRelationshipsHelper
+end

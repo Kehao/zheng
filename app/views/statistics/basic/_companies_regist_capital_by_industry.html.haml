@@ -1,0 +1,74 @@
+#basic_companies_regist_capital_by_industry{:style=>"height: 600px; width: 600px; margin: 5em auto"}
+/%table.table.table-striped.table-bordered.table-condensed
+/  %thead
+/    %th 行业类型
+/    %th 筛查总数（家）
+/    %th 法院执行数（家）
+/    %th 法院执行比率
+/  %tbody
+/    - @companies_court_by_industry.each do |industry_name, stats|
+/      %tr
+/        %td= industry_name
+/        %td= stats[:total_count]
+/        %td= stats[:court_count]
+/        %td= percentage_desc(stats[:court_percent])
+/
+
+:javascript
+  js_companies_regist_capital_by_industry_categories = #{@companies_regist_capital_by_industry.keys}
+  js_companies_regist_capital_by_industry_data = #{@companies_regist_capital_by_industry.values}
+  $(function () {
+        $('#basic_companies_regist_capital_by_industry').highcharts({
+            chart: {
+                type: 'column',
+                margin: [ 50, 50, 100, 80]
+            },
+            title: {
+                text: '企业资本行业分布'
+            },
+            xAxis: {
+                categories: js_companies_regist_capital_by_industry_categories,
+                labels: {
+                    rotation: -45,
+                    align: 'right',
+                    style: {
+                        fontSize: '13px',
+                        fontFamily: 'Verdana, sans-serif'
+                    }
+                }
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: '人民币(万元)'
+                }
+            },
+            legend: {
+                enabled: false
+            },
+            tooltip: {
+                formatter: function() {
+                    return '<b>'+ this.x +'</b><br/>'+
+                        '行业总资本'+ Highcharts.numberFormat(this.y, 2) +
+                        '万元人民币';
+                }
+            },
+            series: [{
+                name: 'Population',
+                data: js_companies_regist_capital_by_industry_data,
+                dataLabels: {
+                        enabled: true,
+                        color: "#2F7ED8",
+                        style: {
+                            fontWeight: 'bold'
+                        },
+                        formatter: function() {
+                            return this.y ;
+                        }
+                    }
+            }]
+        });
+    });
+    
+
+

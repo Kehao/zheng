@@ -1,0 +1,17 @@
+%h1 Listing admin_workflows
+
+%table
+  %tr
+    %th
+    %th
+    %th
+
+  - @admin_workflows.each do |admin_workflow|
+    %tr
+      %td= link_to 'Show', admin_workflow
+      %td= link_to 'Edit', edit_admin_workflow_path(admin_workflow)
+      %td= link_to 'Destroy', admin_workflow, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+
+= link_to 'New Workflow', new_admin_workflow_path

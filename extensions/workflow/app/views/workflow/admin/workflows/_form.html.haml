@@ -1,0 +1,20 @@
+%table.table.table-striped.table-bordered.table-condensed{:style=>(show ? "" : "display:none")}
+  %thead
+    %tr
+      %th 当前状态
+      %th{:colspan=>@statuses.length} 
+        允许的新状态
+    %tr
+      %td --
+      - @statuses.each do |new_status|
+        %td= new_status.name
+  %tbody
+    - @statuses.each do |old_status|
+      %tr
+        %td= old_status.name
+        - @statuses.each do |new_status|
+          %td{:align=>"center"}
+            =check_box_tag "workflow_status[#{ old_status.id }][#{new_status.id}][]",name,workflows.detect {|w| w.old_status_id == old_status.id && w.new_status_id == new_status.id} 
+
+
+

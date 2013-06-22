@@ -1,0 +1,58 @@
+#basic_companies_nature{:style=>"height: 600px; width: 600px; margin: 5em auto"}
+%table.table.table-striped.table-bordered.table-condensed
+  %tr
+    %th 公司类型
+    %th 筛查总数（家）
+    %th 属于该类型数（家）
+    %th 所占比例 
+
+  - @companies_nature[:categores].each_with_index do |categore,index|
+    %tr
+      %td= categore
+      %td= @companies_nature[:total][index]
+      %td= @companies_nature[:count][index]
+      %td= @companies_nature[:percent][index]
+
+:javascript
+  companies_nature = #{@companies_nature[:categores].zip(@companies_nature[:percent])}
+  $(function () {
+        $('#basic_companies_nature').highcharts({
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                margin: [ 0, 0, 0, 0],
+                plotShadow: false
+            },
+            title: {
+                text: '企业性质分布'
+            },
+            tooltip: {
+              formatter: function(){
+                return '<b>'+ this.point.name +'</b>: '+ this.percentage.toFixed(2) +' %';
+              }
+        	/*pointFormat: '{series.name}: <b>{point.percentage}%</b>'*/
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        color: '#000000',
+                        connectorColor: '#000000',
+                        formatter: function() {
+                            return '<b>'+ this.point.name +'</b>: '+ this.percentage.toFixed(2) +' %';
+                        }, 
+                    },
+                    showInLegend: false
+                }
+            },
+            series: [{
+                type: 'pie',
+                name: '占总数',
+                data: companies_nature
+            }]
+        });
+    });
+   
+

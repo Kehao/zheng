@@ -1,0 +1,25 @@
+.modal{:style=>"display:none",:"aria-hidden"=>"true",:id=>"edit-account-#{account.id}"}
+  .modal-header
+    %button.close{:type=>"button",:"data-dismiss"=>"modal",:"aria-hidden"=>true}
+      ×
+    %h3
+      - if resources == :water_company_accounts
+        ="水号为:#{account.water_number}"
+      - else
+        ="电号为:#{account.elec_number}"
+
+  .modal-body
+    = render 'form',:account=>account
+    /= simple_form_for([:admin, company,account],:wrapper => :bootstrap,:html => { :class => 'form-horizontal' }) do |f|
+    /  = f.error_notification
+    /  %fieldset
+    /    .form-inputs
+    /      = f.input :type,:as=>:hidden
+    /      - if resources == :water_company_accounts
+    /        = f.input :water_number
+    /      - else
+    /        = f.input :elec_number
+    /      = f.input :description
+    /    .form-actions
+    /      = f.button :submit#,:"data-dismiss"=>"modal",:"aria-hidden"=>true
+
