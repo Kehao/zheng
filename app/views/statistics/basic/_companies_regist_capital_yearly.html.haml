@@ -1,14 +1,23 @@
-#basic_companies_regist_capital_yearly{:style=>"min-width: 600px; height: 400px; margin: 0 auto;margin:4em 0"}
+#basic_companies_regist_capital_yearly
 :javascript
   s6_dates=#{@companies_regist_capital_yearly.keys}
   s6_values=#{@companies_regist_capital_yearly.values}
   $(function () {
         $('#basic_companies_regist_capital_yearly').highcharts({
             chart: {
+                plotBackgroundColor: "#dddddd",
+                borderWidth:1,
+                borderColor:"#dddddd",
+
                 type: 'spline',
                 marginRight: 130,
                 marginBottom: 40
             },
+            credits: {
+              href: "http://radar.sme.gov.cn/",
+              text: "征信中心"
+            },
+
             title: {
               text: '#{@companies_regist_capital_yearly.keys.first}到#{@companies_regist_capital_yearly.keys.last}',
                 x: -20 //center

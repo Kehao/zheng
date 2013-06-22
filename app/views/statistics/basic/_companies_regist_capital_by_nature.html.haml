@@ -1,4 +1,4 @@
-#basic_companies_regist_capital_by_nature{:style=>"height: 600px; width: 600px; margin: 5em auto"}
+#basic_companies_regist_capital_by_nature
 /%table.table.table-striped.table-bordered.table-condensed
 /  %thead
 /    %th 行业类型
@@ -20,9 +20,17 @@
   $(function () {
         $('#basic_companies_regist_capital_by_nature').highcharts({
             chart: {
+                plotBackgroundColor: "#dddddd",
+                borderWidth:1,
+                borderColor:"#dddddd",
                 type: 'column',
                 margin: [ 50, 50, 120, 80]
             },
+            credits: {
+              href: "http://radar.sme.gov.cn/",
+              text: "征信中心"
+            },
+
             title: {
                 text: '企业资本性质分布'
             },

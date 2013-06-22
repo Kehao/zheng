@@ -1,4 +1,4 @@
-#basic_companies_industry{:style=>"height: 600px; width: 100%; margin: 5em auto"}
+#basic_companies_industry
 %table.table.table-striped.table-bordered.table-condensed
   %tr
     %th 公司类型
@@ -20,6 +20,9 @@
   $(function () {
         $('#basic_companies_industry').highcharts({
             chart: {
+                plotBackgroundColor: "#dddddd",
+                borderWidth:1,
+                borderColor:"#dddddd",
                 plotBackgroundColor: null,
                 plotBorderWidth: null,
                 plotShadow: false
@@ -27,6 +30,11 @@
             title: {
                 text: '企业行业分布'
             },
+            credits: {
+              href: "http://radar.sme.gov.cn/",
+              text: "征信中心"
+            },
+
             tooltip: {
               formatter: function(){
                 return '<b>'+ this.point.name +'</b>: '+ this.percentage.toFixed(2) +' %';

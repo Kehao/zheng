@@ -1,4 +1,4 @@
-#business_average_companies_worker_number_yearly{:style=>"min-width: 600px; height: 600px; margin: 0 auto;margin:4em 0"}
+#business_average_companies_worker_number_yearly
 :javascript
   s6_dates=#{@average_companies_worker_number_yearly.keys}
   s6_values=#{@average_companies_worker_number_yearly.values}
@@ -7,8 +7,16 @@
             chart: {
                 type: 'spline',
                 marginRight: 130,
-                marginBottom: 40
+                marginBottom: 40,
+                plotBackgroundColor: "#dddddd",
+                borderWidth:1,
+                borderColor:"#dddddd"
             },
+            credits: {
+              href: "http://radar.sme.gov.cn/",
+              text: "征信中心"
+            },
+
             title: {
               text: '#{@average_companies_worker_number_yearly.keys.first}到#{@average_companies_worker_number_yearly.keys.last}',
                 x: -20 //center

@@ -1,14 +1,23 @@
-#basic_company_clients{:style=>"min-width: 600px; height: 600px; margin: 0 auto;margin:4em 0"}
+#basic_company_clients
 :javascript
   s6_dates=#{@company_clients.keys}
   s6_values=#{@company_clients.values}
   $(function () {
         $('#basic_company_clients').highcharts({
             chart: {
+                plotBackgroundColor: "#dddddd",
+                borderWidth:1,
+                borderColor:"#dddddd",
+
                 type: 'spline',
                 marginRight: 130,
                 marginBottom: 40
             },
+            credits: {
+              href: "http://radar.sme.gov.cn/",
+              text: "征信中心"
+            },
+
             title: {
               text: '#{@company_clients.keys.first}到#{@company_clients.keys.last}',
                 x: -20 //center

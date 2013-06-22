@@ -1,5 +1,5 @@
 - values = @average_companies_income_by_industry_yearly.values
-#business_average_companies_income_by_industry_yearly{:style=>"min-width: 600px; height: 600px; margin: 0 auto;margin:4em 0"}
+#business_average_companies_income_by_industry_yearly
 :javascript
   categories=#{@average_companies_income_by_industry_yearly.keys}
   the_year_before_last =#{values.map{|h|h["前年"]}} 
@@ -9,8 +9,16 @@
   $(function () {
     $('#business_average_companies_income_by_industry_yearly').highcharts({
       chart: {
-        type: 'bar'
+                plotBackgroundColor: "#dddddd",
+                borderWidth:1,
+                borderColor:"#dddddd",
+                type: 'bar'
           },
+            credits: {
+              href: "http://radar.sme.gov.cn/",
+              text: "征信中心"
+            },
+
             title: {
               text: '年度平均销售收入'
             },

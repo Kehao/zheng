@@ -1,4 +1,4 @@
-#basic_companies_credit{:style=>"height: 600px; width: 600px; margin: 5em auto"}
+#basic_companies_credit
 %table.table.table-striped.table-bordered.table-condensed
   %tr
     %th 信用等级 
@@ -20,9 +20,16 @@
   $(function () {
         $('#basic_companies_credit').highcharts({
             chart: {
+                plotBackgroundColor: "#eee",
+                borderWidth:1,
+                borderColor:"#dddddd",
                 plotBackgroundColor: null,
                 plotBorderWidth: null,
-                plotShadow: false
+                plotShadow: true
+            },
+            credits: {
+              href: "http://radar.sme.gov.cn/",
+              text: "征信中心"
             },
             title: {
                 text: '企业信用等级分布'

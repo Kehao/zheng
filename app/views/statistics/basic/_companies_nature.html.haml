@@ -1,4 +1,4 @@
-#basic_companies_nature{:style=>"height: 600px; width: 600px; margin: 5em auto"}
+#basic_companies_nature
 %table.table.table-striped.table-bordered.table-condensed
   %tr
     %th 公司类型
@@ -18,11 +18,19 @@
   $(function () {
         $('#basic_companies_nature').highcharts({
             chart: {
+                plotBackgroundColor: "#dddddd",
+                borderWidth:1,
+                borderColor:"#dddddd",
                 plotBackgroundColor: null,
                 plotBorderWidth: null,
                 margin: [ 0, 0, 0, 0],
                 plotShadow: false
             },
+            credits: {
+              href: "http://radar.sme.gov.cn/",
+              text: "征信中心"
+            },
+
             title: {
                 text: '企业性质分布'
             },

@@ -91,12 +91,17 @@ form .dk_options
 .nav .active .icon-chevron-right 
   opacity: 1
 
-.home-sidebar .todo li
+@mixin update-todo-li
   background: none 
-
   border-top: 2px solid #34495E
   a:link
     text-decoration: none
+
+.home-sidebar .todo li
+  @include update-todo-li 
+.statistic .todo li
+  @include update-todo-li 
+
 .company-clients-list .alert
   margin-bottom: 0
   

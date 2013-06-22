@@ -1,10 +1,10 @@
-.row
-  .span8
-    .tab-content{:style=>"display:inline"}
+.row.statistic
+  .span9
+    .tab-content{:style=>"display:inline;border:none"}
       = render "statistics/#{params[:scope] || :basic}/#{tab}"
 
-  .span3.tabbable.tabs-right.pull-right
-    %ul.nav.nav-tabs
+  .span3.todo.pull-right
+    %ul
       %h4{style: "padding-left: 12px;"} 基本情况分析
 
       %li{class: "#{tab == 'companies_credit' ? 'active' : ''}"}
