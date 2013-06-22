@@ -22,7 +22,7 @@
       %li{class: "#{tab == 'companies_regist_capital_yearly' ? 'active' : ''}"}
         = link_to "企业资本趋势",basic_statistics_path(:tab=>"companies_regist_capital_yearly")
 
-      %h4{style: "padding-left: 12px;"} 经营情况分析 
+      %h4 经营情况分析 
       %li{class: "#{tab == 'average_companies_worker_number_yearly' ? 'active' : ''}"}
         = link_to "公司员工数",business_statistics_path(:tab=>"average_companies_worker_number_yearly")
 
@@ -34,7 +34,7 @@
       %li{class: "#{tab == 'profit' ? 'active' : ''}"}
         = link_to "利润总额",business_statistics_path(:tab=>"profit")
       
-      %h4{style: "padding-left: 12px;"} 法院执行信息分析
+      %h4 法院执行信息分析
       /%li{class: "#{tab == 'report'? 'active' : ''}"}
       /  = link_to "统计首页",statistics_path
       %li{class: "#{tab == 'companies_court' ? 'active' : ''}"}
