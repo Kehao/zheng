@@ -4,16 +4,16 @@
   %col{:width=>"150px"}
   %col{:width=>"100px"}
   %thead
-    /%tr
-    /  %td{:colspan=>5}
-    /    .alert.alert-info.clearfix
-    /      = render "index_navbar"
-    /      .pull-right{:style=>"margin-top:8px"}
-    /        = link_to new_company_client_path, :class => "btn btn-small btn-warning" do
-    /          %strong 
-    /            + 添加
-    /        %span.label.label-info
-    /          = "#{@company_clients.except(:offset, :limit).count} 个"
+    %tr
+      %td{:colspan=>5}
+        .alert.alert-info.clearfix
+          = render "index_navbar"
+          .pull-right{:style=>"margin-top:8px"}
+            = link_to new_company_client_path, :class => "btn btn-small btn-warning" do
+              %strong 
+                + 添加
+            %span.label.label-info
+              = "#{@company_clients.except(:offset, :limit).count} 个"
 
     %tr
       %th
