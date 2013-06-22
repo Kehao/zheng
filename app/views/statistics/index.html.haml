@@ -34,21 +34,21 @@
       %li{class: "#{tab == 'profit' ? 'active' : ''}"}
         = link_to "利润总额",business_statistics_path(:tab=>"profit")
       
-      %h4 法院执行信息分析
+      %h4 司法系统数据分析
       /%li{class: "#{tab == 'report'? 'active' : ''}"}
       /  = link_to "统计首页",statistics_path
       %li{class: "#{tab == 'companies_court' ? 'active' : ''}"}
-        = link_to "执行情况统计",global_statistics_path(:tab=>"companies_court")
+        = link_to "状态分布情况统计",global_statistics_path(:tab=>"companies_court")
       %li{class: "#{tab == 'companies_court_by_reg_date' ? 'active' : ''}"}
-        = link_to "立案时间统计",global_statistics_path(:tab=>"companies_court_by_reg_date")
+        = link_to "时间分布情况统计",global_statistics_path(:tab=>"companies_court_by_reg_date")
       %li{class: "#{tab == 'companies_court_by_area'? 'active' : ''}"}
         = link_to "区域分布情况统计",global_statistics_path(:tab=>"companies_court_by_area")
       %li{class: "#{tab == 'companies_court_by_industry'? 'active' : ''}"}
         = link_to "行业分布情况统计",global_statistics_path(:tab=>"companies_court_by_industry")
       %li{class: "#{tab == 'companies_court_by_owner'? 'active' : ''}"}
-        = link_to "企业及企业主被执行比例统计",global_statistics_path(:tab=>"companies_court_by_owner")
+        = link_to "连带执行情况分析",global_statistics_path(:tab=>"companies_court_by_owner")
       %li{class: "#{tab == 'companies_court_by_execute_count'? 'active' : ''}"}
-        = link_to "单家企业被执行次数统计",global_statistics_path(:tab=>"companies_court_by_execute_count")
+        = link_to "累计执行统计",global_statistics_path(:tab=>"companies_court_by_execute_count")
 
       /%li{class: "#{tab == 'companies_court_by_apply_money'? 'active' : ''}"}
       /  = link_to "案件执行金额统计",global_statistics_path(:tab=>"companies_court_by_apply_money")
