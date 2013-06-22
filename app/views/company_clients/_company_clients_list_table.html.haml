@@ -35,7 +35,7 @@
         - c = client.company
         %tr.one-company-in-tr{id: "company-#{c.id}"}
           %td.alarm
-            = company_info_badges(c)
+            = raw company_info_badges(client)
           %td.searchable.compay-name-in-list
             = link_to c.name, company_client_path(client,:page=>params[:page]) 
           %td

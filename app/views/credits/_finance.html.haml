@@ -2,9 +2,9 @@
   会计信息
 = render "credits/forms/business",  {company: @company} 
 
-%h3
-  财务信息
 - if company.credit.present?
+  %h3
+    财务信息
   - cr = company.credit
   %table.table.table-bordered
     %tbody

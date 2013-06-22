@@ -1,14 +1,15 @@
-%h3
-  经营场所
 - if company.credit.present?
   - cr = company.credit
   %table.table.table-bordered
+    %tr
+      %th{:colspan=>4}
+        经营场所
     %tbody
       %tr
-        %td.span4 房产性质 
-        %td.span2 自有
-        %td.span2 租赁
-        %td.span2 按揭
+        %th.span4 房产性质 
+        %th.span2 自有
+        %th.span2 租赁
+        %th.span2 按揭
       %tr
         %td 房产总面积(平方米)
         %td= cr.self_area
@@ -29,7 +30,3 @@
         %td= cr.self_value
         %td= cr.rent_value
         %td= cr.mort_value
-
-- else
-  该公司的公司信息尚未检索成功
-  %span.badge ?

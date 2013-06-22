@@ -1,5 +1,1 @@
-%h3
-  信用等级：
-  - if company.credit.present?
-    - cr = company.credit
-    = cr.credit_lvl
+= render "companies/credit_info",:company=>company,:tab=>tab

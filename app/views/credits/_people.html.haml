@@ -1,8 +1,9 @@
-%h3
-  人员情况
 - if company.credit.present?
   - cr = company.credit
   %table.table.table-striped.table-bordered
+    %tr
+      %th{:colspan=>6}
+        人员情况
     %tbody
       - attr_attr = [:epl_count, :master, :bachelor, :junior, :other]
       - attr_attr.each do |item|
@@ -11,7 +12,3 @@
             = Credit.human_attribute_name(item) 
           %td.span4
             = cr.send(item)
-
-- else
-  该公司的公司信息尚未检索成功
-  %span.badge ?

@@ -1,60 +1,23 @@
-.row
-  .span12
-    %h3{:style =>"border-bottom:2px solid #34495e;"}
-      = @company.name
-      %small
-        = @company.owner_name || "法人-未知"
-      %small
-        |
-      %small
-        = @company.code || "组织机构号: 未知"
-      %small
-        |
-      %p{:style => "float:right"}
-        = link_to "返回查看", @company_client, :class=>"btn"
-
-    = render "shared/company_info_nav"
+.credit-edit.clearfix
+  %h3{:style =>"border-bottom:2px solid #34495e;margin-bottom:20px"}
+    = @company.name
+    %small
+      |
+    %small
+      = @company.owner_name || "法人-未知"
+    %small
+      |
+    %small
+      = @company.code || "组织机构号: 未知"
+    %small
+      |
+    %small
+      = link_to "导出该公司的征信报告",company_path(@company,:format=>:pdf)
+    %p{:style => "float:right"}
       
-    .row.span10.pull-left{:style=>"margin-left:2em;"}
-      .company-detail.tab-content{:style=>"border:none"}
-        #company-basic.tab-pane.tab-1.active
-          = render "companies/cert", {company: @company} 
+      = link_to "编辑完成",@company, :class=>"btn"
+  = render "shared/company_info_nav"
 
-        #company-contact.tab-pane.tab-2
-          = render "credits/forms/contact"
-
-        #company-relationship.tab-pane.tab-3
-          = render "credits/forms/changes"
-
-        #company-owner.tab-pane.tab-4
-          = render "credits/forms/owner"
-
-        #company-opt.tab-pane.tab-5
-          = render "credits/forms/opt"
-
-        #company-people.tab-pane.tab-6
-          = render "credits/forms/people"
-
-        #company-devise.tab-pane.tab-7
-          = render "credits/forms/equip"
-
-        #company-place.tab-pane.tab-8
-          = render "credits/forms/place"
-
-        #company-bank.tab-pane.tab-9
-          = render "credits/forms/bank"
-
-        #company-other.tab-pane.tab-10
-          = render "credits/forms/other"
-
-        #company-review.tab-pane.tab-11
-          = render "credits/forms/review"
-
-        #company-finance.tab-pane.tab-12
-          = render "credits/forms/finance"
-
-        #company-level.tab-pane.tab-13
-          = render "companies/credit_info",  {company: @company}
-          / = render "credits/forms/level"
-
+  .pull-left.span10{:style=>"margin-left:2em"}
+    = render "companies/company_tabs",:company=>@company
 

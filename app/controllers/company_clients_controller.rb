@@ -7,6 +7,7 @@ class CompanyClientsController < ApplicationController
   helper_method :selected_region, :params_q
 
   def index  
+    params[:tab] ||= "company-base"
     @query = current_user.company_clients.includes(:company,:importer, company: :owner).search(query_params)
     @company_clients = @query.result.order("company_clients.id DESC").page(params[:page])
   end
@@ -17,6 +18,7 @@ class CompanyClientsController < ApplicationController
   end
 
   def show
+    params[:tab] ||= "company-base"
     @company_client = current_user.company_clients.includes(:company, :company_relationships, :person_relationships).find(params[:id])
     @company = @company_client.company
     @company.business.blank? && @company.create_business

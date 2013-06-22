@@ -1,0 +1,5 @@
+- dir = action_name.eql?("edit")&&"forms/" || ""
+.company-tabs.tab-content{:style=>"border:none"}
+  - company_contents.each do |content,_content_title|
+    %div.tab-pane{:class => selected(params[:tab],"company-#{content}"),:id=>"company-#{content}"}
+      = render "credits/#{dir}#{content}",:tab=>"company-#{content}",:company=>@company

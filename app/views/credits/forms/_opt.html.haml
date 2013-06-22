@@ -1,4 +1,5 @@
 = simple_form_for @credit, :html => {:class => 'form-horizontal'} do |f|
+  = hidden_field_tag :tab,tab
   %legend
     经营信息
   - attr_arr = [:main_product, :sales_region, :clients_type, :upstream, :downstream]

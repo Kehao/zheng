@@ -1,17 +1,12 @@
-%h3
-  联络信息
 - if company.credit.present?
   - cr = company.credit
   %table.table.table-striped.table-bordered
-    %tbody
-      - attr_attr = [:reg_address, :reg_zip, :opt_address, :opt_zip, :zone, :industry, :tel, :fax, :email]
-      - attr_attr.each do |item|
-        %tr
-          %td.span2
-            = Credit.human_attribute_name(item) 
-          %td.span4
-            = cr.send(item)
-
-- else
-  该公司的公司信息尚未检索成功
-  %span.badge ?
+    %tr
+      %th{:colspan=>2}
+        联络信息
+    - contact_attrs.each do |item|
+      %tr
+        %td.span2
+          = Credit.human_attribute_name(item) 
+        %td.span4
+          = cr.send(item)

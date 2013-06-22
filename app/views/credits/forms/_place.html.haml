@@ -1,26 +1,19 @@
 = simple_form_for @credit, :html => {:class => 'form-horizontal'} do |f|
+  = hidden_field_tag :tab,:tab
   %legend
     经营场所
   - attr_arr = [:self_area, :rent_area, :mort_area]
-  .row
-    - attr_arr.each do |item|
-      .span4
-        = f.input item
+  - attr_arr.each do |item|
+    = f.input item
   - attr_arr = [:self_head, :rent_head, :mort_head]
-  .row
-    - attr_arr.each do |item|
-      .span4
-        = f.input item
+  - attr_arr.each do |item|
+    = f.input item
   - attr_arr = [:self_branch, :rent_branch, :mort_branch]
-  .row
-    - attr_arr.each do |item|
-      .span4
-        = f.input item
+  - attr_arr.each do |item|
+    = f.input item
   - attr_arr = [:self_value, :rent_value, :mort_value]
-  .row
-    - attr_arr.each do |item|
-      .span4
-        = f.input item
+  - attr_arr.each do |item|
+    = f.input item
 
   .form-actions
     = f.submit "保存信息", class: "btn btn-primary"

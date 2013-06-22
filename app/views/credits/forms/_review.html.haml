@@ -1,7 +1,8 @@
 = simple_form_for @credit, :html => {:class => 'form-horizontal'} do |f|
+  = hidden_field_tag :tab,tab
   %legend
     行业评价
-  = f.input :industry_review, as: :text, input_html: {cols: 50, rows: 12, class: "span7"}
+  = f.input :industry_review, as: :text, input_html: {cols: 30, rows: 12, class: "span5"}
   .form-actions
     = f.submit "保存信息", class: "btn btn-primary"
 

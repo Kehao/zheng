@@ -1,6 +1,5 @@
-%h3
-  银行信息
 = simple_form_for @credit, :html => {:class => 'form-horizontal'} do |f|
+  = hidden_field_tag :tab,tab
   %legend
     a) 开户信息
   - attr_arr = [:bank_name, :bank_account, :bank_address, :bank_tel, :avg_digits, :bank_level]
@@ -14,15 +13,12 @@
       %legend
         贷款信息
       = b.hidden_field :_destroy, value: 0
-      .row
-        .span4= b.input :name, input_html: {class: "span2"}
-        .span4= b.input :category, input_html: {class: "span2"}
-        .span4= b.input :amount, input_html: {class: "span2"}
-      .row
-        .span4= b.input :due_time
-        .span4= b.input :balance, input_html: {class: "span2"}
-      .row
-        .span6= b.input :deadline
+      = b.input :name, input_html: {class: "span2"}
+      = b.input :category, input_html: {class: "span2"}
+      = b.input :amount, input_html: {class: "span2"}
+      = b.input :due_time#, input_html: {class: "span2"}
+      = b.input :balance, input_html: {class: "span2"}
+      = b.input :deadline#, input_html: {class: "span1"}
 
   %legend
     c) 担保情况
@@ -31,15 +27,12 @@
       %legend
         担保信息
       = b.hidden_field :_destroy, value: 0
-      .row
-        .span4= b.input :name, input_html: {class: "span2"}
-        .span4= b.input :category, input_html: {class: "span2"}
-        .span4= b.input :amount, input_html: {class: "span2"}
-      .row
-        .span4= b.input :due_time
-        .span4= b.input :balance, input_html: {class: "span2"}
-      .row
-        .span6= b.input :deadline
+      = b.input :name, input_html: {class: "span2"}
+      = b.input :category, input_html: {class: "span2"}
+      = b.input :amount, input_html: {class: "span2"}
+      = b.input :due_time#, input_html: {class: "span2"}
+      = b.input :balance, input_html: {class: "span2"}
+      = b.input :deadline#, input_html: {class: "span1"}
 
   .form-actions
     = f.submit "保存信息", class: "btn btn-primary"

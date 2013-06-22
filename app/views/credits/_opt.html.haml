@@ -1,18 +1,14 @@
-%h3
-  经营信息
 - if company.credit.present?
   - cr = company.credit
   %table.table.table-striped.table-bordered
+    %tr
+      %th{:colspan=>2}
+        经营信息
     %tbody
       - attr_attr = [:main_product, :sales_region, :clients_type, :upstream, :downstream, :opt_stage]
       - attr_attr.each do |item|
         %tr
-          %td.span2
+          %th.span2
             = Credit.human_attribute_name(item) 
           %td.span4
             = cr.send(item)
-
-- else
-  该公司的公司信息尚未检索成功
-  %span.badge ?
-
