@@ -5,7 +5,7 @@
 
   .span3.pull-right
     %ul.nav.nav-list.company_nav
-      %h4{style: "padding-left: 12px;"} 基本情况分析
+      %h4 基本情况分析
 
       %li{class: "#{tab == 'companies_credit' ? 'active' : ''}"}
         = link_to "企业信用等级分布",basic_statistics_path(:tab=>"companies_credit")
