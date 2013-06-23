@@ -9,9 +9,8 @@
         /= link_to '关联方导出',exporters_path(:tab=>"export-relationships")
 
     .tab-content
-      .row
-        - if params[:tab].blank?
-          = render "crime_exporter"
+      - if params[:tab].blank?
+        = render "crime_exporter"
         /- if params[:tab].eql?("export-relationships")
         /  = render "relationship_exporter"
 
