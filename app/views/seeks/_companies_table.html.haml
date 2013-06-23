@@ -1,5 +1,5 @@
-%h3.response-title 检索结果：
-%table.table.table-hover
+%h3 检索结果：
+%table.table.table-hover.table-striped.table-borderd
   %thead
     %tr
       %th
@@ -24,9 +24,9 @@
           = company.number
         %td.company-operate
           - if current_user.companies.exists? company
-            = link_to "已加为客户", "#", class: "btn btn-mini", disabled: true
+            = link_to "已是客户", "#", class: "btn btn-mini", disabled: true
           - else
-            = link_to "添加为客户", 
+            = link_to "添加客户", 
                       company_clients_path(company_id: company.id), 
                       data: {method: :post}, 
                       remote: true,

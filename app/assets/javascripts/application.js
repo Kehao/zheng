@@ -8,7 +8,6 @@
 //= require bootstrap-datepicker.zh-CN
 //= require clients
 //= require companies
-//= require seeks
 //= require jquery.validate.min
 //
 //= require highcharts/highcharts

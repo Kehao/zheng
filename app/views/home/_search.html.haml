@@ -1,0 +1,9 @@
+.home-search.todo
+  = simple_form_for :seek_content, url: seeks_path, method: :post, html: { class: 'seek-form' } do |f|
+    = f.hidden_field :category
+    .todo-search
+      = f.input :content, label: false, 
+        :placeholder=>"输入【企业名称】或【工商注册号】进行查找",
+        input_html: { class: 'todo-search-field span8' }
+      /.span1
+      /= f.submit '检索企业', class: 'btn btn-large'

@@ -1,29 +1,9 @@
-.row
-  .span3
-    = render 'sidebar_of_seeks_index'
-  .span9
-    .seek-intro
-      .seek-categories
-        %span.seek-category.active
-          = link_to "企业", "javascript:;", data: {link2: '0'}, class: "seek-category-link2-company"
-        %span.divider-seek-nav
-          = '|'
-        %span.seek-category
-          = link_to "法人", "javascript:;", data: {link2: '1'}, class: "seek-category-link2-person"
-        %span.muted
-          %small.seek-tips-link2-company
-            输入【企业名称】或【工商注册号】进行查找:
-          %small.seek-tips-link2-person
-            输入【法人姓名】或【法人身份证】进行查找:
-
-    .row
-      = simple_form_for :seek_content, url: seeks_path, method: :post, html: { class: 'seek-form' } do |f|
-        .span7
-          = f.hidden_field :category
-          = f.input :content, label: false, input_html: { class: 'span7', id: 'seek-content-input' }
-        .span1
-          = f.submit '添加检索', class: 'btn btn-large'
-    
-    .row
-      = render 'feedbacks_of_seek'
+.span12
+  /= render "shared/company_client_info_nav"
+  = render "home/search"
+  .row
+    .span9
+      = render "feedbacks_of_seek"
+    .span3
+      = render "sidebar_of_seeks_index"
 

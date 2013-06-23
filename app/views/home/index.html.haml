@@ -1,15 +1,7 @@
 .row
   .span8
-
-    .home-search.todo
-      = simple_form_for :seek_content, url: seeks_path, method: :post, html: { class: 'seek-form' } do |f|
-        = f.hidden_field :category
-        .todo-search
-          = f.input :content, label: false, 
-            :placeholder=>"请输入你要搜索的公司",
-            input_html: { class: 'todo-search-field span8', id: 'seek-content-input' }
-        /.span1
-        /= f.submit '检索企业', class: 'btn btn-large'
+    = render "search"
+        
     .alert.alert-info
       .title
         %h4 平台数据库统计
