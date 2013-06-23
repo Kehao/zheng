@@ -25,6 +25,7 @@ module Skyeye
     config.autoload_paths += %W(
       #{config.root}/lib
       #{config.root}/app/reports
+      #{config.root}/app/workers
       #{config.root}/app/models/concerns
       #{config.root}/app/models/spiders
       #{config.root}/app/models/importers
