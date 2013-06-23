@@ -23,7 +23,7 @@
       = opts.input :regist_date_after, as: :date, label: "从哪天之后", required: false, default: Date.today.years_ago(1) 
 
     = f.submit "导出全部", class: "btn btn-info export_btn", data: {"loading-text" => "请求导出……"}
-    - f.submit "导出更新", class: "btn btn-info export_btn", data: {"loading-text" => "请求导出……"}, disabled: true
+    /- f.submit "导出更新", class: "btn btn-info export_btn", data: {"loading-text" => "请求导出……"}, disabled: true
 
 .span5.pull-left
   = render "out_files"

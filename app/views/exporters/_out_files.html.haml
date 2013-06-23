@@ -1,4 +1,4 @@
-.span5.exporters.pull-left
+.exporters.pull-left
   - if @exporters.any?
     %table.table-bordered.table-striped.table-hover
       %tr
@@ -16,10 +16,13 @@
               %span
                 /= e.file_name
                 导出不成功
-            = link_to "#", :class => "btn-close", :data => {:rel => exporter_path(e)} do
-              %i.icon-remove{style: "color: #BBC; text-decoration: none;"}
+            /= link_to "#", :class => "btn-close", :data => {:rel => exporter_path(e)} do
+            /  %i.icon-remove{style: "color: #BBC; text-decoration: none;"}
   - else
     %tr
       %td= "-"
       %td= 系统中没有导出记录。
+
+  /:javascript
+  /  $(".exporters td").deletable({toggle: "a.btn-close"})
 

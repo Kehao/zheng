@@ -3,7 +3,7 @@ class ExportersController < ApplicationController
   # load_and_authorize_resource through: :current_user
 
   def index
-    @exporters = current_user.exporters.order("created_at DESC").page(params[:page])
+    @exporters = current_user.exporters.order("created_at DESC").limit(10)
     @new_exporter = current_user.exporters.new
   end
 
