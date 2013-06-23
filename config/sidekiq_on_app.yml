@@ -5,6 +5,6 @@
 :timeout:      20
 :queues:
   - [importer, 1]
-  - [snapshot, 1]
+  - [spider, 1]
 
 # nohup bundle exec sidekiq -C config/sidekiq_on_app.yml -e production >> log/sidekiq.log 2>&1 &
