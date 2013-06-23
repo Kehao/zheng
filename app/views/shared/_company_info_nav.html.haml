@@ -1,5 +1,9 @@
+- @company.credit ||= @company.create_credit
 %ul.nav.nav-list.company_nav.pull-left{:style=>"margin-top:20px"}
   - company_contents.each do |content,content_title|
+    %li.edit-company-icon
+      = link_to edit_credit_path(@company.credit,:tab=>"company-#{content}") do
+        %i.icon-edit 
     %li{class: selected(params[:tab],"company-#{content}")}
       = link_to "#company-#{content}",data: {toggle: "tab"} do 
         %i.icon-chevron-right

@@ -1,5 +1,5 @@
 .credit-edit.clearfix
-  %h3{:style =>"border-bottom:2px solid #34495e;margin-bottom:20px"}
+  %h3{:style =>"border-bottom:2px solid #34495e;"}
     = @company.name
     %small
       |
@@ -15,9 +15,10 @@
       = link_to "导出该公司的征信报告",company_path(@company,:format=>:pdf)
     %p{:style => "float:right"}
       
-      = link_to "编辑完成",@company, :class=>"btn"
+      = link_to "编辑完成",company_client_path(@company_client,:tab=>params[:tab]), :class=>"btn"
   = render "shared/company_info_nav"
 
   .pull-left.span10{:style=>"margin-left:2em"}
-    = render "companies/company_tabs",:company=>@company
+    .alert.alert-success{:style=>"margin-top:20px"}
+      = render "companies/company_tabs",:company=>@company
 

@@ -21,6 +21,7 @@
 //= require jquery.validate.min
 //= require messages
 //= require relationship
+//= require jquery.district-ul
 
 Array.prototype.map = function(fun /*, thisp*/) { 
     var len = this.length >>> 0;

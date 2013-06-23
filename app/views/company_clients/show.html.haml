@@ -16,7 +16,7 @@
         = link_to "导出该公司的征信报告",company_client_path(@company_client,:format=>:pdf)
       %p{:style => "float:right"}
         = link_to "返回列表", company_clients_path(), :class=>"btn"
-        = link_to "编辑",    new_or_edit_credit(@company), :class=>"btn"
+        /= link_to "编辑",    new_or_edit_credit(@company), :class=>"btn"
     = render "shared/company_info_nav"
     
     .row.span10.pull-left{:style=>"margin-left:2em"}

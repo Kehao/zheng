@@ -1,0 +1,60 @@
+/- if selected_province.blank?
+/- else
+/= content_tag :ul, :class => "select-opts region-selects" do
+/= content_tag :li, selected_province[0], :data => {:value => selected_province[1]}, :class => selected(selected_province[1], selected_province && selected_province[1], 'actived')
+
+%dl.area.clearfix
+  = f.hidden_field attr_name, :class => "select-value"
+  %dt
+    = f.label attr_name, '所属地区 '
+    %dd.select-input.first
+      .region-input-prompt.select-prompt
+        - if selected_province
+          .select-content{:data => {:value => selected_province[1]}} 
+            = selected_province[0] 
+        - else
+          .select-content
+            = "省 份" 
+        %span.select-tangle
+      = content_tag :ul, :class => "select-opts region-selects" do
+        = content_tag :li, "省 份", :data => {:value => ""}, :class => selected(selected_province, :blank, 'actived')
+        - selected_provinces.map do |province|
+          = content_tag :li, province[0], 
+            :data => {:value => province[1]}, 
+            :class => selected(province[1], selected_province && selected_province[1], 
+            'actived')
+    
+  %dd.select-input
+    .region-input-prompt.select-prompt
+      - if selected_city
+        .select-content{:data => {:value => selected_city[1]}}
+          = selected_city[0] 
+      - else
+        .select-content
+          = "城 市" 
+      %span.select-tangle
+    = content_tag :ul, :class => "select-opts region-selects" do
+      = content_tag :li, "城 市", :data => {:value => ""}, :class => selected(selected_city, :blank, 'actived')
+      - selected_cities.each do |city|
+        = content_tag :li, city[0], :data => {:value => city[1]}, :class => selected(city[1], selected_city && selected_city[1], 'actived')
+
+  %dd.select-input
+    .region-input-prompt.select-prompt
+      - if selected_county
+        .select-content{:data => {:value => selected_county[1]}}
+          = selected_county[0] 
+      - else
+        .select-content
+          = "区 县" 
+      %span.select-tangle
+    = content_tag :ul, :class => "select-opts region-selects" do
+      = content_tag :li, "区 县", :data => {:value => ""}, :class => selected(selected_county, :blank, 'actived')
+      - selected_counties.each do |county|
+        = content_tag :li, county[0], :data => {:value => county[1]}, :class => selected(county[1], selected_county && selected_county[1], 'actived')
+:javascript
+  jQuery.District("dl.area",{
+    onChange: function(code){
+      $("dl.area .select-value").val(code);
+    }
+  })
+

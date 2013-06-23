@@ -1,1 +1,19 @@
-= render "companies/cert",:tab=>tab,:company=>company   
+/= render "companies/cert",:tab=>tab,:company=>company   
+- company.cert ||= Cert.new 
+
+= dataDb_form_for company,:url=>company_path(company,:client_id=>@company_client.id),:method=>:put,:html => {:class => 'form-horizontal edit-company'} do |f|
+  = hidden_field_tag :tab,tab
+  .form-inputs
+    .alert.clearfix{:style=>"padding-left:0px"}
+      = f.input :name
+      = f.input :number
+      = f.input :owner_name
+      = f.area_select area_select_options(company.region_code)
+      /= f.input :region_code
+    = f.fields_for :cert,company.cert do |cert|
+      - cert_attrs.each do |attr|
+        = cert.input attr
+  .form-actions
+    = f.submit :class => "btn"
+    
+

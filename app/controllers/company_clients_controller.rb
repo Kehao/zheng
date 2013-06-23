@@ -1,7 +1,7 @@
 #encoding: utf-8
 class CompanyClientsController < ApplicationController
   respond_to :json, :html, :xml
-  load_and_authorize_resource through: :current_user
+  load_resource through: :current_user
   skip_load_resource :only => [:index, :court_problem]
 
   helper_method :selected_region, :params_q

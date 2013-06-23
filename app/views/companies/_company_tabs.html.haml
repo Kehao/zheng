@@ -1,4 +1,4 @@
-- dir = action_name.eql?("edit")&&"forms/" || ""
+- dir = ["edit","update"].index(action_name)&&"forms/" || ""
 .company-tabs.tab-content{:style=>"border:none"}
   - company_contents.each do |content,_content_title|
     %div.tab-pane{:class => selected(params[:tab],"company-#{content}"),:id=>"company-#{content}"}

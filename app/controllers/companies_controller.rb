@@ -10,6 +10,25 @@ class CompaniesController < ApplicationController
     end
   end
 
+  def update
+    @company = Company.find(params[:id])
+    @company_client = CompanyClient.find(params[:client_id])
+    respond_to do |format|
+      if @company.update_attributes(params[:company])
+        format.html{ redirect_to @company_client}
+      else
+        @credit = @company.credit || @company.credit.new
+        (4 - @credit.operators.count).times{ @credit.operators.build }
+        (5 - @credit.equips.count).times{ @credit.equips.build }
+        (5 - @credit.loans.count).times{ @credit.loans.build }
+        (5 - @credit.morts.count).times{ @credit.morts.build }
+        (3 - @credit.holder_changes.count).times{ @credit.holder_changes.build }
+        (3 - @credit.mass_changes.count).times{ @credit.mass_changes.build }
+        format.html{ render "credits/edit" }
+      end
+    end
+  end
+
   def update_company
     company = current_user.companies.find(params[:id])
     respond_to do |format|

@@ -9,6 +9,7 @@
     %tr
       - changes1_attrs.each do |item|
         %th= HolderChange.human_attribute_name(item)
+
     - company.credit.holder_changes.each do |p|
       %tr
         - changes1_attrs.each do |item|

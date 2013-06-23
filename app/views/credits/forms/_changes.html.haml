@@ -4,12 +4,16 @@
     %legend
       股东变更
     = b.hidden_field :_destroy, value: 0
-    .span3= b.input :name,  input_html: {class: "span2"}
-    .span9= b.input :change_at#, input_html: {class: "span1"}
-    .span3= b.input :before_amount,  input_html: {class: "span1"}
-    .span3= b.input :before_percent, input_html: {class: "span1"}
-    .span3= b.input :after_amount,   input_html: {class: "span1"}
-    .span3= b.input :after_percent,  input_html: {class: "span1"}
+    = b.input :name,  input_html: {class: "span2"}
+    = b.input :change_at#, input_html: {class: "span1"}
+    .span4
+      = b.input :before_amount,  input_html: {class: "span1"}
+    .span4
+      = b.input :before_percent, input_html: {class: "span1"}
+    .span4
+      = b.input :after_amount,   input_html: {class: "span1"}
+    .span4
+      = b.input :after_percent,  input_html: {class: "span1"}
 
   = f.simple_fields_for :mass_changes, @credit.mass_changes do |b|
     %legend

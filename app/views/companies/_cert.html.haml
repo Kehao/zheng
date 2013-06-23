@@ -1,55 +1,40 @@
-- if company.idinfo_crawled
-  %table.table.table-striped.table-bordered
-    %thead
+- unless company.idinfo_crawled
+  .alert.alert-info
+    该公司的公司信息尚未检索成功
+
+- company.cert = Cert.new unless company.cert
+
+%table.table.table-striped.table-bordered
+  %thead
+    %tr.alert
+      %th.span3
+        = Company.human_attribute_name(:name)
+      %th
+        = company.name
+  %tbody
+    %tr.alert
+      %th= Company.human_attribute_name(:number) 
+      %td= company.number 
+    %tr.alert
+      %th= Company.human_attribute_name(:owner_name) 
+      %td= company.owner_name
+    %tr.alert
+      %th 所属地区
+      %td= area_name(company.region_code)
+
+
+    - cert_attrs.each do |attr|
       %tr
-        %th.span3
-          = Cert.human_attribute_name(:name)
-        %th
-          = company.name
-    %tbody
-      %tr
-        %th= Cert.human_attribute_name(:regist_id) 
-        %td= company.number || company.cert.try(:regist_id)
-      %tr
-        %th= Cert.human_attribute_name(:owner_name) 
-        %td= company.owner_name
-      %tr
-        %th= Cert.human_attribute_name(:address) 
-        %td= company.address
-      %tr
-        %th= Cert.human_attribute_name(:business_scope) 
-        %td= company.business_scope
-      %tr
-        %th= Cert.human_attribute_name(:company_type) 
-        %td= company.company_type
-      %tr
-        %th= Cert.human_attribute_name(:found_date) 
-        %td= company.found_date
-      %tr
-        %th= Cert.human_attribute_name(:approved_date) 
-        %td= company.approved_date
-      %tr
-        %th= Cert.human_attribute_name(:business_period) 
-        %td= company.business_period
-      %tr
-        %th= Cert.human_attribute_name(:paid_in_capital) 
-        %td= company.paid_in_capital
-      %tr
-        %th= Cert.human_attribute_name(:regist_capital) 
-        %td= company.regist_capital
-      %tr
-        %th= Cert.human_attribute_name(:regist_org) 
-        %td= company.regist_org
-      %tr
-        %th= Cert.human_attribute_name(:check_years) 
-        %td
-          - if company.check_years.present?
-            = company.check_years
-          - else
-            无法检索到工商年检信息
-            %span.badge.badge-warning
-              %i.icon-warning-sign
+        %th= Cert.human_attribute_name(attr) 
+        %td= company.cert.send attr
+
+    %tr
+      %th= Cert.human_attribute_name(:check_years) 
+      %td
+        - if company.check_years.present?
+          = company.check_years
+        - else
+          %i.icon-warning-sign
+          无法检索到工商年检信息
             
-- else
-  该公司的公司信息尚未检索成功
-  %span.badge ?
+

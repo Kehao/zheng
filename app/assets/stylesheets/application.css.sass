@@ -1,11 +1,12 @@
 /*
  *= require_self
  *= require bootstrap-editable
+ *= require select_ul
  */
 @import 'flat-ui'
 
- 
-
+.required abbr 
+  color: red
 .tip
   height: 30px
   line-height: 30px
@@ -153,6 +154,22 @@ table.fixed
 .search-results a,.search-history a
   text-decoration: none
   text-shadow: none
+
+.edit-company 
+  .form-inputs input 
+    width: 300px
+  dl.area
+    margin-top: 0
+    margin-bottom: 10px
+    padding-left: 108px
+li.edit-company-icon
+  height: 10px
+  a i
+    position: relative
+    left: 100px
+    top: 13px
+.alert .tab-content
+  padding-top: 0
 
 
 

@@ -82,6 +82,7 @@ zh-CN:
         name: "公司名称"
         owner_name: "法人姓名"
         number: "工商注册号"
+        region_code: "工商注册地"
         code: "组织机构代码"
         idinfo_status: "工商"
         court_status: "法务"

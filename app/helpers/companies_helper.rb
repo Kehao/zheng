@@ -1,6 +1,20 @@
 #encoding: utf-8
 module CompaniesHelper
 
+  def cert_attrs
+    [ :regist_capital,
+      :paid_in_capital,
+      :address,
+      :business_scope,
+      :company_type,
+      :found_date,
+      :approved_date,
+      :business_start_date,
+      :business_end_date,
+      :regist_org,
+      ]
+  end
+
 def contact_attrs
     [:reg_address, :reg_zip, :opt_address, :opt_zip, :zone, :industry, :tel, :fax, :email]
   end

@@ -17,6 +17,7 @@ class Cert < ActiveRecord::Base
                   :orig_url,             #http://www.idinfo.cn/SignHandle?user...
                   :regist_capital_amount  # 注册资本有美元和人民币等，这个值是换算成人民币后的数值，用于统计
 
+
   #validates :name, presence: true, uniqueness: true
   belongs_to :company
 

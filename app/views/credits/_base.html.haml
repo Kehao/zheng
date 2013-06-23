@@ -1,1 +1,9 @@
 = render "companies/cert",:tab=>tab,:company=>company   
+/- comany.cert ||= Cert.new 
+
+/= simple_form_for company, :html => {:class => 'form-horizontal'} do |f|
+/  = hidden_field_tag :tab,tab
+
+
+
+

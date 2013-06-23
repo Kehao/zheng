@@ -2,6 +2,10 @@ require "sidekiq/web"
 Skyeye::Application.routes.draw do
   get "home/index"
 
+  get '/district' => 'district#index' # 返回树状结构的省，市，区县数据
+  match '/district/:id', to: 'district#list' # 地区选择
+
+
   get "crimes/index"
 
   root :to => 'home#index'
