@@ -1,5 +1,6 @@
 # encoding: utf-8
 class StatisticsController < ApplicationController
+  @@stats = {}
   include StatisticsHelper
   respond_to :json, :html, :xml
 
@@ -96,7 +97,6 @@ class StatisticsController < ApplicationController
   end
 
   def cache_result(type,result)
-    @@stats ||= {}
     @@stats[current_user.id] ||= {} 
     @@stats[current_user.id][type] ||= result 
     @@stats[current_user.id][type]
