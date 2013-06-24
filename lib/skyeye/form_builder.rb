@@ -1,3 +1,4 @@
+#encoding: utf-8
 module Skyeye 
   class FormBuilder < SimpleForm::FormBuilder  
     def area_select(options = {})
@@ -13,11 +14,12 @@ module ApplicationHelper
   end
 
   def area_name(region_code)
+    return "未知" if region_code.nil?
     ancestors = District.code_chain(region_code)
     province = ancestors[1] && District.get(ancestors[1])
         city = ancestors[2] && District.get(ancestors[2])
       county = ancestors[3] && District.get(ancestors[3])
-    [province,city,county].join("-") 
+    [province,city,county].join(" > ") 
   end
 
   def area_select_options(region_code)

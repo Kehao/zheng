@@ -1,17 +1,19 @@
 - importers = current_user.importers.where(type: importer_class.name, view_status: 1)
 
 - if importers.present?
-  .add-form
-    %table.table.table-hover{:style=>"table-layout:fixed"}
+  .add-form.alert.clearfix
+    %table.span8.table.table.table-bordered.table-hover{:style=>"table-layout:fixed"}
       %thead
         %tr
           %th{:style=>"width:10%"} 序号
           /%th 导入时间
-          %th{:style=>"width:15%"} 文件名称
+          %th{:style=>"width:50%"} 文件名称
           %th{:style=>"width:10%"} 导入状态
-          %th{:style=>"width:50%"} 导入进度
+          /%th{:style=>"width:50%"} 导入进度
           /%th 用时
-          %th{:style=>"width:15%"} 操作
+
+          %th 操作
+          /%th{:style=>"width:15%"} 操作
       %tbody
         - importers.each_with_index do |importer, index|
 
@@ -28,15 +30,15 @@
             - else
               %td=t importer.status_text
 
-            %td
-              = link_to "#",:onclick=>("$('.process-#{importer.id}').toggle();return false;" ) do
-                - if ["importing","waiting"].index(importer.status)
-                  .progress.progress-success.progress-striped.active
-                    .bar{:style=>"width: #{importer.process_bar && bar['rate'] || 0 }%;"}  
-                - elsif importer.status.eql?("complete") 
-                  = "#{importer.process_bar && bar['rate'] || 100 }%"
-                - else
-                  = "#{importer.process_bar && bar['rate'] || 0 }%"
+            /%td
+            /  = link_to "#",:onclick=>("$('.process-#{importer.id}').toggle();return false;" ) do
+            /    - if ["importing","waiting"].index(importer.status)
+            /      .progress.progress-success.progress-striped.active
+            /        .bar{:style=>"width: #{importer.process_bar && bar['rate'] || 0 }%;"}  
+            /    - elsif importer.status.eql?("complete") 
+            /      = "#{importer.process_bar && bar['rate'] || 100 }%"
+            /    - else
+            /      = "#{importer.process_bar && bar['rate'] || 0 }%"
 
             %td
               - if ["error","complete"].index(importer.status)

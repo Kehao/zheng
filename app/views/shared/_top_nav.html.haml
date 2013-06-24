@@ -2,9 +2,9 @@
   .navbar-inner
     .container
       %ul.nav
+        %li{class: "#{controller_name == 'home' ? 'active' : ''}"}
+          = link_to "征信中心", main_app.root_path
         - if current_user.present?
-          %li{class: "#{controller_name == 'home' ? 'active' : ''}"}
-            = link_to "征信中心", main_app.root_path
           %li{class: "#{["company_clients","credits"].index(controller_name)&&'active'||''}"}
             = link_to company_clients_path do
               %i{:class=>"fui-checkmark-16"}

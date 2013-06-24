@@ -24,12 +24,12 @@
                 = f.submit '添加企业', class: 'btn btn-primary'
                 = submit_tag '取消', :type => :reset, :class => "btn"
 
-        #upload-list-box.alert.tab-pane{class: selected(params[:tab], "upload-list-box")}
+        #upload-list-box.tab-pane{class: selected(params[:tab], "upload-list-box")}
           = render "importers/form",
             :file_label => "客户列表文件",
             :importer_class => CompanyClientImporter,
             :redirect_to => "/company_clients/new?tab=upload-list-box",
-            :template => {:excel=>"/template/客户导入模板.xls",:image=>"/template/demoinput.png" }
+            :template => {:excel=>"/template/客户导入.xls",:image=>"/template/demoinput.png" }
 
         /#upload-list-box2.tab-pane{class: selected(params[:tab], "upload-list-box2")}
         /  = render "importers/form",

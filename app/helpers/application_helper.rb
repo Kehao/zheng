@@ -46,7 +46,7 @@ module ApplicationHelper
   def edit_user_nav
       content_tag :ul,:class=>"nav nav-tabs" do
         concat (content_tag :li,(link_to "基本信息设置",edit_user_registration_path),:class => tab_class(:registrations))
-        concat (content_tag :li,(link_to "告警设置",edit_user_alarm_config_path),:class => tab_class(:alarm_configs))
+        #concat (content_tag :li,(link_to "告警设置",edit_user_alarm_config_path),:class => tab_class(:alarm_configs))
       end
   end
   

@@ -1,7 +1,7 @@
 %table.table.table-bordered.table-striped.table-hover{:class=>"fixed"}
   %col{:width=>"202px"}
   %col{:width=>"350px"}
-  %col{:width=>"150px"}
+  %col{:width=>"200px"}
   %col{:width=>"100px"}
   %thead
     %tr
@@ -33,18 +33,23 @@
     - if @company_clients.any?
       - @company_clients.each do |client|
         - c = client.company
-        %tr.one-company-in-tr{id: "company-#{c.id}"}
+        %tr.one-company-in-tr{id: dom_id(client)}
           %td.alarm
             = raw company_info_badges(client)
           %td.searchable.compay-name-in-list
             = link_to c.name, company_client_path(client,:page=>params[:page]) 
           %td
-            = c.area_desc
+            = area_name(c.region_code)
+            /= c.area_desc
 
           %td.searchable
             = c.owner_name
           %td.company-operations
-            = link_to "javascript:;", data: {rel: company_client_path(client)}, style: "display: none;" do
+            = link_to company_client_path(client),
+              :remote=>true, 
+              :method => :delete,
+              :data=>{:confirm=>"确定删除客户?"},
+              :style => "display: none;" do
               %i.text-error.icon-trash
 
     - elsif params[:q].present?

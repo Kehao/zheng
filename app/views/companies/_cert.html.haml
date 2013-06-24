@@ -21,8 +21,6 @@
     %tr.alert
       %th 所属地区
       %td= area_name(company.region_code)
-
-
     - cert_attrs.each do |attr|
       %tr
         %th= Cert.human_attribute_name(attr) 

@@ -8,7 +8,7 @@ class CompanyClientsController < ApplicationController
 
   def index  
     params[:tab] ||= "company-base"
-    @query = current_user.company_clients.includes(:company,:importer, company: :owner).search(query_params)
+    @query = current_user.company_clients.includes(:company => [:owner,:business,:cert]).search(query_params)
     @company_clients = @query.result.order("company_clients.id DESC").page(params[:page])
   end
 
@@ -75,9 +75,9 @@ class CompanyClientsController < ApplicationController
 
   def destroy
     @company_client = current_user.company_clients.find(params[:id])
-    current_user.company_clients.delete @company_client
+    @company_client.destroy
     respond_to do |f|
-      f.js { head :no_content }
+      f.js 
     end
   end
 

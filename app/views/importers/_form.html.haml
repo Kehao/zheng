@@ -1,4 +1,4 @@
-.upload-list-box
+.upload-list-box.alert.alert-info
   = simple_form_for Importer.new,:url => main_app.importers_path,html: {multipart: true,:class => 'form-horizontal'} do |f|
     %fieldset
       .form-inputs
@@ -19,14 +19,14 @@
 
 = render "importers/list_importers",:importer_class => importer_class,:redirect_to=>redirect_to
 
-- if template[:image]
-  .modal.hide{id: "template-png",style: "width:700px;height:600px"}
-    .modal-header
-      %button.close{data: {dismiss: "modal"}} ×
-      %h3
-        上传文件图示：
-    .modal-body
-      = image_tag template[:image]
+/- if template[:image]
+/  .modal.hide{id: "template-png"style: "width:700px;height:600px"}
+/    .modal-header
+/      %button.close{data: {dismiss: "modal"}} ×
+/      %h3
+/        上传文件图示：
+/    .modal-body
+/      = image_tag template[:image]
 //:javascript
 //  this.user_channel = "/user-#{current_user.id}";
 //= javascript_include_tag "#{FAYE_CONFIG['server']}.js"

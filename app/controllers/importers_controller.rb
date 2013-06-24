@@ -6,7 +6,7 @@ class ImportersController < ApplicationController
       @importer = import_class_string.constantize.new(params[:importer])
       @importer.user = current_user
       @importer.name = params[:importer][:file].original_filename
-      @importer.secure_token = @importer.file.send :secure_token
+      #@importer.secure_token = @importer.file.send :secure_token
 
       if @importer.save
         flash[:notice] = "上传成功，开始解析和载入；"

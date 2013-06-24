@@ -1,21 +1,26 @@
 #encoding: utf-8
 class CompanyClientImporter < Importer
 
-  has_many :company_clients, foreign_key:"importer_secure_token", primary_key: "secure_token", dependent: :destroy
-  has_many :companies, foreign_key:"importer_secure_token", primary_key:"secure_token"#, dependent: :destroy
+  has_many :company_clients, foreign_key:"importer_id", dependent: :destroy
+  has_many :companies, foreign_key:"importer_id"#dependent: :destroy
 
-  COLUMN = %w(company_name owner_name owner_number company_number company_code)
-  TITLE  = %w(企业名称 法人代表姓名 法人身份证号 营业执照编号 组织机构代码编号)
+  COLUMN = %w(company_name company_number owner_name owner_number)
+  TITLE  = %w(企业名称 工商注册号 法人姓名 法人身份证号)
 
   def faye_go_to_path
     "/company_clients/new?tab=upload-list-box"
   end
 
-  def row_pre_validations(row)
-   # if s(row[COLUMN.index("company_name")]).blank?
-   #   add_row_exception_msgs("#{TITLE[COLUMN.index("company_name")]}不能为空!")
-   # end
+  #def parser
+  #  @parser ||= RooExcel.new(self,"/Users/qiu/Downloads/企业模板.xls") 
+  #end
+
+  def check_import_file
+    unless parser.title.map(&:strip) == TITLE 
+      raise "请使用客户导入模板导入!属性为#{TITLE.join(",")}"
+    end
   end
+
 
   def import_row(row)
     company_attrs,owner_attrs = company_client_attrs(row)
@@ -26,11 +31,11 @@ class CompanyClientImporter < Importer
     row_valid?
   end
 
+
   def company_client_attrs(row)
     company_attrs = {
       name:   s(row[COLUMN.index("company_name")]),
       number: s(row[COLUMN.index("company_number")]),
-      code:   s(row[COLUMN.index("company_code")]),
       owner_name: s(row[COLUMN.index("owner_name")])
     }
     owner_attrs = {

@@ -1,4 +1,6 @@
 - if company.credit 
+  - if company.credit.operators.blank?
+    - company.credit.operators.build
   - company.credit.operators.each do |p|
     %table.table.table-striped.table-bordered
       - owner_attrs .each do |item|

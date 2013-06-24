@@ -3,15 +3,15 @@
     = f.fields_for :options do |opts|
       %p{:style=>"line-height:20px;"}
         案件状态
+        = opts.label :processing, :class => "checkbox inline" do
+          = opts.check_box :processing, :value => @new_exporter.options[:processing], :checked => true
+          执行中
         = opts.label :closed, :class => "checkbox inline" do
           = opts.check_box :closed, :value => @new_exporter.options[:closed]
           已结案
         = opts.label :other, :class => "checkbox inline" do
           = opts.check_box :other, :value => @new_exporter.options[:other]
           其他
-        = opts.label :processing, :class => "checkbox inline" do
-          = opts.check_box :processing, :value => @new_exporter.options[:processing], :checked => true
-          执行中
 
       = opts.input :region_name, :wrapper => :append, :label => "所属地区", required: false do
         = opts.input_field :region_name, class: "span2", value: "全部"
@@ -22,7 +22,7 @@
                                                         
       = opts.input :regist_date_after, as: :date, label: "从哪天之后", required: false, default: Date.today.years_ago(1) 
 
-    = f.submit "导出全部", class: "btn btn-info export_btn", data: {"loading-text" => "请求导出……"}
+    = f.submit "导出法务信息", class: "btn btn-info export_btn", data: {"loading-text" => "请求导出……"}
     /- f.submit "导出更新", class: "btn btn-info export_btn", data: {"loading-text" => "请求导出……"}, disabled: true
 
 .span5.pull-left

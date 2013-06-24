@@ -18,17 +18,6 @@ module ImportMethods
     def search_company(company_attrs)
       return nil if company_attrs[:name].blank?
       Company.where(name: company_attrs[:name].strip).first
-
-     # return nil if company_attrs.blank? or company_attrs.values.all?(&:blank?) 
-     # conditions =
-     #   [:name].inject({}) do |condition,attr|
-     #   if company_attrs[attr] && !company_attrs[attr].blank? 
-     #     company_attrs[attr].strip! if company_attrs[attr].respond_to? :strip!
-     #     condition.merge! "#{attr}_eq".intern => company_attrs[attr]
-     #   end
-     #   condition
-     #   end
-     # Company.search(conditions.merge(:m => "or")).result.first
     end
 
     # = person_attrs
@@ -64,7 +53,7 @@ module ImportMethods
 
     def import_company(company_attrs,importer)
       company = Company.new(company_attrs)
-      company.importer_secure_token = importer && importer.secure_token || nil
+      company.importer_id = importer && importer.id || nil
       company.create_way = Company::CREATE_WAY[:import]
       company.save
       company
@@ -78,6 +67,10 @@ module ImportMethods
     end
   end
 
+
+  #
+  #  instance_methods
+  #
   def search_or_create_company(company_attrs)
     self.class.search_or_create_company(company_attrs,self)
   end
@@ -94,14 +87,13 @@ module ImportMethods
     self.class.import_person(person_attrs,self)
   end
 
-
   def import_company_client(company)
     company_client = self.user.company_clients.where(company_id:company.id).first
 
     unless company_client
       company_client = self.user.company_clients.new
       company_client.company = company
-      company_client.importer_secure_token = self.secure_token
+      company_client.importer_id = self.id
       company_client.save
     end
     end_import(company_client)
@@ -120,7 +112,7 @@ module ImportMethods
   def import_client_company_relationship(company_client,relationship_attrs,company)
     relate_type = RelationshipImporter.relate_type(relationship_attrs[:relate_type])
     rela = company_client.company_relationships.create(
-      :importer_secure_token => self.secure_token,
+      :importer_id => self.id,
       :desc => relationship_attrs[:desc],
       :hold_percent => relationship_attrs[:hold_percent],
       :relate_type => relate_type,
@@ -132,7 +124,7 @@ module ImportMethods
   def import_client_person_relationship(company_client,relationship_attrs,person)
     relate_type = RelationshipImporter.relate_type(relationship_attrs[:relate_type])
     rela = company_client.person_relationships.create(
-      :importer_secure_token => self.secure_token,
+      :importer_id => self.id,
       :desc => relationship_attrs[:desc],
       :hold_percent => relationship_attrs[:hold_percent],
       :relate_type => relate_type,
@@ -148,6 +140,37 @@ module ImportMethods
       add_row_exception_msgs("导入[#{human_name}]失败:#{msg}")
     end
     record
+  end
+
+  def import_data_source_and_data_item(company_client,data_source_attrs,data_item_attrs)
+    data_source = search_or_create_company_client_data_source(company_client,data_source_attrs)
+
+    if row_valid?
+      import_data_item(data_source,data_item_attrs)
+    end
+    row_valid?
+  end
+
+  def search_or_create_company_client_data_source(company_client,data_source_attrs)
+    unless data_source_attrs[:identify].blank?
+      data_source = company_client.elec_data_sources.where(data_source_attrs).first
+    else
+      data_source = company_client.elec_data_sources.default
+    end
+    unless data_source
+      data_source = import_data_source(company_client,data_source_attrs)
+    end
+    data_source 
+  end
+
+  def import_data_source(company_client,data_source_attrs)
+      data_source = company_client.elec_data_sources.create(data_source_attrs.merge(:importer_id=>self.id)) 
+      end_import(data_source)
+  end
+
+  def import_data_item(data_source,data_item_attrs)
+      data_item=data_source.data_items.create(data_item_attrs.merge(:importer_id=>self.id,:status=>"other")) 
+      end_import(data_item)
   end
 
   def import_company_and_company_client(company_attrs)
