@@ -39,7 +39,7 @@ class Business < ActiveRecord::Base
 
   def scale_percent
     return 0 if scale.blank?
-    rst = (scale + 0.0) / (Cert.count - Cert.where(regist_capital: nil).count)
+    rst = (scale + 0.0) / (@@a||=(Cert.count - Cert.where(regist_capital: nil).count))
     rst = 100 - (rst.round(2)*100).to_i
   end
   def scale_score
@@ -48,7 +48,7 @@ class Business < ActiveRecord::Base
 
   def credit_percent
     return 0 if credit.blank?
-    rst = (credit + 0.0) / (Company.where(court_crawled: true).count)
+    rst = (credit + 0.0) / (@@b||=Company.where(court_crawled: true).count)
     rst = 100 - (rst.round(2)*100).to_i
   end
   def credit_score
@@ -57,7 +57,7 @@ class Business < ActiveRecord::Base
 
   def sales_percent
     return 0 if sales.blank?
-    rst = (sales + 0.0) / (Business.where("sales IS NOT NULL").count)
+    rst = (sales + 0.0) / (@@c||=Business.where("sales IS NOT NULL").count)
     rst = 100 - (rst.round(2)*100).to_i
   end
   def sales_score
@@ -66,7 +66,7 @@ class Business < ActiveRecord::Base
 
   def profit_percent
     return 0 if profit.blank?
-    rst = (profit + 0.0) / (Business.where("profit IS NOT NULL").count)
+    rst = (profit + 0.0) / (@@d||=Business.where("profit IS NOT NULL").count)
     rst = 100 - (rst.round(2)*100).to_i
   end
   def profit_score
