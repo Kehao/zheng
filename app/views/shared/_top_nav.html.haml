@@ -10,11 +10,11 @@
               %i{:class=>"fui-checkmark-16"}
               征 信
 
-          - if current_user.role.name != "member"
-            %li{class: "#{controller_name == 'statistics' ? 'active' : ''}"}
-              = link_to  main_app.statistics_path do
-                %i{:class=>"fui-eye-16"}
-                监 测
+          %li{class: "#{controller_name == 'statistics' ? 'active' : ''}"}
+            = link_to  main_app.statistics_path do
+              %i{:class=>"fui-eye-16"}
+              监 测
+
           %li{class: "#{controller_name == 'seeks' ? 'active' : ''}"}
             = link_to seeks_path do 
               %i{:class=>"fui-menu-16"}
