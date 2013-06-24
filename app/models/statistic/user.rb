@@ -1,6 +1,12 @@
 # encoding: utf-8
 module Statistic
   module User
+    def stats_all
+      {
+        :stats_companies_court
+      }
+
+    end
     # === Statistics format
     #
     #  {
@@ -371,7 +377,7 @@ module Statistic
 
     def status_baic_companies(group_by)
       result = {:categores =>[],:percent=>[],:count=>[],:total=>[]}
-      companies = self.companies.includes(:cert) 
+      companies = self.companies.includes(:business,:cert) 
       return result if companies.blank? 
 
       companies_size = companies.size
@@ -506,7 +512,7 @@ module Statistic
 
     def stats_business_average_companies_by_nature_yearly(attr)
       result = {}
-      companies = self.companies.includes(:business)
+      companies = self.companies.includes(:cert,:business)
       return result if companies.blank?
 
       (companies.group_by &:company_type).each do |company_type,comps|

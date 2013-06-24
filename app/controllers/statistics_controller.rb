@@ -47,7 +47,6 @@ class StatisticsController < ApplicationController
       else
         Date.today.at_end_of_month
       end
-
     @companies_court_by_reg_date = current_user.stats_companies_court_by_reg_date(@start_month_beginning,@end_month_end)
   end
 
@@ -96,65 +95,72 @@ class StatisticsController < ApplicationController
   def chart_companies_court_by_apply_money
   end
 
+  def cache_result(type,result)
+    @@stats ||= {}
+    @@stats[current_user.id] ||= {} 
+    @@stats[current_user.id][type] ||= result 
+    @@stats[current_user.id][type]
+  end
+
   def chart_companies_credit
-    @companies_credit = current_user.stats_basic_companies_credit
+    @companies_credit = cache_result(:stats_basic_companies_credit,current_user.stats_basic_companies_credit)
   end
 
   def chart_companies_nature
-    @companies_nature = current_user.stats_basic_companies_nature
+    @companies_nature = cache_result(:stats_basic_companies_nature,current_user.stats_basic_companies_nature)
   end
 
   def chart_companies_industry
-    @companies_industry = current_user.stats_basic_companies_industry
+    @companies_industry = cache_result(:stats_basic_companies_industry,current_user.stats_basic_companies_industry)
   end
 
   def chart_company_clients
-    @company_clients = current_user.stats_basic_company_clients
+    @company_clients = cache_result(:stats_basic_company_clients,current_user.stats_basic_company_clients)
   end
 
   def chart_companies_regist_capital_by_industry
-    @companies_regist_capital_by_industry = current_user.stats_basic_companies_regist_capital_by_industry 
+    @companies_regist_capital_by_industry = cache_result(:stats_basic_companies_regist_capital_by_industry,current_user.stats_basic_companies_regist_capital_by_industry)
   end
 
   def chart_companies_regist_capital_by_nature
-    @companies_regist_capital_by_nature = current_user.stats_basic_companies_regist_capital_by_nature 
+    @companies_regist_capital_by_nature = cache_result(:stats_basic_companies_regist_capital_by_nature,current_user.stats_basic_companies_regist_capital_by_nature)
   end
 
   def chart_companies_regist_capital_yearly
-    @companies_regist_capital_yearly = current_user.stats_basic_companies_regist_capital_yearly 
+    @companies_regist_capital_yearly = cache_result(:stats_basic_companies_regist_capital_yearly,current_user.stats_basic_companies_regist_capital_yearly)
   end
 
   def chart_average_companies_worker_number_yearly
-    @average_companies_worker_number_yearly = current_user.stats_business_average_companies_worker_number_yearly 
+    @average_companies_worker_number_yearly = cache_result(:stats_business_average_companies_worker_number_yearly,current_user.stats_business_average_companies_worker_number_yearly )
   end
 
   def chart_income
     if params[:subtab].eql?("income_by_nature")
-      @average_companies_income_by_nature_yearly = current_user.stats_business_average_companies_income_by_nature_yearly 
+      @average_companies_income_by_nature_yearly = cache_result(:stats_business_average_companies_income_by_nature_yearly,current_user.stats_business_average_companies_income_by_nature_yearly )
     elsif params[:subtab].eql?("income_by_industry")
-      @average_companies_income_by_industry_yearly = current_user.stats_business_average_companies_income_by_industry_yearly 
+      @average_companies_income_by_industry_yearly = cache_result(:stats_business_average_companies_income_by_industry_yearly,current_user.stats_business_average_companies_income_by_industry_yearly )
     else
-      @companies_income_total_yearly = current_user.stats_business_companies_income_total_yearly 
+      @companies_income_total_yearly = cache_result(:stats_business_companies_income_total_yearly,current_user.stats_business_companies_income_total_yearly )
     end
   end
 
   def chart_assets
     if params[:subtab].eql?("assets_by_nature")
-      @average_companies_assets_by_nature_yearly = current_user.stats_business_average_companies_assets_by_nature_yearly 
+      @average_companies_assets_by_nature_yearly = cache_result(:stats_business_average_companies_assets_by_nature_yearly,current_user.stats_business_average_companies_assets_by_nature_yearly )
     elsif params[:subtab].eql?("assets_by_industry")
-      @average_companies_assets_by_industry_yearly = current_user.stats_business_average_companies_assets_by_industry_yearly 
+      @average_companies_assets_by_industry_yearly = cache_result(:stats_business_average_companies_assets_by_industry_yearly,current_user.stats_business_average_companies_assets_by_industry_yearly )
     else
-      @companies_assets_total_yearly = current_user.stats_business_companies_assets_total_yearly 
+      @companies_assets_total_yearly = cache_result(:stats_business_companies_assets_total_yearly,current_user.stats_business_companies_assets_total_yearly )
     end
   end
   
   def chart_profit
     if params[:subtab].eql?("profit_by_nature")
-      @average_companies_profit_by_nature_yearly = current_user.stats_business_average_companies_profit_by_nature_yearly 
+      @average_companies_profit_by_nature_yearly = cache_result(:stats_business_average_companies_profit_by_nature_yearly,current_user.stats_business_average_companies_profit_by_nature_yearly )
     elsif params[:subtab].eql?("profit_by_industry")
-      @average_companies_profit_by_industry_yearly = current_user.stats_business_average_companies_profit_by_industry_yearly 
+      @average_companies_profit_by_industry_yearly = cache_result(:stats_business_average_companies_profit_by_industry_yearly,current_user.stats_business_average_companies_profit_by_industry_yearly )
     else
-      @companies_profit_total_yearly = current_user.stats_business_companies_profit_total_yearly 
+      @companies_profit_total_yearly = cache_result(:stats_business_companies_profit_total_yearly,current_user.stats_business_companies_profit_total_yearly )
     end
   end
 
