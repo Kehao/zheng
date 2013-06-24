@@ -1,12 +1,6 @@
 # encoding: utf-8
 module Statistic
   module User
-    def stats_all
-      {
-        :stats_companies_court
-      }
-
-    end
     # === Statistics format
     #
     #  {
