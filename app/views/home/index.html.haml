@@ -5,13 +5,13 @@
     .alert.alert-info
       .title
         %h4 平台数据库统计
-        %p{:style=>"margin-top:10px"}
-          系统中企业数量
-          = @companies_cont
-          ,系统企业总资产 ￥
-          = Cert.sum(:regist_capital_amount).round(2)
-          ,系统企业GDP贡献值 ￥
-          = Business.sum(:income_of_last_year).round(2)
+        /%p{:style=>"margin-top:10px"}
+        /系统中企业数量
+        /= @companies_cont
+        /,系统企业总资产 ￥
+        /= Cert.sum(:regist_capital_amount).round(2)
+        /,系统企业GDP贡献值 ￥
+        /= Business.sum(:income_of_last_year).round(2)
     .home-chart
       = render "companies_credit"
         
