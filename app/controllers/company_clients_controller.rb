@@ -8,7 +8,7 @@ class CompanyClientsController < ApplicationController
 
   def index  
     params[:tab] ||= "company-base"
-    @query = current_user.company_clients.includes(:company => [:owner,:business,:cert]).search(query_params)
+    @query = current_user.company_clients.includes(:company => [:owner,:business,:cert,:credit]).search(query_params)
     @company_clients = @query.result.order("company_clients.id DESC").page(params[:page])
   end
 

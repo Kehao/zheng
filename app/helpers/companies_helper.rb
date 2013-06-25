@@ -83,13 +83,24 @@ def contact_attrs
       end
       if can? :read, Cert #cert badge
         desc_string = '经营'
+        if company.business
+          value_size = company.business.attributes.values.compact.size
+        end
+        status = []
+        if company.business.nil? || value_size < 4 
+          status = ["","数据为空"]
+        elsif company.business && value_size < 20 
+          status = ["warning","数据不完整"]
+        elsif company.business && value_size > 20 
+          status = ["success","数据完整"]
+        end
         haml_tag :span,
                  link_to(desc_string, 
-                         company_client_path(client,:tab=>"company-opt"), 
-                          title: idinfo_status_title(company)),
-                 # rel: "tooltip", 
+                         company_client_path(client,:tab=>"company-finance"), 
+                          title: status[1]),
+                 # rel: "tooltip", ))
                  # data: {placement: "right"}, 
-                 class: "badge badge-#{badge_class_name(company.idinfo_status)}"
+                 class: "badge badge-#{status[0]}"
 
       end
       if can? :read, Crime #court badge

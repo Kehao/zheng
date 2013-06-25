@@ -35,9 +35,9 @@ module CompanyClientsHelper
     context = ""
     
     if can? :read, Cert
-      if company.idinfo_status == "warning"
-        context += "工商信息不完整；"
-      elsif company.idinfo_status == "important"
+      #if company.idinfo_status == "warning"
+      #  context += "工商信息不完整；"
+      if company.idinfo_status == "important"
         context += "无法检索到工商信息；"
       end
     end
