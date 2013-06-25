@@ -10,7 +10,7 @@ class CompanyClient < ActiveRecord::Base
 
   validates :company_id, presence: true
 
-  belongs_to :importer, :primary_key => "secure_token", :foreign_key => "importer_secure_token"
+  belongs_to :importer,  :foreign_key => "importer_id"
 
   has_many :company_relationships, class_name: "ClientCompanyRelationship", as: :client, dependent: :destroy
   has_many :person_relationships,  class_name: "ClientPersonRelationship",  as: :client, dependent: :destroy
