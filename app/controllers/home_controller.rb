@@ -9,6 +9,8 @@ class HomeController < ApplicationController
 
     @company_client = current_user.company_clients.new
     @company_client.company = Company.new
-    @companies_credit = current_user.stats_basic_companies_credit
+    @companies_credit = StatisticsController.cache_result(current_user.id,:stats_basic_companies_credit) do
+        current_user.stats_basic_companies_credit
+    end
   end
 end

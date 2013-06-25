@@ -1,6 +1,18 @@
 # encoding: utf-8
 class StatisticsController < ApplicationController
-  @@stats = {}
+  cattr_accessor :stats do
+    {}
+  end
+  class << self
+    def cache_result(user_id,type)
+      stats[user_id] ||= {} 
+      stats[user_id][type] ||= yield 
+      stats[user_id][type]
+    end
+  end
+  def cache_result(user_id=current_user.id,type,&block)
+    self.class.cache_result(user_id,type,&block)
+  end
   include StatisticsHelper
   respond_to :json, :html, :xml
 
@@ -96,12 +108,7 @@ class StatisticsController < ApplicationController
   def chart_companies_court_by_apply_money
   end
 
-  def cache_result(type)
-    @@stats[current_user.id] ||= {} 
-    @@stats[current_user.id][type] ||= yield 
-    @@stats[current_user.id][type]
-  end
-
+  
   def chart_companies_credit
     @companies_credit = cache_result(:stats_basic_companies_credit) do
       current_user.stats_basic_companies_credit
@@ -109,19 +116,19 @@ class StatisticsController < ApplicationController
   end
 
   def chart_companies_nature
-    @companies_nature = cache_result(:stats_basic_companies_nature) do
+    @companies_nature = cache_result(:stats_basic_companies_nature)do
       current_user.stats_basic_companies_nature
     end
   end
 
   def chart_companies_industry
-    @companies_industry = cache_result(:stats_basic_companies_industry do 
+    @companies_industry = cache_result(:stats_basic_companies_industry) do 
       current_user.stats_basic_companies_industry
     end
   end
 
   def chart_company_clients
-    @company_clients = cache_result(:stats_basic_company_clients do 
+    @company_clients = cache_result(:stats_basic_company_clients) do 
       current_user.stats_basic_company_clients
     end
   end
@@ -189,7 +196,7 @@ class StatisticsController < ApplicationController
         current_user.stats_business_average_companies_profit_by_nature_yearly 
       end
     elsif params[:subtab].eql?("profit_by_industry")
-      @average_companies_profit_by_industry_yearly = cache_result(:stats_business_average_companies_profit_by_industry_yearly do 
+      @average_companies_profit_by_industry_yearly = cache_result(:stats_business_average_companies_profit_by_industry_yearly) do 
         current_user.stats_business_average_companies_profit_by_industry_yearly 
       end
     else
