@@ -8,7 +8,7 @@ module Reporter
 
     configure do |config| 
       #config.request_url = 'http://192.168.1.151:8080/crm/dealSkyEyeRiskWarn.action'
-      config.request_url = 'http://crm.qqw.com.cn/dealSkyEyeRiskWarn.action'
+      #config.request_url = 'http://crm.qqw.com.cn/dealSkyEyeRiskWarn.action'
       config.after_ok = lambda do |message|
         message.event.sent_to_apollo = true
         message.event.save

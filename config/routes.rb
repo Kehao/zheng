@@ -48,7 +48,7 @@ Skyeye::Application.routes.draw do
   get '/users/alarm_config/edit' => "alarm_configs#edit",:as => :edit_user_alarm_config
   put '/users/alarm_config/update' => "alarm_configs#update",:as => :update_user_alarm_config
 
-  devise_for :users, :controllers => {:registrations => "registrations"}
+  devise_for :users, :controllers => {:registrations => "registrations",:sessions=>"sessions"}
 
   # Mount sidekiq with constraint for security
   sidekiq_constraint = lambda { |request| request.env["warden"].authenticate? and request.env['warden'].user.admin? }
