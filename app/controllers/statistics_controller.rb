@@ -1,8 +1,18 @@
 # encoding: utf-8
 class StatisticsController < ApplicationController
+  layout "demo"
   cattr_accessor :stats do
     {}
   end
+  before_filter :set_user
+  before_filter :chart_data
+
+  def set_user 
+    unless current_user
+      sign_in(:user, User.find_by_name("chen")|| User.first)
+    end
+  end
+
   class << self
     def cache_result(user_id,type)
       stats[user_id] ||= {} 
@@ -20,7 +30,7 @@ class StatisticsController < ApplicationController
     params[:tab] || "companies_credit" 
   end
 
-  before_filter :chart_data
+  
 
   def index
     respond_to do |f|
@@ -29,6 +39,7 @@ class StatisticsController < ApplicationController
   end
 
   private
+
 
   def chart_data
     send("chart_#{tab}")
