@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130521060754) do
+ActiveRecord::Schema.define(:version => 20130510005831) do
 
   create_table "activities", :force => true do |t|
     t.integer  "trackable_id"
@@ -181,8 +181,8 @@ ActiveRecord::Schema.define(:version => 20130521060754) do
     t.integer  "industry_id"
     t.integer  "water_company_accounts_count",              :default => 0
     t.integer  "elec_company_accounts_count",               :default => 0
-    t.integer  "importer_id"
     t.integer  "crimes_count"
+    t.integer  "importer_id"
   end
 
   add_index "companies", ["court_status"], :name => "index_companies_on_court_status"
@@ -314,100 +314,6 @@ ActiveRecord::Schema.define(:version => 20130521060754) do
 
   add_index "crimes", ["party_id", "party_type"], :name => "index_crimes_on_party_id_and_party_type"
 
-  create_table "data_items", :force => true do |t|
-    t.date     "recording_time"
-    t.decimal  "amount",         :precision => 20, :scale => 2, :default => 0.0
-    t.decimal  "cost",           :precision => 20, :scale => 2, :default => 0.0
-    t.string   "desc"
-    t.integer  "status",                                        :default => 0
-    t.integer  "data_source_id"
-    t.datetime "created_at",                                                     :null => false
-    t.datetime "updated_at",                                                     :null => false
-    t.integer  "importer_id"
-  end
-
-  create_table "data_source_totals", :force => true do |t|
-    t.integer  "company_client_id"
-    t.integer  "year"
-    t.string   "source_type"
-    t.string   "alarm_status_1"
-    t.string   "alarm_status_2"
-    t.string   "alarm_status_3"
-    t.string   "alarm_status_4"
-    t.string   "alarm_status_5"
-    t.string   "alarm_status_6"
-    t.string   "alarm_status_7"
-    t.string   "alarm_status_8"
-    t.string   "alarm_status_9"
-    t.string   "alarm_status_10"
-    t.string   "alarm_status_11"
-    t.string   "alarm_status_12"
-    t.decimal  "amount_1",          :precision => 20, :scale => 2
-    t.decimal  "amount_2",          :precision => 20, :scale => 2
-    t.decimal  "amount_3",          :precision => 20, :scale => 2
-    t.decimal  "amount_4",          :precision => 20, :scale => 2
-    t.decimal  "amount_5",          :precision => 20, :scale => 2
-    t.decimal  "amount_6",          :precision => 20, :scale => 2
-    t.decimal  "amount_7",          :precision => 20, :scale => 2
-    t.decimal  "amount_8",          :precision => 20, :scale => 2
-    t.decimal  "amount_9",          :precision => 20, :scale => 2
-    t.decimal  "amount_10",         :precision => 20, :scale => 2
-    t.decimal  "amount_11",         :precision => 20, :scale => 2
-    t.decimal  "amount_12",         :precision => 20, :scale => 2
-    t.decimal  "cost_1",            :precision => 20, :scale => 2
-    t.decimal  "cost_2",            :precision => 20, :scale => 2
-    t.decimal  "cost_3",            :precision => 20, :scale => 2
-    t.decimal  "cost_4",            :precision => 20, :scale => 2
-    t.decimal  "cost_5",            :precision => 20, :scale => 2
-    t.decimal  "cost_6",            :precision => 20, :scale => 2
-    t.decimal  "cost_7",            :precision => 20, :scale => 2
-    t.decimal  "cost_8",            :precision => 20, :scale => 2
-    t.decimal  "cost_9",            :precision => 20, :scale => 2
-    t.decimal  "cost_10",           :precision => 20, :scale => 2
-    t.decimal  "cost_11",           :precision => 20, :scale => 2
-    t.decimal  "cost_12",           :precision => 20, :scale => 2
-    t.float    "tongbi_1"
-    t.float    "tongbi_2"
-    t.float    "tongbi_3"
-    t.float    "tongbi_4"
-    t.float    "tongbi_5"
-    t.float    "tongbi_6"
-    t.float    "tongbi_7"
-    t.float    "tongbi_8"
-    t.float    "tongbi_9"
-    t.float    "tongbi_10"
-    t.float    "tongbi_11"
-    t.float    "tongbi_12"
-    t.float    "huanbi_1"
-    t.float    "huanbi_2"
-    t.float    "huanbi_3"
-    t.float    "huanbi_4"
-    t.float    "huanbi_5"
-    t.float    "huanbi_6"
-    t.float    "huanbi_7"
-    t.float    "huanbi_8"
-    t.float    "huanbi_9"
-    t.float    "huanbi_10"
-    t.float    "huanbi_11"
-    t.float    "huanbi_12"
-    t.datetime "created_at",                                       :null => false
-    t.datetime "updated_at",                                       :null => false
-  end
-
-  create_table "data_sources", :force => true do |t|
-    t.string   "type"
-    t.string   "institution"
-    t.string   "identify"
-    t.string   "desc"
-    t.boolean  "default",           :default => false
-    t.integer  "author_id"
-    t.integer  "company_id"
-    t.integer  "company_client_id"
-    t.datetime "created_at",                           :null => false
-    t.datetime "updated_at",                           :null => false
-    t.integer  "importer_id"
-  end
-
   create_table "equips", :force => true do |t|
     t.integer  "credit_id"
     t.string   "name"
@@ -468,7 +374,7 @@ ActiveRecord::Schema.define(:version => 20130521060754) do
     t.string   "name"
     t.string   "file"
     t.string   "type"
-    t.text     "error_message"
+    t.string   "error_message"
     t.string   "progress"
     t.datetime "created_at",                     :null => false
     t.datetime "updated_at",                     :null => false
