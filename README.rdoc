@@ -1,4 +1,3 @@
-     # 企业经营情况
       t.integer   :company_worker_number
       t.string    :company_sales_area
       t.float     :company_income_of_last_year
