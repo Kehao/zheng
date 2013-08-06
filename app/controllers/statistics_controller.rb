@@ -10,7 +10,7 @@ class StatisticsController < ApplicationController
 
   def set_user 
     unless current_user
-      sign_in(:user, User.find_by_name("chen")|| User.first)
+      sign_in(:user, User.find_by_name("chen") || User.first)
     end
   end
 
