@@ -1,9 +1,11 @@
 # encoding: utf-8
 class StatisticsController < ApplicationController
   layout "demo"
+
   cattr_accessor :stats do
     {}
   end
+  skip_before_filter :authenticate_user!
   before_filter :set_user
   before_filter :chart_data
 
