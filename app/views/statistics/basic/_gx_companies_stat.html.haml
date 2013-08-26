@@ -1,0 +1,66 @@
+#basic_gx_companies_stat
+%table.table.table-striped.table-bordered.table-condensed
+  %tr
+    %th 等级 
+    %th 筛查总数（家）
+    %th 属于等级（家）
+    %th 所占比例 
+
+  - @gx_companies_stat[:categores].each_with_index do |categore,index|
+    %tr
+      %td= categore 
+      %td= @gx_companies_stat[:total][index]
+      %td= @gx_companies_stat[:count][index]
+      %td= @gx_companies_stat[:percent][index]
+
+
+
+:javascript
+  gx_companies_stat = #{@gx_companies_stat[:categores].zip(@gx_companies_stat[:percent])}
+  $(function () {
+        $('#basic_gx_companies_stat').highcharts({
+            chart: {
+                plotBackgroundColor: "#eee",
+                borderWidth:1,
+                borderColor:"#dddddd",
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: true
+            },
+            credits: {
+              href: "http://radar.sme.gov.cn/",
+              text: "征信中心"
+            },
+            title: {
+                text: '今年(2013)区高新企业统计'
+            },
+            tooltip: {
+              formatter: function(){
+                return '<b>'+ this.point.name +'</b>: '+ this.percentage.toFixed(2) +' %';
+              }
+        	/*pointFormat: '{series.name}: <b>{point.percentage}%</b>'*/
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        color: '#000000',
+                        connectorColor: '#000000',
+                        formatter: function() {
+                            return '<b>'+ this.point.name +'</b>: '+ this.percentage.toFixed(2) +' %';
+                        }, 
+                    },
+                    showInLegend: true
+                }
+            },
+            series: [{
+                type: 'pie',
+                name: '占总数',
+                data: gx_companies_stat
+            }]
+        });
+    });
+   
+

@@ -1,0 +1,66 @@
+#basic_gx_three_years_tech_total
+%table.table.table-striped.table-bordered.table-condensed
+  %tr
+    %th 等级 
+    %th 筛查总数（家）
+    %th 属于等级（家）
+    %th 所占比例 
+
+  - @gx_three_years_tech_total[:categores].each_with_index do |categore,index|
+    %tr
+      %td= categore 
+      %td= @gx_three_years_tech_total[:total][index]
+      %td= @gx_three_years_tech_total[:count][index]
+      %td= @gx_three_years_tech_total[:percent][index]
+
+
+
+:javascript
+  gx_three_years_tech_total = #{@gx_three_years_tech_total[:categores].zip(@gx_three_years_tech_total[:percent])}
+  $(function () {
+        $('#basic_gx_three_years_tech_total').highcharts({
+            chart: {
+                plotBackgroundColor: "#eee",
+                borderWidth:1,
+                borderColor:"#dddddd",
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: true
+            },
+            credits: {
+              href: "http://radar.sme.gov.cn/",
+              text: "征信中心"
+            },
+            title: {
+                text: '3年新增专利统计'
+            },
+            tooltip: {
+              formatter: function(){
+                return '<b>'+ this.point.name +'</b>: '+ this.percentage.toFixed(2) +' %';
+              }
+        	/*pointFormat: '{series.name}: <b>{point.percentage}%</b>'*/
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        color: '#000000',
+                        connectorColor: '#000000',
+                        formatter: function() {
+                            return '<b>'+ this.point.name +'</b>: '+ this.percentage.toFixed(2) +' %';
+                        }, 
+                    },
+                    showInLegend: true
+                }
+            },
+            series: [{
+                type: 'pie',
+                name: '占总数',
+                data: gx_three_years_tech_total
+            }]
+        });
+    });
+   
+

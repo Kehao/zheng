@@ -1,0 +1,59 @@
+#gx_average_companies_loan_yearly.chart-height{:style=>"height:400px"}
+:javascript
+  s_dates=#{@gx_average_companies_loan_yearly.keys}
+  s_values=#{@gx_average_companies_loan_yearly.values}
+  $(function () {
+        $('#gx_average_companies_loan_yearly').highcharts({
+            chart: {
+                type: 'spline',
+                marginRight: 130,
+                marginBottom: 70, 
+                plotBackgroundColor: "#dddddd",
+                borderWidth:1,
+                borderColor:"#dddddd"
+            },
+            credits: {
+              href: "http://radar.sme.gov.cn/",
+              text: "征信中心"
+            },
+
+            title: {
+              text: '#{@gx_average_companies_loan_yearly.keys.first}到#{@gx_average_companies_loan_yearly.keys.last}',
+                x: -20 //center
+            },
+            subtitle: {
+                text: '科技企业年度平均贷款金额（万元）',
+                x: -20
+            },
+            xAxis: {
+              labels: {rotation: -25,	align: 'right',	style: { font: 'normal 13px Verdana, sans-serif'}},
+              categories: s_dates 
+            },
+            yAxis: {
+                title: {
+                    text: '金额(万元)'
+                },
+                plotLines: [{
+                    value: 0,
+                    width: 1,
+                    color: '#808080'
+                }]
+            },
+            tooltip: {
+                valueSuffix: '万'
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'top',
+                x: -10,
+                y: 100,
+                borderWidth: 0
+            },
+            series: [{
+                name: '万元',
+                data: s_values
+            }]
+        });
+    });
+    

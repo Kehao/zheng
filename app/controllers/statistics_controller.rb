@@ -217,7 +217,52 @@ class StatisticsController < ApplicationController
       end
     end
   end
+  #gx
+  def chart_gx_companies_yearly
+    @gx_companies_yearly = {"前年(2011)" => 16,"去年(2012)" => 20,"今年(2013)" => 40}
+  end
 
+  def chart_gx_province_companies_yearly
+    @gx_province_companies_yearly = {"前年(2011)" => 2,"去年(2012)" => 4,"今年(2013)" => 8}
+  end
+
+  def chart_gx_state_companies_yearly
+    @gx_state_companies_yearly = {"前年(2011)" => 1,"去年(2012)" => 2,"今年(2013)" => 3}
+  end
+
+  def chart_gx_companies_stat
+    @gx_companies_stat = {
+      :categores=>["国家级高新技术企业", "省级高新技术企业","其它"],
+      :percent=>[(3.0/40).round(2),(8.0/40).round(2),(29.0/40).round(2)],
+      :count=>[3, 8, 29],
+      :total=>[40, 40,40]}
+  end
+    
+  def chart_gx_average_companies_income_by_industry_yearly
+    @average_companies_income_by_industry_yearly = cache_result(:stats_business_average_companies_income_by_industry_yearly) do
+      current_user.stats_business_average_companies_income_by_industry_yearly 
+    end
+  end
+
+  def chart_gx_average_companies_loan_yearly
+    @gx_average_companies_loan_yearly = {"前年(2011)" => 150,"去年(2012)" => 180,"今年(2013)" => 200 }
+  end
+
+  def chart_gx_companies_need_loan_yearly
+    @gx_companies_need_loan_yearly = {
+      :categores=>["希望创投机构介入", "希望获得金融机构贷款","已经获得科技贷款","已经获得科技保险","其它需求"],
+      :percent=>[(3.0/27).round(2),(8.0/27).round(2),(9.0/27).round(2),(5.0/27).round(2),(2.0/27).round(2)],
+      :count=>[3, 8, 9, 5, 2],
+      :total=>[27,27,27,27,27]}
+  end
+
+  def chart_gx_three_years_tech_total
+    @gx_three_years_tech_total = {
+      :categores=>["发明专利", "实用新型","外观设计","软件著作权","集成电路布图设计专有权","植物新品种","其他"],
+      :percent=>[(4.0/42).round(2),(8.0/42).round(2),(9.0/42).round(2),(5.0/42).round(2),(4.0/42).round(2),(10.0/42).round(2),(12.0/42).round(2)],
+      :count=>[4, 8, 9, 5, 4,10,12],
+      :total=>[42,42,42,42,42,42]}
+  end
 
 
   def convert_date(options,attr_name)

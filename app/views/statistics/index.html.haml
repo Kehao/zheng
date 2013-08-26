@@ -6,7 +6,6 @@
   .span3.pull-right
     %ul.nav.nav-list.company_nav
       %h4 基本情况分析
-
       %li{class: "#{tab == 'companies_credit' ? 'active' : ''}"}
         = link_to "企业信用等级分布",basic_statistics_path(:tab=>"companies_credit")
       %li{class: "#{tab == 'companies_nature' ? 'active' : ''}"}
@@ -21,6 +20,23 @@
         = link_to "企业资本行业分布",basic_statistics_path(:tab=>"companies_regist_capital_by_industry")
       %li{class: "#{tab == 'companies_regist_capital_yearly' ? 'active' : ''}"}
         = link_to "企业资本趋势",basic_statistics_path(:tab=>"companies_regist_capital_yearly")
+      %h4 高新区技术企业统计
+      %li
+        = link_to "高新区企业入驻情况",basic_statistics_path(:tab=>"gx_companies_yearly")
+        = link_to "省级高新技术企业",basic_statistics_path(:tab=>"gx_province_companies_yearly")
+        = link_to "国家级高新技术企业",basic_statistics_path(:tab=>"gx_state_companies_yearly")
+        = link_to "区高新企业统计",basic_statistics_path(:tab=>"gx_companies_stat")
+      %h4 科技贷款状况
+      %li
+        = link_to "科技企业年度平均销售收入（万元）",basic_statistics_path(:tab=>"gx_average_companies_income_by_industry_yearly")
+        = link_to "科技企业年度平均贷款金额（万元）",basic_statistics_path(:tab=>"gx_average_companies_loan_yearly")
+      %h4 企业融资需求
+      %li
+        = link_to "企业融资需求分布",basic_statistics_path(:tab=>"gx_companies_need_loan_yearly")
+
+      %h4 新增专利统计
+      %li
+        = link_to "3年新增专利统计",basic_statistics_path(:tab=>"gx_three_years_tech_total")
 
       %h4 经营情况分析 
       %li{class: "#{tab == 'average_companies_worker_number_yearly' ? 'active' : ''}"}
