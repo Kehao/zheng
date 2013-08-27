@@ -1,6 +1,7 @@
 # encoding: utf-8
 class StatisticsController < ApplicationController
   layout "demo"
+
   cattr_accessor :stats do
     {}
   end
